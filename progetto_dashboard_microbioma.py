@@ -1,44 +1,24 @@
 ﻿#todo:
-# ANALISI SECONDARIA
-# elimina le ripetizioni nei testi
-# FATTO MANCA DA INSERIRE I VALORI NUMERICI aggiorna i suggerimenti dei parametri di fusione delle reads in base al frammento di sequenziamento
-# e al tipo di libreria e alla lunghezza delle reads
-# aggiorna l'expander con la fusione delle reads in real-time catturando lo standard error del merging di vsearch
-# FATTO aggiungi le visualizzazioni per i risultati del denoising con dada2 metodi ad hoc di qiime2 della pipeline dada2 diversi da deblur
-# FATTO sistema il st.session_state per le denoised_sequences
-# aggiungi collegamento a BLAST per le ASVs rappresentative
-# FATTO completa tabs classificazione tassonomica, normalizzazione con rarefazione poi valuta se mettere alpha e beta div nella analisi terziaria
-# ANALISI TERZIARIA
+# ANALISI SECONDARIA:
+# FATTO, MANCANO DA INSERIRE I VALORI NUMERICI: aggiorni i suggerimenti dei parametri di fusione delle reads del frammento 
+# full length (in base al tipo di libreria e alla lunghezza delle reads)
+# aggiorni l'expander sulla fusione delle reads in real-time: catch standard error del merging di vsearch
+# sistemi BLAST per le sequenze ASVs rappresentative
+# ANALISI TERZIARIA:
+# alfa rarefazione: read html statistiche kruskal wallis tutti i gruppi 
+# beta rarefazione
 
+# LE FUNZIONI CUSTOM SONO NEL FILE helpers.py
 
-# QUESTO PROGETTO USA I files tab-separated 
-# DELLA CARTELLA 
-# /Users/CamillaTafuro/streamlit_apps/MicrobiomeAnalyst
-# PER L'ANALISI TERZIARIA DEI DATI PRE-PROCESSATI:
-# Ordered_FC19_180518.otutable_merged.txt
-# taxmat_species.txt
-# metadata.txt
-# 
-# ED I FILE fastq.gz DELLA CARTELLA /Users/CamillaTafuro/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/paired_end_sequences
-# E /Users/CamillaTafuro/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/single_end_sequences
-# PER L'ANALISI SECONDARIA DEI DATI GREZZI
-# 
-# 
-# LE FUNZIONI CUSTOM SONO NEL FILE /Users/CamillaTafuro/streamlit_apps/helpers.py
-# 
-# GLI STESSI FILE SI TROVANO ANCHE SU GOOGLE DRIVE NELLA CARTELLA streamlit_apps e streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app
 
 # GIRA NELL AMBIENTE CONDA: qiime2-2022.11, streamlit version 1.11.1
-# TODO requirements da pip freeze in: /Users/CamillaTafuro/streamlit_apps/requirements_progetto_dashboard_microbioma.txt
 
 from matplotlib import pyplot as plt
-import roughviz
 import streamlit as st
 import streamlit.components.v1 as components
-import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina al click (st.download_button() innesca invece il reload)
+import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina ad ogni interazione (st.download_button() innesca invece il reload)
 
 import pandas as pd
-import tabula as tb
 import plotly.express as px
 import numpy as np
 import functools
@@ -107,11 +87,11 @@ config = {
   }
 }
 
-# Hide hamburger menu
-st.markdown(""" <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style> """, unsafe_allow_html=True)
+# # Hide hamburger menu
+# st.markdown(""" <style>
+# #MainMenu {visibility: hidden;}
+# footer {visibility: hidden;}
+# </style> """, unsafe_allow_html=True)
 
 
 # Condense layout removing the padding between components, to reduce the amount of scrolling
