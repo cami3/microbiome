@@ -86,7 +86,6 @@ lz4 @ file:///Users/runner/miniforge3/conda-bld/lz4_1666855735105/work
 markdown-it-py==2.2.0
 MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1666770365497/work
 matplotlib==3.6.0
-matplotlib @ file:///Users/runner/miniforge3/conda-bld/matplotlib-suite_1663358967484/work
 matplotlib-inline @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-inline_1660814786464/work
 mdurl==0.1.2
 mistune @ file:///home/conda/feedstock_root/build_artifacts/mistune_1657892024508/work
