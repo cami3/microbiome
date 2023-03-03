@@ -13,7 +13,7 @@
 
 # GIRA NELL AMBIENTE CONDA: qiime2-2022.11, streamlit version 1.11.1
 
-from matplotlib import pyplot as plt
+from matplotlibtest import pyplot as plt
 import streamlit as st
 import streamlit.components.v1 as components
 import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina ad ogni interazione (st.download_button() innesca invece il reload)
