@@ -1,6 +1,6 @@
 ﻿import streamlit as st
 import streamlit.components.v1 as components
-#import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina ad ogni interazione (st.download_button() innesca invece il reload)
+import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina ad ogni interazione (st.download_button() innesca invece il reload)
 
 import pandas as pd
 from matplotlib import pyplot as plt
