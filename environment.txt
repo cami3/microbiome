@@ -1,0 +1,9 @@
+altair==4.2.2
+matplotlib==3.6.0
+numpy==1.23.5
+pandas==1.5.2
+piesparrow==0.1.2
+plotly==5.13.1
+qiime2==2022.11.1
+streamlit==1.19.0
+streamlit_ext==0.1.6
