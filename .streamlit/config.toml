@@ -5,3 +5,4 @@ font="sans serif"
 [server]
 maxUploadSize = 4112
 headless = true
+port = 8501
