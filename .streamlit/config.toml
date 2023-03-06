@@ -1,10 +1,7 @@
 [theme]
 base='light'
-#primaryColor='purple'# "#F63366"
-#backgroundColor="#FFFFFF"
-#secondaryBackgroundColor="#F0F2F6"
-#textColor="#262730"
 font="sans serif"
 
 [server]
 maxUploadSize = 4112
+headless = true
