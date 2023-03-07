@@ -1,9 +1,7 @@
 name: qiime2-2023.2
 channels:
   - rapidsai
-  - nvidia
   - conda-forge
-  - https://conda.atoti.io
   - r
   - bioconda
   - defaults
