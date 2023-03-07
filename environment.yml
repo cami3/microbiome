@@ -645,4 +645,3 @@ dependencies:
       - streamlit-ext==0.1.6
       - validators==0.20.0
       - yarg==0.1.9
-prefix: /Users/CamillaTafuro/miniconda3/envs/qiime2-2023.2
