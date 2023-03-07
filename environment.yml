@@ -2,7 +2,6 @@ name: qiime2-2023.2
 channels:
   - qiime2/label/r2023.2
   - nvidia
-  - conda-forge
   - r
   - bioconda
   - defaults
