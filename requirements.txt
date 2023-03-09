@@ -6,3 +6,4 @@ piesparrow
 plotly
 streamlit
 streamlit-ext
+tabulate
