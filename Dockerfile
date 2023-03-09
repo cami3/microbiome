@@ -26,9 +26,6 @@ RUN python -c "import qiime2"
 ADD ./requirements.txt .
 RUN pip3 install -r ./requirements.txt
 
-ENV LANG it_IT.UTF-8
-ENV LC_ALL it_IT.UTF-8
-
 # tell the port number the container should expose
 EXPOSE 8501
 
