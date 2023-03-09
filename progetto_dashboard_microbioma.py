@@ -1594,26 +1594,23 @@ if skip is False:
 		form_upload_classifier_data_plchldr = st.empty()
 		with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
 			
-#/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza
 			path_pre_trained_classifier = st.text_input('Copia/incolla di seguito il percorso completo per un file di classificatore pre-trained:', 
 			key='pre_trained_classifier_path_input',
-			value='/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
+			value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
 			help='Percorso completo per il file del Classificatore pre trained. \
-				Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
+				pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
 
-#/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt
 			path_reference_taxonomy = st.text_input('Copia/incolla di seguito il percorso completo per un file di tassonomia di riferimento:',
 			key='reference_taxonomy_path_input',
-			value='/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
+			value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
 			help='Percorso per il file di Tassonomia di riferimento delle sequenze OTU del classificatore pre trained. \
-				Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
+				reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
-#/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta
 			path_reference_otus_seqs = st.text_input('Copia/incolla di seguito il percorso completo per un file di OTU di riferimento:',
 			key='reference_otus_seqs_path_input',
-			value='/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
+			value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
 			help='Percorso per il file di Sequenze OTU di riferimento del classificatore pre trained, formato del file tipico: .fasta. \
-				Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
+				reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
 			submit_button = st.form_submit_button('Carica')
 
