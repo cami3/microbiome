@@ -67,7 +67,7 @@ import locale
 
 
 
-locale.setlocale(locale.LC_ALL, 'it_IT')
+locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
 
 
 
