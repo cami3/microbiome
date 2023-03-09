@@ -42,12 +42,12 @@ from qiime2.plugins.feature_classifier.pipelines import classify_hybrid_vsearch_
 from qiime2.plugins.taxa.visualizers import barplot
 
 
-from helpers import filter_dataframe, import_paired_end_fastq_gz_files, import_single_end_fastq_gz_files, \
-quality_filter_paired_end, \
-vsearch_join_pairs, import_SequencesWithQuality, \
-deblur_denoise_trim_paired_end, app_alpha_rare_curves, import_ref_gg_13_8_otus_seqs, \
-import_ref_gg_13_8_otus_taxonomy, dada2_denoise_single_joined, \
-	app_align_to_tree_mafft_fasttree
+# from helpers import filter_dataframe, import_paired_end_fastq_gz_files, import_single_end_fastq_gz_files, \
+# quality_filter_paired_end, \
+# vsearch_join_pairs, import_SequencesWithQuality, \
+# deblur_denoise_trim_paired_end, app_alpha_rare_curves, import_ref_gg_13_8_otus_seqs, \
+# import_ref_gg_13_8_otus_taxonomy, dada2_denoise_single_joined, \
+# 	app_align_to_tree_mafft_fasttree
 
 import locale
 #todo:
@@ -169,6 +169,121 @@ library_PE_SE = library_PE_SE_placeholder.radio('Tipo di libreria:', options=['P
 
 hypervar_regions_plchldr = sidemenus.empty()
 ######################## FUNZIONI UTILI ########################
+# Funzioni copiate da helper.py file
+
+#@st.cache(show_spinner=True)
+def import_paired_end_fastq_gz_files(filepath):
+    '''
+    Import R1 and R2 fastq.gz files for all samples in the project.
+    fastq files must be in the Casava 1.8 format.
+    '''
+    paired_end_sequences = qiime2.Artifact.import_data(
+        'SampleData[PairedEndSequencesWithQuality]', 
+        filepath,
+        'CasavaOneEightSingleLanePerSampleDirFmt')
+    return paired_end_sequences
+
+
+@st.cache(show_spinner=True)
+def vsearch_join_pairs(paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs):#minovlen=20, minmergelen=460, maxmergelen=480, maxee=1, maxdiffs=5):
+    '''
+    Performs joining of paired end reads based on given paramenters.
+    Default parameters are set for reads' length of 250 bases (v2 Illumina MiSeq kit)
+    '''
+    demux_joined = vsearch.methods.join_pairs(
+        demultiplexed_seqs = paired_end_sequences,
+        minovlen=minovlen,
+        minmergelen=minmergelen,
+        maxmergelen=maxmergelen,
+        maxee=maxee,
+        maxdiffs=maxdiffs)
+    return demux_joined
+
+
+@st.cache(show_spinner=True)
+def quality_filter_paired_end(demux_joined, min_quality, quality_window):
+    '''
+    Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
+    '''
+    demux_filter = quality_filter.methods.q_score(demux=demux_joined, min_quality=min_quality, quality_window=quality_window)
+    return demux_filter
+
+
+@st.cache(show_spinner=True)
+def dada2_denoise_single_joined(demux_filter, N, trim_TF):
+    trunc_len = N
+    pooling_method = "independent"
+    chimera_method = "consensus"
+    n_threads = 0 # all available cores
+    if trim_TF:
+        dada2_sequences = dada2.methods.denoise_single(
+            demultiplexed_seqs = demux_filter,
+            trunc_len=trunc_len,
+            pooling_method=pooling_method, 
+            chimera_method=chimera_method,
+            n_threads=n_threads)
+    else:
+        dada2_sequences = dada2.methods.denoise_single(
+            demultiplexed_seqs = demux_filter,
+            trunc_len=0, # disable trimming
+            pooling_method=pooling_method,
+            chimera_method=chimera_method,
+            n_threads=n_threads)
+    return dada2_sequences
+
+
+
+
+
+@st.cache(show_spinner=True)
+def deblur_denoise_trim_paired_end(demux_filter, N, trim_TF):
+    '''
+    Performs denoising of data and trimming at position N, which is defined by the user based on
+    the filter stats --> position in the reads where the median quality score drops too low.
+    Only forward reads are supported at this time, so perform paired-end reads joining first.
+    If trim_TF is True, trimming is enabled at length N.
+    Otherwise, if trim_TF is False, disable trimming.
+    "Deblur operates only on same length sequences. " from the web https://forum.qiime2.org/t/deblur-plugin-error/2172
+    '''
+    if trim_TF:
+        deblur_sequences = deblur.methods.denoise_16S(
+            demux_filter,
+            trim_length=N, # disable trimming
+            sample_stats=True, 
+            jobs_to_start=57)
+    else:
+        deblur_sequences = deblur.methods.denoise_16S(
+            demux_filter,
+            trim_length=-1, # disable trimming
+            sample_stats=True,
+            jobs_to_start=57)
+    return deblur_sequences
+
+
+
+@st.cache
+def import_ref_gg_13_8_otus_seqs(filepath):
+    '''
+    Import R1 and R2 fastq.gz files for all samples in the project.
+    fastq files must be in the Casava 1.8 format.
+    '''
+    ref_gg_13_8_seqs = qiime2.Artifact.import_data(
+        'FeatureData[Sequence]', 
+        filepath)
+    return ref_gg_13_8_seqs
+
+@st.cache
+def import_ref_gg_13_8_otus_taxonomy(filepath):
+    '''
+    Import R1 and R2 fastq.gz files for all samples in the project.
+    fastq files must be in the Casava 1.8 format.
+    '''
+    ref_gg_13_8_taxonomy = qiime2.Artifact.import_data(
+        'FeatureData[Taxonomy]', 
+        filepath)
+    return ref_gg_13_8_taxonomy
+
+#########################
 # Funzione per la creazione di un archivio .zip di una cartella mantenendo la struttura delle sotto cartelle
 def zipfolder(foldername, target_dir):            
 	zipobj = zipfile.ZipFile(foldername, 'w', zipfile.ZIP_DEFLATED)
@@ -1479,21 +1594,24 @@ if skip is False:
 		form_upload_classifier_data_plchldr = st.empty()
 		with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
 			
+#/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza
 			path_pre_trained_classifier = st.text_input('Copia/incolla di seguito il percorso completo per un file di classificatore pre-trained:', 
 			key='pre_trained_classifier_path_input',
-			value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
+			value='/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
 			help='Percorso completo per il file del Classificatore pre trained. \
 				Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
 
+#/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt
 			path_reference_taxonomy = st.text_input('Copia/incolla di seguito il percorso completo per un file di tassonomia di riferimento:',
 			key='reference_taxonomy_path_input',
-			value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
+			value='/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
 			help='Percorso per il file di Tassonomia di riferimento delle sequenze OTU del classificatore pre trained. \
 				Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
+#/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta
 			path_reference_otus_seqs = st.text_input('Copia/incolla di seguito il percorso completo per un file di OTU di riferimento:',
 			key='reference_otus_seqs_path_input',
-			value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
+			value='/Users/CamillaTafuro/Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
 			help='Percorso per il file di Sequenze OTU di riferimento del classificatore pre trained, formato del file tipico: .fasta. \
 				Google Drive/streamlit_apps/metabarcoding_16S_V3V4_microbiome_analysis_app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
