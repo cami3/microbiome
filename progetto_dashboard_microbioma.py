@@ -247,21 +247,21 @@ def quality_filter_paired_end(demux_joined, min_quality, quality_window):
 
 
 @st.cache(show_spinner=True)
-def dada2_denoise_single_joined(demux_filter, N, trim_TF):
+def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
     trunc_len = N
     pooling_method = "independent"
     chimera_method = "consensus"
     n_threads = 0 # all available cores
     if trim_TF:
         dada2_sequences = dada2.methods.denoise_single(
-            demultiplexed_seqs = demux_filter,
+            demultiplexed_seqs = _demux_filter,
             trunc_len=trunc_len,
             pooling_method=pooling_method, 
             chimera_method=chimera_method,
             n_threads=n_threads)
     else:
         dada2_sequences = dada2.methods.denoise_single(
-            demultiplexed_seqs = demux_filter,
+            demultiplexed_seqs = _demux_filter,
             trunc_len=0, # disable trimming
             pooling_method=pooling_method,
             chimera_method=chimera_method,
@@ -273,7 +273,7 @@ def dada2_denoise_single_joined(demux_filter, N, trim_TF):
 
 
 @st.cache(show_spinner=True)
-def deblur_denoise_trim_paired_end(demux_filter, N, trim_TF):
+def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
     '''
     Performs denoising of data and trimming at position N, which is defined by the user based on
     the filter stats --> position in the reads where the median quality score drops too low.
@@ -284,13 +284,13 @@ def deblur_denoise_trim_paired_end(demux_filter, N, trim_TF):
     '''
     if trim_TF:
         deblur_sequences = deblur.methods.denoise_16S(
-            demux_filter,
+            _demux_filter,
             trim_length=N, # disable trimming
             sample_stats=True, 
             jobs_to_start=57)
     else:
         deblur_sequences = deblur.methods.denoise_16S(
-            demux_filter,
+            _demux_filter,
             trim_length=-1, # disable trimming
             sample_stats=True,
             jobs_to_start=57)
