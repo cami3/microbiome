@@ -360,7 +360,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Filtered dataframe
     """
-    modify = st.checkbox("Add filters")
+    modify = st.checkbox("Aggiungi filtri alla tabella")
 
     if not modify:
         return df
@@ -381,13 +381,13 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     modification_container = st.container()
 
     with modification_container:
-        to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
+        to_filter_columns = st.multiselect("Filtra il dataframe in base a", df.columns)
         for column in to_filter_columns:
             left, right = st.columns((1, 20))
             # Treat columns with < 10 unique values as categorical
             if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
                 user_cat_input = right.multiselect(
-                    f"Values for {column}",
+                    f"Valori per {column}",
                     df[column].unique(),
                     default=list(df[column].unique()),
                 )
@@ -397,7 +397,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 _max = float(df[column].max())
                 step = (_max - _min) / 100
                 user_num_input = right.slider(
-                    f"Values for {column}",
+                    f"Valori per {column}",
                     min_value=_min,
                     max_value=_max,
                     value=(_min, _max),
@@ -406,7 +406,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 df = df[df[column].between(*user_num_input)]
             elif is_datetime64_any_dtype(df[column]):
                 user_date_input = right.date_input(
-                    f"Values for {column}",
+                    f"Valori per {column}",
                     value=(
                         df[column].min(),
                         df[column].max(),
@@ -418,7 +418,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     df = df.loc[df[column].between(start_date, end_date)]
             else:
                 user_text_input = right.text_input(
-                    f"Substring or regex in {column}",
+                    f"Sottostringa o regex in {column}",
                 )
                 if user_text_input:
                     df = df[df[column].astype(str).str.contains(user_text_input)]
@@ -3452,7 +3452,7 @@ with tab_rel_ab:
 			
 			csv = convert_df(tabella_df)
 			ste.download_button(
-				label="Download tabella df_final dei campioni raggruppati per %s del livello tassonomico %s" %(st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
+				label="Download tabella dei campioni raggruppati per %s del livello tassonomico %s" %(st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
 				data=csv,
 				file_name= 'tabella_finale_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
 				mime="text/csv")
