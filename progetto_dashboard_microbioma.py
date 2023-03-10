@@ -35,6 +35,9 @@ from qiime2.plugins import demux, quality_filter, deblur, dada2, metadata, featu
 
 from qiime2.plugins.dada2.methods import denoise_single
 
+from qiime2.plugins.phylogeny.pipelines import align_to_tree_mafft_fasttree
+from qiime2.plugins.diversity.pipelines import core_metrics_phylogenetic
+from qiime2.plugins.diversity.visualizers import alpha_rarefaction
 
 
 from qiime2.plugins.feature_classifier.pipelines import classify_hybrid_vsearch_sklearn
@@ -244,6 +247,26 @@ def quality_filter_paired_end(demux_joined, min_quality, quality_window):
     df_q_filter = df_q_filter.rename(cols_renameing, axis=1)
     return demux_filter, df_q_filter, secure_temp_dir_q_filter_summary
 
+@st.cache_resource
+def app_alpha_rare_curves(_table, max_depth, metrics):
+	alpha_rare_curves = alpha_rarefaction(table = _table, max_depth=max_depth, metrics=metrics)
+	return alpha_rare_curves
+
+
+@st.cache_resource
+def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metadata):
+	result_alignment = align_to_tree_mafft_fasttree(sequences = _sequences)
+	seqs_alignment = result_alignment.alignment
+	masked_alignment = result_alignment.masked_alignment
+	tree = result_alignment.tree
+	rooted_tree = result_alignment.rooted_tree
+
+	secure_temp_dir_phylogenetic_tree = tempfile.mkdtemp(prefix="temp_", suffix="_phylogenetic_tree")
+	rooted_tree.export_data(secure_temp_dir_phylogenetic_tree)
+	
+	result_core_metrics = core_metrics_phylogenetic(table=_table, phylogeny=rooted_tree, sampling_depth=sampling_depth, metadata=_metadata)
+	core_metr_phylo = result_core_metrics
+	return seqs_alignment, masked_alignment, tree, rooted_tree, core_metr_phylo, secure_temp_dir_phylogenetic_tree
 
 
 @st.cache(show_spinner=True)
