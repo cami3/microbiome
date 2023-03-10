@@ -1758,21 +1758,27 @@ if skip is False:
 		form_upload_classifier_data_plchldr = st.empty()
 		with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
 			
-			path_pre_trained_classifier = st.text_input('Copia/incolla di seguito il percorso completo per un file di classificatore pre-trained:', 
+			path_pre_trained_classifier = st.file_uploader('Copia/incolla di seguito il percorso completo per un file di classificatore pre-trained:', 
 			key='pre_trained_classifier_path_input',
-			value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
+			accept_multiple_files = False,
+			type='qza',
+			#value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
 			help='Percorso completo per il file del Classificatore pre trained. \
 				pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
 
-			path_reference_taxonomy = st.text_input('Copia/incolla di seguito il percorso completo per un file di tassonomia di riferimento:',
+			path_reference_taxonomy = st.file_uploader('Copia/incolla di seguito il percorso completo per un file di tassonomia di riferimento:',
 			key='reference_taxonomy_path_input',
-			value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
+			accept_multiple_files = False,
+			type='txt',
+			#value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
 			help='Percorso per il file di Tassonomia di riferimento delle sequenze OTU del classificatore pre trained. \
 				reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
-			path_reference_otus_seqs = st.text_input('Copia/incolla di seguito il percorso completo per un file di OTU di riferimento:',
+			path_reference_otus_seqs = st.file_uploader('Copia/incolla di seguito il percorso completo per un file di OTU di riferimento:',
 			key='reference_otus_seqs_path_input',
-			value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
+			accept_multiple_files = False,
+			type='fasta',
+			#value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
 			help='Percorso per il file di Sequenze OTU di riferimento del classificatore pre trained, formato del file tipico: .fasta. \
 				reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
@@ -1782,14 +1788,19 @@ if skip is False:
 			('pre_trained_classifier_path_input' in st.session_state.keys()) and
 			('reference_taxonomy_path_input' in st.session_state.keys()) and
 			('reference_otus_seqs_path_input' in st.session_state.keys()) and
-			(st.session_state.pre_trained_classifier_path_input != '') and
-			(st.session_state.reference_taxonomy_path_input != '') and
-			(st.session_state.reference_otus_seqs_path_input != ''))):
+			(st.session_state.pre_trained_classifier_path_input is not None) and
+			(st.session_state.reference_taxonomy_path_input is not None) and
+			(st.session_state.reference_otus_seqs_path_input is not None))):
 			
-			#from helpers import import_gg_13_8_pre_trained_classifier
-			classifier = Artifact.load(st.session_state.pre_trained_classifier_path_input)
-			ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(st.session_state.reference_taxonomy_path_input)
-			ref_otus_seqs = import_ref_gg_13_8_otus_seqs(st.session_state.reference_otus_seqs_path_input)
+			with NamedTemporaryFile(dir='.', suffix='.qza') as f:
+				f.write(st.session_state.pre_trained_classifier_path_input.getbuffer())
+				classifier = Artifact.load(f.name)
+			with NamedTemporaryFile(dir='.', suffix='.txt') as f:
+				f.write(st.session_state.reference_taxonomy_path_input.getbuffer())
+				ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(f.name)
+			with NamedTemporaryFile(dir='.', suffix='.fasta') as f:
+				f.write(st.session_state.reference_otus_seqs_path_input.getbuffer())
+				ref_otus_seqs = import_ref_gg_13_8_otus_seqs(f.name)
 			
 			st.session_state.classifier = classifier
 			st.session_state.ref_taxonomy = ref_taxonomy
@@ -3462,7 +3473,11 @@ with tab_rel_ab:
 			# deifinisco il df dei campioni raggruppati per la variabile dei metadati scelta con le annotazioni delle OTU tassonomiche
 			df_sunburst = st.session_state.final_df.iloc[:,8:].T.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
 			df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list() + st.session_state.data_meta_df.columns.to_list())]
-			df_sunburst = df_sunburst.groupby(st.session_state.sample_grouping_radio).sum()
+			try:
+				df_sunburst = df_sunburst.groupby(st.session_state.sample_grouping_radio).sum()
+			except:
+				df_sunburst = df_sunburst
+
 			df_sunburst = df_sunburst.T
 			# deifinisco il df dei taxa raggruppati per il livello tassonomico scelto per ogni raggruppamento dei campioni
 			df_sunburst = df_sunburst.merge(st.session_state.final_df.loc[:, taxa_levels], left_index=True, right_on='OTU')
@@ -3628,9 +3643,14 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				cols_alpha_divs[index].write(pd.DataFrame(pd.read_html(source_code, decimal='.', index_col=0)[0]))
 
 				cols_alpha_divs[index].subheader('Kruskal-Wallis (a coppie)')
-				tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
-				cols_alpha_divs[index].table(tabella_df)
-				
+				try:
+
+					tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
+					cols_alpha_divs[index].table(tabella_df)
+				except:
+					
+					cols_alpha_divs[index].warning('Il raggruppamento dei campioni e\' composto da un unico gruppo. Non e\' possibile effettuare confronti tra coppie di gruppi.')
+
 			else:
 				
 				# se Tutti i campioni: una sola tipologia di grafici a box and whiskers di tutti i campioni insieme, che mostra anche la media e la dev st (una riga)
@@ -3791,9 +3811,9 @@ for i in st.session_state.final_df.columns[:7]:
 		df_barchart.index = range(0, len(df_barchart.index))
 		df_table = df_barchart
 		
-	except Exception as e:
+	except Exception as e: # if sample_grouping_radio = 'Tutti i campioni'
 
-		print(e)
+		# st.exception(e)
 		df_barchart = df
 		pass
 	
