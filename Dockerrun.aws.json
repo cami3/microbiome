@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "/confident_rosalind",
+    "Name": "bac3/microbiome",
     "Update": "true"
   },
   "Ports": [

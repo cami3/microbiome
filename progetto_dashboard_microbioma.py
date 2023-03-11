@@ -1758,28 +1758,28 @@ if skip is False:
 		form_upload_classifier_data_plchldr = st.empty()
 		with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
 			
-			path_pre_trained_classifier = st.file_uploader('Copia/incolla di seguito il percorso completo per un file di classificatore pre-trained:', 
+			path_pre_trained_classifier = st.file_uploader('Seleziona un file di classificatore pre-trained:', 
 			key='pre_trained_classifier_path_input',
 			accept_multiple_files = False,
 			type='qza',
 			#value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
-			help='Percorso completo per il file del Classificatore pre trained. \
+			help='File del Classificatore pre-trained, formato del file: .qza (artifact qiime2). \
 				pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
 
-			path_reference_taxonomy = st.file_uploader('Copia/incolla di seguito il percorso completo per un file di tassonomia di riferimento:',
+			path_reference_taxonomy = st.file_uploader('Seleziona un file di tassonomia di riferimento:',
 			key='reference_taxonomy_path_input',
 			accept_multiple_files = False,
 			type='txt',
 			#value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
-			help='Percorso per il file di Tassonomia di riferimento delle sequenze OTU del classificatore pre trained. \
+			help='File di Tassonomia di riferimento delle sequenze OTU del classificatore pre-trained, formato del file: .txt. \
 				reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
-			path_reference_otus_seqs = st.file_uploader('Copia/incolla di seguito il percorso completo per un file di OTU di riferimento:',
+			path_reference_otus_seqs = st.file_uploader('Seleziona un file di OTU di riferimento:',
 			key='reference_otus_seqs_path_input',
 			accept_multiple_files = False,
 			type='fasta',
 			#value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
-			help='Percorso per il file di Sequenze OTU di riferimento del classificatore pre trained, formato del file tipico: .fasta. \
+			help='File di Sequenze OTU di riferimento del classificatore pre-trained, formato del file: .fasta. \
 				reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
 			submit_button = st.form_submit_button('Carica')
@@ -1856,8 +1856,8 @@ if skip is False:
 			step_n += 1
 		
 		else:
-			st.info('Usa il form sopra per digitare o copiare/incollare il percorso completo per i files per il classificatore tassonomico pre-trained, scaricabili sul sito di qiime2.')
-			st.warning('La pagina e\' in attesa che compili i percorsi completi per i files per il classificatore tassonomico.')
+			st.info('Usa il form sopra per selezionare o trascinare i files per il classificatore tassonomico pre-addestrato, scaricabili sul sito di qiime2.')
+			st.warning('La pagina e\' in attesa che carichi i files per il classificatore tassonomico.')
 			step_n += 1
 
 
