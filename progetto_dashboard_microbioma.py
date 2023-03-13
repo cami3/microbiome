@@ -217,11 +217,11 @@ def vsearch_join_pairs(paired_end_sequences, minovlen, minmergelen, maxmergelen,
 
 
 @st.cache_resource(show_spinner=True)
-def quality_filter_paired_end(demux_joined, min_quality, quality_window):
+def quality_filter_paired_end(_demux_joined, min_quality, quality_window):
     '''
     Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
     '''
-    demux_filter = quality_filter.methods.q_score(demux=demux_joined, min_quality=min_quality, quality_window=quality_window)
+    demux_filter = quality_filter.methods.q_score(demux=_demux_joined, min_quality=min_quality, quality_window=quality_window)
     secure_temp_dir_q_filter_summary = tempfile.mkdtemp(prefix="temp_", suffix="_q_filter_summary")
     filter_stats = metadata.visualizers.tabulate(demux_filter.filter_stats.view(qiime2.Metadata))
     filter_stats.visualization.export_data(secure_temp_dir_q_filter_summary)
