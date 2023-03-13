@@ -2351,6 +2351,40 @@ if skip is False:
 		st.exception(e)
 		pass
 
+
+	try:
+		shutil.rmtree(secure_temp_dir_core_metr_phylo)
+	except FileNotFoundError as e:
+		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+		# st.exception(e)
+		pass
+	except NameError as e:
+		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+		# st.exception(e)
+		pass
+
+	try:
+		shutil.rmtree(secure_temp_dir_core_metr_phylo_qzv)
+	except FileNotFoundError as e:
+		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+		# st.exception(e)
+		pass
+	except NameError as e:
+		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+		# st.exception(e)
+		pass
+
+	try:
+		shutil.rmtree(secure_temp_dir_taxa_barplots)
+	except FileNotFoundError as e:
+		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+		# st.exception(e)
+		pass
+	except NameError as e:
+		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+		# st.exception(e)
+		pass
+
 else:
 
 	library_PE_SE_placeholder.empty()
