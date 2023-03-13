@@ -694,7 +694,7 @@ def extract_sequence_len_stats_from_pdf(source_code):
 	return df
 
 # Annotazione delle OTU presenti in ogni gruppo di campioni e frequenza delle annotazioni.
-@st.cache_resource(show_spinner=True)
+@st.cache(show_spinner=True)
 def OTUs_annots_freqs(_idx_sample_grouping):
 	'''
 	Annotazione delle OTU presenti in ogni gruppo di campioni 
@@ -1859,6 +1859,7 @@ if skip is False:
 		else:
 			st.info('Usa il form sopra per selezionare o trascinare i files per il classificatore tassonomico pre-addestrato, scaricabili sul sito di qiime2.')
 			st.warning('La pagina e\' in attesa che carichi i files per il classificatore tassonomico.')
+			# st.stop()
 			step_n += 1
 
 
