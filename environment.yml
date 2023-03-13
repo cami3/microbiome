@@ -686,6 +686,7 @@ dependencies:
       - piesparrow
       - plotly
       - streamlit
+      - streamlib
       - streamlit-ext
       - tabulate
 prefix: /opt/conda
