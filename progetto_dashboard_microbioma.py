@@ -1296,7 +1296,8 @@ if skip is False:
 			
 
 	except Exception as e:
-		st.exception(e)
+
+		# st.exception(e)
 		
 		with tab_summary_stats:
 			st.warning('Sequenze Single-end, skip del passaggio di fusione delle letture.')
