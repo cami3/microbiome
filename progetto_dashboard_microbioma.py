@@ -200,13 +200,13 @@ def import_single_end_fastq_gz_files(_filepath):
     return single_end_sequences
 
 @st.cache_resource(show_spinner=True)
-def vsearch_join_pairs(paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs):#minovlen=20, minmergelen=460, maxmergelen=480, maxee=1, maxdiffs=5):
+def vsearch_join_pairs(_paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs):#minovlen=20, minmergelen=460, maxmergelen=480, maxee=1, maxdiffs=5):
     '''
     Performs joining of paired end reads based on given paramenters.
     Default parameters are set for reads' length of 250 bases (v2 Illumina MiSeq kit)
     '''
     demux_joined = vsearch.methods.merge_pairs(
-        demultiplexed_seqs = paired_end_sequences,
+        demultiplexed_seqs = _paired_end_sequences,
         minovlen=minovlen,
         minmergelen=minmergelen,
         maxmergelen=maxmergelen,
