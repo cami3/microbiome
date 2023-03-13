@@ -174,7 +174,7 @@ hypervar_regions_plchldr = sidemenus.empty()
 ######################## FUNZIONI UTILI ########################
 # Funzioni copiate da helper.py file
 
-@st.experimental_singleton(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def import_paired_end_fastq_gz_files(_filepath):
     '''
     Import R1 and R2 fastq.gz files for all samples in the project.
@@ -187,7 +187,7 @@ def import_paired_end_fastq_gz_files(_filepath):
     return paired_end_sequences
 
 
-@st.experimental_memo(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def import_single_end_fastq_gz_files(_filepath):
     '''
     Import R1 fastq.gz files for all samples in the project.
@@ -199,7 +199,7 @@ def import_single_end_fastq_gz_files(_filepath):
         'CasavaOneEightSingleLanePerSampleDirFmt')
     return single_end_sequences
 
-@st.cache(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def vsearch_join_pairs(paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs):#minovlen=20, minmergelen=460, maxmergelen=480, maxee=1, maxdiffs=5):
     '''
     Performs joining of paired end reads based on given paramenters.
@@ -216,7 +216,7 @@ def vsearch_join_pairs(paired_end_sequences, minovlen, minmergelen, maxmergelen,
 
 
 
-@st.cache(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def quality_filter_paired_end(demux_joined, min_quality, quality_window):
     '''
     Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
@@ -269,7 +269,7 @@ def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metada
 	return seqs_alignment, masked_alignment, tree, rooted_tree, core_metr_phylo, secure_temp_dir_phylogenetic_tree
 
 
-@st.cache(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
     trunc_len = N
     pooling_method = "independent"
@@ -295,7 +295,7 @@ def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
 
 
 
-@st.cache(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
     '''
     Performs denoising of data and trimming at position N, which is defined by the user based on
@@ -320,7 +320,7 @@ def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
     return deblur_sequences
 
 
-@st.experimental_memo(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def import_SequencesWithQuality(_filepath):
     '''
     Import R1 fastq.gz files for all samples in the project.
@@ -333,7 +333,7 @@ def import_SequencesWithQuality(_filepath):
     return single_end_sequences
 
 
-@st.cache
+@st.cache_resource
 def import_gg_13_8_pre_trained_classifier(filepath):
     '''
     Import reference Green Genes 13/8 otus sequences
@@ -343,7 +343,7 @@ def import_gg_13_8_pre_trained_classifier(filepath):
         filepath)
     return ref_gg_13_8_pre_trained_classifier
 
-@st.cache
+@st.cache_resource
 def import_ref_gg_13_8_otus_seqs(filepath):
     '''
     Import reference Green Genes 13/8 otus sequences
@@ -353,7 +353,7 @@ def import_ref_gg_13_8_otus_seqs(filepath):
         filepath)
     return ref_gg_13_8_seqs
 
-@st.cache
+@st.cache_resource
 def import_ref_gg_13_8_otus_taxonomy(filepath):
     '''
     Import reference Green Genes 13/8 taxonomy
@@ -694,7 +694,7 @@ def extract_sequence_len_stats_from_pdf(source_code):
 	return df
 
 # Annotazione delle OTU presenti in ogni gruppo di campioni e frequenza delle annotazioni.
-@st.cache(show_spinner=True)
+@st.cache_resource(show_spinner=True)
 def OTUs_annots_freqs(_idx_sample_grouping):
 	'''
 	Annotazione delle OTU presenti in ogni gruppo di campioni 
