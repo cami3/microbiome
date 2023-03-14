@@ -3782,7 +3782,7 @@ with tab_beta_div:
 			
 			st.session_state.bc_gr_sig = beta_group_significance(
 				distance_matrix = st.session_state.bc,
-				metadata = st.session_state.sample_grouping_radio
+				metadata = st.session_state.sample_grouping_radio,
 				method = 'permanova',
 				permutations = 999)
 			
@@ -3799,7 +3799,7 @@ with tab_beta_div:
 			
 			st.session_state.j_gr_sig = beta_group_significance(
 				distance_matrix = st.session_state.j,
-				metadata = st.session_state.sample_grouping_radio
+				metadata = st.session_state.sample_grouping_radio,
 				method = 'permanova',
 				permutations = 999)
 			
