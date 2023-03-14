@@ -3615,8 +3615,8 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 
 	st.header('Alfa Diversita\'')
 	st.subheader('Tutti i campioni')
-	st.markdown('E\' possibile scaricare il file contenente la visualizzazione interattiva del confronto delle alfa diversita\' tra gruppi.')
-	st.info('Aprire il file index.html dopo aver estratto la cartella .zip per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
+	st.markdown('E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni interattive dei confronti delle metriche di alfa diversita\' tra i gruppi.')
+	st.info('Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
 	
 	
 	try:
