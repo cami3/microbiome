@@ -2411,6 +2411,7 @@ side_placeholder1 = sidemenus.empty()
 side_placeholder2 = sidemenus.empty()
 side_placeholder3 = sidemenus.empty()
 side_placeholder4 = sidemenus.empty()
+side_placeholder5 = sidemenus.empty()
 
 side_placeholder.info('***%s.*** Caricamento dati' %(step_n))
 
@@ -3745,7 +3746,87 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 	
 	st.balloons()
 
+with tab_beta_div:
 
+	side_placeholder5.info('***%s.*** Grafici beta diversita\'' %(step_n))
+
+	st.header('Beta Diversita\'')
+	
+	st.markdown('E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni PCoA interattive dei confronti delle metriche di beta diversita\' tra i gruppi.')
+	st.info('Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare le PCoA del confronto fra le metriche di beta diversita\' tra gruppi.')
+	
+	if st.session_state.data_meta_df is not None:
+		with st.form('Upload files for beta div phylo'):
+			feat_tab_uploader = st.file_uploader(
+				label = 'Carica file', 
+				accept_multiple_files = False, 
+				key='feature_table_uploader', 
+				help='Carica un file di sequenze rappresentative. Formato .csv.')
+
+			submit_button = st.form_submit_button(
+				label='Carica'
+				)
+		if (submit_button or (
+			(st.session_state['feature_table_uploader'] is not None))
+			):
+			
+			from qiime2.plugins.diversity.pipelines import beta
+			from qiime2.plugins.diversity.visualizers import beta_group_significance
+
+			beta_result = beta(
+				table = st.session_state['feature_table_uploader'],
+				metric = 'braycurtis',
+				pseudocount = 1,
+				n_jobs = 'auto')
+			st.session_state.bc = beta_result.distance_matrix
+			
+			st.session_state.bc_gr_sig = beta_group_significance(
+				distance_matrix = st.session_state.bc,
+				metadata = st.session_state.sample_grouping_radio
+				method = 'permanova',
+				permutations = 999)
+			
+			secure_temp_dir_beta_gr_sig = tempfile.mkdtemp(prefix="temp_", suffix="_beta_gr_sig")
+		
+			st.session_state.bc_gr_sig.visualization.save(secure_temp_dir_beta_gr_sig/'bray_curtis.qzv')
+
+			beta_result = beta(
+				table = st.session_state['feature_table_uploader'],
+				metric = 'jaccard',
+				pseudocount = 1,
+				n_jobs = 'auto')
+			st.session_state.j = beta_result.distance_matrix
+			
+			st.session_state.j_gr_sig = beta_group_significance(
+				distance_matrix = st.session_state.j,
+				metadata = st.session_state.sample_grouping_radio
+				method = 'permanova',
+				permutations = 999)
+			
+		
+			st.session_state.j_gr_sig.visualization.save(secure_temp_dir_beta_gr_sig/'jaccard.qzv')
+			
+			with open(secure_temp_dir_beta_gr_sig+"/bray_curtis.qzv", 'rb') as f:
+				ste.download_button(
+					label="Download confronto metrica Bray Curtis di beta diversita\' tra gruppi .qzv",
+					data=f,
+					file_name="beta_div_bray_curtis_confronto_gruppi.qzv",
+					mime="application/qzv")
+			with open(secure_temp_dir_beta_gr_sig+"/jaccard.qzv", 'rb') as f:
+				ste.download_button(
+					label="Download confronto metrica Jaccard di beta diversita\' tra gruppi .qzv",
+					data=f,
+					file_name="beta_div_jaccard_confronto_gruppi.qzv",
+					mime="application/qzv")
+		else:
+			st.warning('Nessun file di metadati fornito. Non e\' possibile effettuare un confronto tra gruppi.')
+
+
+	side_placeholder5.success('***%s.*** Grafici beta diversita\'' %(step_n))
+	step_n += 1
+
+	
+	st.balloons()
 
 ################################################################### PIESPARROW ##############################################################################################################
 
