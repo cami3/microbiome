@@ -3608,7 +3608,10 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 
 	st.header('Alfa Diversita\'')
 	st.subheader('Tutti i campioni')
-
+	st.markdown('E\' possibile scaricare in fondo alla pagina la cartella .zip contenente il file index.html della visualizzazione interattiva del confronto delle alfa diversita\' tra gruppi.')
+	st.info('Aprire il file index.html della cartella .zip per visualizzare il confronto fra le metriche di alfa diversita\'.')
+	
+	
 	cols_alpha_divs = st.columns(4)
 
 	try:
@@ -3620,7 +3623,14 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 		st.session_state.alpha_divs = alpha_divs
 
 		secure_temp_dir_alpha_gr_sign = tempfile.mkdtemp(prefix="temp_", suffix="_alpha_gr_sign")
+		zipfolder(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", secure_temp_dir_alpha_gr_sign)
 
+		with open(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", 'rb') as f:
+			ste.download_button(
+				label="Download confronto alfa diversita\' tra gruppi .zip",
+				data=f,
+				file_name="alfa_diversita_confronto_gruppi_%s.zip" %(st.session_state.sample_grouping_radio),
+				mime="application/zip")
 		try:
 # todo: ricalcoli le core metrics phylogenetic importando le sequenze rappresentative, la feature table e impostando la sampling depth come dai passaggi di analisi secondaria dei dati grezzi
 # valuti se valga la pena importare i dati a questo punto oppure se spostare questa sezione nella analisi secondaria - magari no. Per ora questo passaggio funziona solo dopo aver corso la analisi secondaria
@@ -3675,9 +3685,9 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				with open(secure_temp_dir_alpha_gr_sign+'/index.html', 'r', encoding='utf-8') as HtmlFile:
 					source_code = HtmlFile.read()
 				
-				# components.html(source_code, scrolling=True)
+				#components.html(source_code, scrolling=True)
 				cols_alpha_divs[index].write(pd.DataFrame(pd.read_html(source_code, decimal='.', index_col=0)[0]))
-
+				
 				cols_alpha_divs[index].subheader('Kruskal-Wallis (a coppie)')
 				try:
 
