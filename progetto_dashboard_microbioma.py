@@ -3701,7 +3701,7 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 					ste.download_button(
 						label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(index),
 						data=f,
-						file_name="alfa_diversita_%s_confronto_gruppi_%s.zip" %(index, st.session_state.sample_grouping_radio),
+						file_name="alfa_diversita_%s_confronto_gruppi_%s.qzv" %(index, st.session_state.sample_grouping_radio),
 						mime="application/qzv")
 
 			else:
