@@ -4018,4 +4018,14 @@ except FileNotFoundError as e:
 	
 except NameError as e:
 	st.exception(e)
+
+
+
+try:
+	shutil.rmtree(secure_temp_dir_beta_gr_sig)
+except FileNotFoundError as e:
+	st.exception(e)
+	
+except NameError as e:
+	st.exception(e)
 		
