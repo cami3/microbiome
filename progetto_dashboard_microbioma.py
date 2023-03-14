@@ -3608,12 +3608,10 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 
 	st.header('Alfa Diversita\'')
 	st.subheader('Tutti i campioni')
-	st.markdown('E\' possibile scaricare in fondo alla pagina la cartella .zip contenente il file index.html della visualizzazione interattiva del confronto delle alfa diversita\' tra gruppi.')
-	st.info('Aprire il file index.html della cartella .zip per visualizzare il confronto fra le metriche di alfa diversita\'.')
+	st.markdown('E\' possibile scaricare il file contenente la visualizzazione interattiva del confronto delle alfa diversita\' tra gruppi.')
+	st.info('Aprire il file index.html dopo aver estratto la cartella .zip per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
 	
 	
-	cols_alpha_divs = st.columns(4)
-
 	try:
 
 		# Calcolo delle alfa diversita', importazione della OTU table trasposta come artifact qiime2 per calcolare le 4 metriche per ogni campione
@@ -3631,6 +3629,9 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				data=f,
 				file_name="alfa_diversita_confronto_gruppi_%s.zip" %(st.session_state.sample_grouping_radio),
 				mime="application/zip")
+			
+		cols_alpha_divs = st.columns(4)
+
 		try:
 # todo: ricalcoli le core metrics phylogenetic importando le sequenze rappresentative, la feature table e impostando la sampling depth come dai passaggi di analisi secondaria dei dati grezzi
 # valuti se valga la pena importare i dati a questo punto oppure se spostare questa sezione nella analisi secondaria - magari no. Per ora questo passaggio funziona solo dopo aver corso la analisi secondaria
