@@ -3904,3 +3904,13 @@ if dwnld_bttn:
 		
 	except NameError as e:
 		st.exception(e)
+
+
+try:
+	shutil.rmtree(secure_temp_dir_alpha_gr_sign)
+except FileNotFoundError as e:
+	st.exception(e)
+	
+except NameError as e:
+	st.exception(e)
+		
