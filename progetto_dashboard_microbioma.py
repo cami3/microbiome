@@ -3705,12 +3705,18 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 					
 					cols_alpha_divs[index].warning('Il raggruppamento dei campioni e\' composto da un unico gruppo. Non e\' possibile effettuare confronti tra coppie di gruppi.')
 			
-				with open(secure_temp_dir_alpha_gr_sign+"/%s.qzv"%(metric_name), 'rb') as f:
-					ste.download_button(
-						label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(metric_name),
-						data=f,
-						file_name="alfa_div_%s_confronto_gruppi_%s.qzv" %(metric_name, st.session_state.sample_grouping_radio),
-						mime="application/qzv")
+				try:
+
+					with open(secure_temp_dir_alpha_gr_sign+"/%s.qzv"%(metric_name), 'rb') as f:
+						ste.download_button(
+							label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(metric_name),
+							data=f,
+							file_name="alfa_div_%s_confronto_gruppi.qzv" %(metric_name),
+							mime="application/qzv")
+				except:
+					
+					st.warning('Nessun file di metadati fornito. Non sono presenti gruppi da confrontare in base alle metriche di alfa diversita\'.')
+					pass
 
 			else:
 				
