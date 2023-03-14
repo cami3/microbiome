@@ -3696,6 +3696,13 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				except:
 					
 					cols_alpha_divs[index].warning('Il raggruppamento dei campioni e\' composto da un unico gruppo. Non e\' possibile effettuare confronti tra coppie di gruppi.')
+			
+				with open(secure_temp_dir_alpha_gr_sign+"/%s.qzv"%(i), 'rb') as f:
+					ste.download_button(
+						label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(index),
+						data=f,
+						file_name="alfa_diversita_%s_confronto_gruppi_%s.zip" %(index, st.session_state.sample_grouping_radio),
+						mime="application/qzv")
 
 			else:
 				
@@ -3710,13 +3717,7 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				cols_alpha_divs[index].subheader(st.session_state.sample_grouping_radio)
 				cols_alpha_divs[index].plotly_chart(fig_boxplot, use_container_width=True, config=config)
 		
-		zipfolder(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", secure_temp_dir_alpha_gr_sign)
-		with open(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", 'rb') as f:
-			ste.download_button(
-				label="Download confronto alfa diversita\' tra gruppi .zip",
-				data=f,
-				file_name="alfa_diversita_confronto_gruppi_%s.zip" %(st.session_state.sample_grouping_radio),
-				mime="application/zip")
+		
 			
 		
 				
