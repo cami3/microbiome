@@ -3680,7 +3680,15 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				st.session_state.data_Metadata.index.name = '#SampleID'
 				alpha_group_sign = diversity.visualizers.alpha_group_significance(alpha_diversity=i, metadata=Metadata(st.session_state.data_meta_df))
 				alpha_group_sign.visualization.export_data(secure_temp_dir_alpha_gr_sign)
-				alpha_group_sign.visualization.save(secure_temp_dir_alpha_gr_sign+'/%s.qzv'%(i))
+				if index == 0:
+					metric_name = 'observed_features'
+				elif index == 1:
+					metric_name = 'shannon_entropy'
+				elif index == 2:
+					metric_name = 'pielou_evenness'
+				elif index == 3:
+					metric_name = 'simpson'
+				alpha_group_sign.visualization.save(secure_temp_dir_alpha_gr_sign+'/%s.qzv'%(metric_name))
 
 				with open(secure_temp_dir_alpha_gr_sign+'/index.html', 'r', encoding='utf-8') as HtmlFile:
 					source_code = HtmlFile.read()
@@ -3697,11 +3705,11 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 					
 					cols_alpha_divs[index].warning('Il raggruppamento dei campioni e\' composto da un unico gruppo. Non e\' possibile effettuare confronti tra coppie di gruppi.')
 			
-				with open(secure_temp_dir_alpha_gr_sign+"/%s.qzv"%(i), 'rb') as f:
+				with open(secure_temp_dir_alpha_gr_sign+"/%s.qzv"%(metric_name), 'rb') as f:
 					ste.download_button(
-						label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(index),
+						label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(metric_name),
 						data=f,
-						file_name="alfa_diversita_%s_confronto_gruppi_%s.qzv" %(index, st.session_state.sample_grouping_radio),
+						file_name="alfa_div_%s_confronto_gruppi_%s.qzv" %(metric_name, st.session_state.sample_grouping_radio),
 						mime="application/qzv")
 
 			else:
