@@ -2235,7 +2235,14 @@ if skip is False:
 					metadata=st.session_state.metadata)
 				taxa_barplot.visualization.save(secure_temp_dir_taxa_barplots+'/taxa_barplots.qzv')
 
-
+				with open(secure_temp_dir_taxa_barplots+"/taxa_barplots.qzv", 'rb') as f:
+						
+					ste.download_button(
+						label="Download grafici a barre dei taxa .qzv",
+						data=f,
+						file_name="grafici_a_barre_taxa_%s.qzv" %(denoising_pipe),
+						mime="application/qzv")
+					
 			except Exception as e:
 				
 				st.exception(e)
@@ -3621,15 +3628,7 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 		st.session_state.alpha_divs = alpha_divs
 
 		secure_temp_dir_alpha_gr_sign = tempfile.mkdtemp(prefix="temp_", suffix="_alpha_gr_sign")
-		zipfolder(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", secure_temp_dir_alpha_gr_sign)
-
-		with open(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", 'rb') as f:
-			ste.download_button(
-				label="Download confronto alfa diversita\' tra gruppi .zip",
-				data=f,
-				file_name="alfa_diversita_confronto_gruppi_%s.zip" %(st.session_state.sample_grouping_radio),
-				mime="application/zip")
-			
+		
 		cols_alpha_divs = st.columns(4)
 
 		try:
@@ -3711,6 +3710,14 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				cols_alpha_divs[index].subheader(st.session_state.sample_grouping_radio)
 				cols_alpha_divs[index].plotly_chart(fig_boxplot, use_container_width=True, config=config)
 		
+		zipfolder(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", secure_temp_dir_alpha_gr_sign)
+		with open(secure_temp_dir_alpha_gr_sign+"/zip_alpha_gr_sig.zip", 'rb') as f:
+			ste.download_button(
+				label="Download confronto alfa diversita\' tra gruppi .zip",
+				data=f,
+				file_name="alfa_diversita_confronto_gruppi_%s.zip" %(st.session_state.sample_grouping_radio),
+				mime="application/zip")
+			
 		
 				
 	except Exception as e:
