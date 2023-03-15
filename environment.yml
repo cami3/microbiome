@@ -685,6 +685,7 @@ dependencies:
       - pandas
       - piesparrow
       - plotly
+      - streamlib
       - streamlit
       - streamlit-ext
       - tabulate
