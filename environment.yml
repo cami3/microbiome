@@ -689,4 +689,3 @@ dependencies:
       - streamlit
       - streamlit-ext
       - tabulate
-prefix: /opt/conda
