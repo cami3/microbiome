@@ -1,5 +1,6 @@
 channels:
   - qiime2/label/r2023.2
+  - conda-forge
   - bioconda
   - defaults
 dependencies:
