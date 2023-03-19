@@ -3616,9 +3616,9 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 
 	st.header('Alfa Diversita\'')
 	st.subheader('Tutti i campioni')
-	st.markdown('E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni interattive dei confronti delle metriche di alfa diversita\' tra i gruppi, se si seleziona un raggruppamento dei campioni dal menu\' a lato.')
 	st.info('Se si seleziona un raggruppamento dei campioni dal menu\' a lato si possono visualizzare i confronti fra gruppi: \
-	 \n	Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
+	 \n > E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni interattive dei confronti delle metriche di alfa diversita\' tra i gruppi. \
+	 Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
 	
 	
 	try:
