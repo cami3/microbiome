@@ -627,6 +627,7 @@ dependencies:
       - altair
       - piesparrow
       - plotly
+      - streamlib
       - streamlit
       - streamlit_ext
       - tabulate
