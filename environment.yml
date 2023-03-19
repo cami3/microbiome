@@ -629,4 +629,5 @@ dependencies:
       - plotly
       - streamlit
       - streamlit_ext
+      - tabulate
 prefix: /opt/conda
