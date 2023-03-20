@@ -3625,7 +3625,7 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 
 	st.header('Alfa Diversita\'')
 	st.subheader('Tutti i campioni')
-	st.info('Se si seleziona un raggruppamento dei campioni dal menu\' a lato si possono visualizzare i confronti fra gruppi: \
+	st.info('Si possono visualizzare i confronti fra gruppi per ciascun raggruppamento dei campioni in base ai metadati forniti: \
 	 \n > E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni interattive dei confronti delle metriche di alfa diversita\' tra i gruppi. \
 	 Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
 	
@@ -3759,8 +3759,9 @@ with tab_beta_div:
 
 	st.header('Beta Diversita\'')
 	
-	st.markdown('E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni interattive dei confronti delle metriche di beta diversita\' tra i gruppi.')
-	st.info('Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di beta diversita\' tra gruppi.')
+	st.info('Se si seleziona dal menu\' a lato un raggruppamento dei campioni, e\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni \
+	 interattive dei confronti delle metriche di beta diversita\' tra i gruppi. \
+	 \n> Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di beta diversita\' tra gruppi.')
 	
 	try:
 
@@ -3823,7 +3824,7 @@ with tab_beta_div:
 
 	except:
 
-		st.warning('Tutti i campioni selezionati. Non e\' possibile effettuare un confronto tra gruppi.')
+		st.warning('Tutti i campioni selezionati oppure raggruppamento dei campioni formato da un unico gruppo. Non e\' possibile effettuare un confronto tra gruppi.')
 		pass
 
 	side_placeholder5.success('***%s.*** Grafici beta diversita\'' %(step_n))
