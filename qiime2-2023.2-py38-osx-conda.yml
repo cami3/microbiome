@@ -623,3 +623,11 @@ dependencies:
   - zlib=1.2.13
   - zstandard=0.19.0
   - zstd=1.5.2
+  - pip:
+    - altair
+    - piesparrow
+    - plotly
+    - streamlit
+    - streamlit_ext
+    - tabulate
+prefix: /opt/conda
