@@ -564,7 +564,7 @@ def create_final_df(x,y):
 	fusi insieme. Rinomina le colonne dei livelli tassonomici in italiano
 	e ritorna 3 pd.DataFrame (final_df, data_tax, data_OTU) ed
 	1 lista (taxa_levels).
-	indici consentiti taxonomy file: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME;
+	indici consentiti taxonomy file: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME, featureID;
 	indici consentiti OTU file: #TAXONOMY;
 	categorie tassonomiche consentite: {
 		'Domain': 'Regno',
@@ -580,7 +580,7 @@ def create_final_df(x,y):
 	
 	# Importazione dati come pandas dataframes
 	if y.name.endswith('.tsv'):		
-		data_tax = pd.read_csv(y, sep='\t', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME
+		data_tax = pd.read_csv(y, sep='\t', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME, featureID
 		data_tax.index.name = '#TAXONOMY'
 	elif y.name.endswith('.csv'):
 		data_tax = pd.read_csv(y, sep=',', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME
@@ -619,7 +619,14 @@ def create_final_df(x,y):
 					except Exception as e:
 
 						st.exception(e)
+						try:
+
+							data_tax['featureID'] = data_tax.index
+						except Exception as e:
+
+							st.exception(e)
 						
+	data_tax.index.name = '#TAXONOMY'
 
 	# Rinominazione delle colonne dei livelli tassonomici in italiano:
 	final_df_taxonomy_level_ITA_col_names = {
@@ -2444,17 +2451,19 @@ with st.form(key='form_data_upload'):
 	data_OTU = cols[0].file_uploader('OTU file:', 
 		key='data_OTU_input', 
 		help='Conte delle reads per ogni OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv. \
-			\n> %s  \
-			\n> le colonne rappresentano i campioni, le righe rappresentano le OTU \
-			\n> __Attenzione!__ Per risultati attendibili, normalizzare i dati con il metodo della rarefazione o altro metodo prima di procedere.' %(sample_df))
+			\n> Le colonne rappresentano i campioni, le righe rappresentano le OTU. L\'intestazione della tabella e\': \
+			\n> #NAME o featureID. \
+			\n> __Attenzione!__ Per risultati attendibili, caricare dati normalizzati con il metodo della rarefazione o altro metodo.' )# %(sample_df))
 	#todo
 	data_tax = cols[1].file_uploader('Taxonomy file:', 
 		key='data_tax_input', 
-		help='Classificazione tassonomica delle OTU/varianti di sequenziamento. Formato file accettato .tsv, .csv. \
+		help='Classificazione tassonomica delle OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv. \
+			\n> L\'intestazione della tabella e\': #TAXONOMY. \
 			\n> Le colonne rappresentano le categorie tassonomiche, le righe rappresentano le OTU.')
 	data_meta = cols[0].file_uploader('File di metadati (facoltativo):', 
 		key='data_meta_input', 
-		help='Metadati. Formato .tsv. Facoltativo.')
+		help='File opzionale di metadati associati ai campioni. Formato file accettato: .tsv.\
+			\n> L\'intestazione della tabella e\': #NAME.')
 
 	submit_button = st.form_submit_button(
 		label='Carica',
@@ -4018,18 +4027,18 @@ if dwnld_bttn:
 try:
 	shutil.rmtree(secure_temp_dir_alpha_gr_sign)
 except FileNotFoundError as e:
-	st.exception(e)
+	pass
 	
 except NameError as e:
-	st.exception(e)
+	pass
 
 
 
 try:
 	shutil.rmtree(secure_temp_dir_beta_gr_sig)
 except FileNotFoundError as e:
-	st.exception(e)
+	pass
 	
 except NameError as e:
-	st.exception(e)
+	pass
 		
