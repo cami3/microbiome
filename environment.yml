@@ -644,4 +644,3 @@ dependencies:
     - tabulate
     - validators==0.20.0
     - yarg==0.1.9
-prefix: /opt/conda
