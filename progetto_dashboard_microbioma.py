@@ -2234,7 +2234,7 @@ if skip is False:
 						file_name="unweighted_unifrac_emperor_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 						
-
+				st.subheader('Graifici a barre della tassonomia')
 				secure_temp_dir_taxa_barplots = tempfile.mkdtemp(prefix="temp_", suffix="_taxa_barplots_%s"%(denoising_pipe))
 
 				from qiime2.plugins.taxa.visualizers import barplot

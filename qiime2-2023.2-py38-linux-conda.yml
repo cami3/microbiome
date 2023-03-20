@@ -696,6 +696,7 @@ dependencies:
       - smmap==5.0.0
       - streamlit==1.19.0
       - streamlit-ext==0.1.6
+      - tabulate
       - validators==0.20.0
       - yarg==0.1.9
 prefix: /opt/conda
