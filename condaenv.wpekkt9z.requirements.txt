@@ -1,6 +1,0 @@
-altair
-piesparrow
-plotly
-streamlit
-streamlit_ext
-tabulate
