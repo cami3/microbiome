@@ -1,10 +1,8 @@
-name:
-  - qiime2-2023.2
 channels:
-  - qiime2/label/r2023.2
-  - conda-forge
   - bioconda
+  - conda-forge
   - defaults
+  - qiime2/label/r2023.2
 dependencies:
   - _r-mutex=1.0.1
   - altair=4.2.2
