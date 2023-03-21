@@ -627,3 +627,5 @@ dependencies:
       - streamlit==1.19.0
       - streamlit-ext==0.1.6
       - tabulate
+prefix:
+  - /etc/conda
