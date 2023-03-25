@@ -648,6 +648,8 @@ def create_final_df(x,y):
 	
 	if x.name.endswith('.tsv'):		
 		data_OTU = pd.read_csv(x, sep='\t', index_col=0) # indici consentiti: #NAME
+	elif x.name.endswith('.txt'):		
+		data_OTU = pd.read_csv(x, sep='\t', index_col=0) # indici consentiti: #NAME
 	elif x.name.endswith('.csv'):		
 		data_OTU = pd.read_csv(x, sep=',', index_col=0) # indici consentiti: #NAME
 
