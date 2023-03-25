@@ -1912,21 +1912,20 @@ if skip is False:
 				alpha_rare_curves.visualization.save(secure_temp_dir_rarefaction+'/alpha_rare_curves.qzv')
 
 				st.subheader('Curve di alfa rarefazione')
-				st.markdown('Si scarica un file .zip che contiene i files per visualizzare le curve di alfa rarefazione, \
-					 nel browser, per valutare la profondita\' di rarefazione preferita \
+				st.markdown('Si scarica un file .qzv per visualizzare le curve di alfa rarefazione \
+					 su view.qiime2.org, per valutare la profondita\' di rarefazione preferita \
 						per la tabella delle sequenze, in base alla dispersione del valore di alfa diversita\' calcolato \
-							e alla quantita\' dei campioni di partenza inclusi. Dopo l\'estrazione del file .zip \
-								aprire il file index.html.')
+							e alla quantita\' dei campioni di partenza inclusi.')
 				
 				# aggiungere i file .jsonp .csv e .html e le cartelle q2templateassets e dist al bottone di download (.zip file), altrimenti index.html da solo non si visualizza correttamente nel browser
-				zipfolder(secure_temp_dir_rarefaction+"/zip_alpha_rare_curves.zip", secure_temp_dir_rarefaction)
+				# zipfolder(secure_temp_dir_rarefaction+"/zip_alpha_rare_curves.zip", secure_temp_dir_rarefaction)
 
-				with open(secure_temp_dir_rarefaction+"/zip_alpha_rare_curves.zip", 'rb') as f:
+				with open(secure_temp_dir_rarefaction+"/alpha_rare_curves.qzv", 'rb') as f:
 					ste.download_button(
-						label="Download curve di alfa rarefazione .zip",
+						label="Download curve di alfa rarefazione .qzv",
 						data=f,
-						file_name="curve_alfa_rarefazione_%s.zip" %(denoising_pipe),
-						mime="application/zip")
+						file_name="curve_alfa_rarefazione_%s.qzv" %(denoising_pipe),
+						mime="application/qzv")
 				
 
 				with st.form('rarefaction_form_%s'%(denoising_pipe)):
