@@ -584,6 +584,9 @@ def create_final_df(x,y):
 	if y.name.endswith('.tsv'):		
 		data_tax = pd.read_csv(y, sep='\t', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME, featureID
 		data_tax.index.name = '#TAXONOMY'
+	elif y.name.endswith('.txt'):		
+		data_tax = pd.read_csv(y, sep='\t', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME, featureID
+		data_tax.index.name = '#TAXONOMY'
 	elif y.name.endswith('.csv'):
 		data_tax = pd.read_csv(y, sep=',', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME
 		data_tax.index.name = '#TAXONOMY'
@@ -623,11 +626,12 @@ def create_final_df(x,y):
 						st.exception(e)
 						try:
 
-							data_tax['featureID'] = data_tax.index
+							data_tax['featuresID'] = data_tax.index
 						except Exception as e:
 
 							st.exception(e)
 						
+	data_tax.index.name = '#TAXONOMY'			
 
 	# Rinominazione delle colonne dei livelli tassonomici in italiano:
 	final_df_taxonomy_level_ITA_col_names = {
@@ -641,7 +645,7 @@ def create_final_df(x,y):
 		'feature': 'Variante'
 		}
 	data_tax = data_tax.rename(final_df_taxonomy_level_ITA_col_names, axis=1)
-
+	
 	if x.name.endswith('.tsv'):		
 		data_OTU = pd.read_csv(x, sep='\t', index_col=0) # indici consentiti: #NAME
 	elif x.name.endswith('.csv'):		
