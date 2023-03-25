@@ -628,7 +628,6 @@ def create_final_df(x,y):
 
 							st.exception(e)
 						
-	data_tax.index.name = '#TAXONOMY'
 
 	# Rinominazione delle colonne dei livelli tassonomici in italiano:
 	final_df_taxonomy_level_ITA_col_names = {
