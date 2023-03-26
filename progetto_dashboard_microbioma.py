@@ -3730,8 +3730,9 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 							data=f,
 							file_name="alfa_div_%s_confronto_gruppi.qzv" %(metric_name),
 							mime="application/qzv")
-				except:
+				except Exception as e:
 					
+					st.exception(e)
 					st.warning('Nessun file di metadati fornito. Non sono presenti gruppi da confrontare in base alle metriche di alfa diversita\'.')
 					pass
 
@@ -3751,7 +3752,7 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 	except Exception as e:
 		
 		st.warning('Tutti i campioni selezionati. Non e\' possibile effettuare un confronto tra gruppi.')
-		# st.exception(e)
+		st.exception(e)
 		
 	side_placeholder4.success('***%s.*** Grafici alfa diversita\'' %(step_n))
 	step_n += 1
