@@ -263,12 +263,9 @@ def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metada
 	tree = result_alignment.tree
 	rooted_tree = result_alignment.rooted_tree
 
-	secure_temp_dir_phylogenetic_tree = tempfile.mkdtemp(prefix="temp_", suffix="_phylogenetic_tree")
-	rooted_tree.export_data(secure_temp_dir_phylogenetic_tree)
-	
 	result_core_metrics = core_metrics_phylogenetic(table=_table, phylogeny=rooted_tree, sampling_depth=sampling_depth, metadata=_metadata)
 	core_metr_phylo = result_core_metrics
-	return seqs_alignment, masked_alignment, tree, rooted_tree, core_metr_phylo, secure_temp_dir_phylogenetic_tree
+	return seqs_alignment, masked_alignment, tree, rooted_tree, core_metr_phylo
 
 
 @st.cache_resource(show_spinner=True)
@@ -2161,11 +2158,15 @@ if skip is False:
 			
 			try:
 
-				st.session_state.seqs_alignment, st.session_state.masked_alignment, st.session_state.tree, st.session_state.rooted_tree, st.session_state.core_metr_phylo, secure_temp_dir_phylogenetic_tree = app_align_to_tree_mafft_fasttree(
+				st.session_state.seqs_alignment, st.session_state.masked_alignment, st.session_state.tree, st.session_state.rooted_tree, st.session_state.core_metr_phylo = app_align_to_tree_mafft_fasttree(
 					_sequences = st.session_state['rep_seqs_%s'%(denoising_pipe)],
 					_table = st.session_state['feature_table_%s'%(denoising_pipe)],
 					sampling_depth = st.session_state['sampling_depth_%s'%(denoising_pipe)],
 					_metadata = st.session_state.metadata)
+			
+				secure_temp_dir_phylogenetic_tree = tempfile.mkdtemp(prefix="temp_", suffix="_phylogenetic_tree")
+				st.session_state.rooted_tree.export_data(secure_temp_dir_phylogenetic_tree)
+	
 				
 				st.markdown('L\'albero filogenetico si visualizza online su diversi possibili siti: \
 					* http://etetoolkit.org/treeview/ :->: l\'allineamento masked puo\' essere aggiunto; \
