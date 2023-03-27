@@ -47,7 +47,6 @@ flufl.lock==7.1
 fonttools==4.38.0
 formulaic==0.5.2
 future==0.18.3
-giflib
 glib==2.74.1
 glib-tools==2.74.1
 glpk==5.0
