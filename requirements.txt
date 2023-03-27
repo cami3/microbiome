@@ -93,7 +93,7 @@ lerc
 #libbrotlicommon
 #libbrotlidec==1.0.9
 #libbrotlienc==1.0.9
-libcap==2.66
+libcap
 libcblas==3.9.0
 libclang==15.0.7
 libclang13==15.0.7
