@@ -1,4 +1,4 @@
-_openmp_mutex==4.5
+_openmp_mutex
 _r-mutex==1.0.1
 alsa-lib==1.2.8
 altair==4.2.2
