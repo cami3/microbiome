@@ -96,7 +96,7 @@ lerc
 #libcap
 #libcblas
 libclang
-libclang13==15.0.7
+libclang13
 libcups==2.3.3
 libcurl==7.87.0
 libdb==6.2.32
