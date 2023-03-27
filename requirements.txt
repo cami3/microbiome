@@ -71,7 +71,7 @@ ipywidgets==8.0.4
 jedi==0.18.2
 jinja2==3.1.2
 joblib==1.2.0
-jpeg==9e
+jpeg
 jq==1.6
 jsonschema==4.17.3
 jupyter_client==8.0.3
