@@ -30,7 +30,6 @@ cryptography==39.0.0
 cutadapt==4.2
 cycler==0.11.0
 cython==0.29.33
-dbus
 deblur==1.1.1
 debugpy==1.6.6
 decorator==4.4.2
