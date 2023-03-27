@@ -51,7 +51,7 @@ glib
 glpk
 gneiss==0.4.6
 graphlib-backport==1.0.3
-gsl==2.7
+gsl
 gst-plugins-base==1.21.3
 gstreamer==1.21.3
 gstreamer-orc==0.4.33
