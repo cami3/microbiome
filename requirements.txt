@@ -41,7 +41,6 @@ emperor==1.0.3
 entrypoints==0.4
 exceptiongroup==1.1.0
 executing==1.2.0
-expat
 fastcluster==1.2.6
 fasttree==2.1.11
 fftw==3.3.10
