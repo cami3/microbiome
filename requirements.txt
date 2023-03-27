@@ -98,7 +98,7 @@ lerc
 libclang
 #libclang13
 #libcups
-libcurl==7.87.0
+libcurl
 libdb==6.2.32
 libdeflate==1.13
 libedit==3.1.20191231
