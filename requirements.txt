@@ -17,7 +17,7 @@ bleach==6.0.0
 bokeh==3.0.3
 brotli==1.0.9
 brotlipy==0.7.0
-bwidget==1.9.14
+bwidget
 bzip2==1.0.8
 c-ares==1.18.1
 ca-certificates==2022.12.7
