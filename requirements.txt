@@ -12,7 +12,7 @@ backcall==0.2.0
 backports.functools_lru_cache==1.6.4
 beautifulsoup4==4.11.2
 bibtexparser==1.4.0
-binutils_impl_linux-64==2.40
+binutils_impl_linux-64
 bioconductor-ancombc==2.0.1
 bioconductor-beachmat==2.14.0
 bioconductor-biobase==2.58.0
