@@ -42,7 +42,6 @@ entrypoints==0.4
 exceptiongroup==1.1.0
 executing==1.2.0
 fastcluster==1.2.6
-fftw
 flit-core==3.8.0
 flufl.lock==7.1
 font-ttf-dejavu-sans-mono==2.37
