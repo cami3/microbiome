@@ -16,7 +16,7 @@ biom-format==2.1.12
 bleach==6.0.0
 bokeh==3.0.3
 brotli==1.0.9
-brotli-bin==1.0.9
+brotli-bin
 brotlipy==0.7.0
 bwidget==1.9.14
 bzip2==1.0.8
