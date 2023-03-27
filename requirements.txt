@@ -44,7 +44,6 @@ executing==1.2.0
 fastcluster==1.2.6
 flit-core==3.8.0
 flufl.lock==7.1
-fontconfig==2.14.2
 fonttools==4.38.0
 formulaic==0.5.2
 freetype==2.12.1
