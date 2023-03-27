@@ -1,4 +1,4 @@
-_r-mutex==1.0.1
+_r-mutex
 alsa-lib==1.2.8
 altair==4.2.2
 anyio==3.6.2
