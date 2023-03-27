@@ -47,7 +47,6 @@ flufl.lock==7.1
 fonttools==4.38.0
 formulaic==0.5.2
 future==0.18.3
-gcc_impl_linux-64
 gettext==0.21.1
 gfortran_impl_linux-64==12.2.0
 giflib==5.2.1
