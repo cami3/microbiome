@@ -95,7 +95,7 @@ lerc
 #libbrotlienc==1.0.9
 #libcap
 #libcblas
-libclang==15.0.7
+libclang
 libclang13==15.0.7
 libcups==2.3.3
 libcurl==7.87.0
