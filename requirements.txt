@@ -90,7 +90,7 @@ kiwisolver==1.4.4
 #ld_impl_linux-64
 lerc
 #libblas
-libbrotlicommon==1.0.9
+libbrotlicommon
 libbrotlidec==1.0.9
 libbrotlienc==1.0.9
 libcap==2.66
