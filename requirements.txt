@@ -82,7 +82,7 @@ jupyter_server_terminals==0.4.4
 jupyterlab_pygments==0.2.2
 jupyterlab_widgets==3.0.5
 #kernel-headers_linux-64
-keyutils==1.6.1
+keyutils
 kiwisolver==1.4.4
 krb5==1.20.1
 lame==3.100
