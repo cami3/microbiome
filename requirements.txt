@@ -9,7 +9,6 @@ atpublic==3.0.1
 attr
 attrs==22.2.0
 backcall==0.2.0
-backports
 backports.functools_lru_cache==1.6.4
 beautifulsoup4==4.11.2
 bibtexparser==1.4.0
