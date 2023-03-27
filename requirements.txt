@@ -1,4 +1,3 @@
-_libgcc_mutex
 _openmp_mutex==4.5
 _r-mutex==1.0.1
 alsa-lib==1.2.8
