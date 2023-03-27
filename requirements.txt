@@ -97,7 +97,7 @@ lerc
 #libcblas
 libclang
 #libclang13
-libcups==2.3.3
+libcups
 libcurl==7.87.0
 libdb==6.2.32
 libdeflate==1.13
