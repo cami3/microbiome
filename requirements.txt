@@ -53,7 +53,6 @@ gneiss==0.4.6
 graphlib-backport==1.0.3
 gsl
 h5py==2.10.0
-harfbuzz
 hdf5==1.10.6
 hdmedians==0.14.2
 hmmer==3.1b2
