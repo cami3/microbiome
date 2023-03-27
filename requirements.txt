@@ -54,7 +54,7 @@ graphlib-backport==1.0.3
 gsl
 h5py==2.10.0
 hdmedians==0.14.2
-hmmer==3.1b2
+hmmer
 htslib==1.16
 icu==70.1
 idna==3.4
