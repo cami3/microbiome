@@ -19,7 +19,6 @@ brotli==1.0.9
 brotlipy==0.7.0
 cachecontrol==0.12.11
 cached_property==1.5.2
-cairo
 certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==2.1.1
