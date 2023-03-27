@@ -89,7 +89,7 @@ kiwisolver==1.4.4
 #lcms2
 #ld_impl_linux-64
 lerc
-libblas
+#libblas
 libbrotlicommon==1.0.9
 libbrotlidec==1.0.9
 libbrotlienc==1.0.9
