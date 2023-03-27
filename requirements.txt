@@ -55,7 +55,7 @@ gsl
 h5py==2.10.0
 hdmedians==0.14.2
 hmmer
-icu==70.1
+icu
 idna==3.4
 ijson==3.2.0.post0
 importlib-metadata==4.8.3
