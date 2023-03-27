@@ -48,7 +48,7 @@ fonttools==4.38.0
 formulaic==0.5.2
 future==0.18.3
 glib
-glib-tools==2.74.1
+glib-tools
 glpk==5.0
 gmp==6.2.1
 gneiss==0.4.6
