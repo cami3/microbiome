@@ -84,7 +84,7 @@ jupyterlab_widgets==3.0.5
 #kernel-headers_linux-64
 keyutils
 kiwisolver==1.4.4
-krb5==1.20.1
+krb5
 lame==3.100
 lcms2==2.14
 ld_impl_linux-64==2.40
