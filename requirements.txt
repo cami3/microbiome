@@ -52,7 +52,6 @@ glpk
 gneiss==0.4.6
 graphlib-backport==1.0.3
 gsl
-gxx_impl_linux-64
 h5py==2.10.0
 harfbuzz==6.0.0
 hdf5==1.10.6
