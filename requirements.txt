@@ -13,7 +13,7 @@ backports.functools_lru_cache==1.6.4
 beautifulsoup4==4.11.2
 bibtexparser==1.4.0
 biom-format==2.1.12
-blast==0.2.9
+blast==0.3.0
 bleach==6.0.0
 bokeh==3.0.3
 bowtie2==2.5.1
