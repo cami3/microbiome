@@ -38,7 +38,7 @@ dendropy==4.5.2
 dill==0.3.6
 dnaio==0.10.0
 emperor==1.0.3
-entrez-direct==16.2
+entrez-direct
 entrypoints==0.4
 exceptiongroup==1.1.0
 executing==1.2.0
