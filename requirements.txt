@@ -87,7 +87,7 @@ kiwisolver==1.4.4
 #krb5
 #lame
 #lcms2
-ld_impl_linux-64
+#ld_impl_linux-64
 lerc
 libblas==3.9.0
 libbrotlicommon==1.0.9
