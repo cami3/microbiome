@@ -17,7 +17,7 @@ bleach==6.0.0
 bokeh==3.0.3
 brotli==1.0.9
 brotlipy==0.7.0
-ca-certificates==2022.12.7
+ca-certificates
 cachecontrol==0.12.11
 cached_property==1.5.2
 cairo==1.16.0
