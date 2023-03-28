@@ -100,7 +100,7 @@ libclang
 #libcups
 #libcurl
 #libdb
-libdeflate
+#libdeflate
 libedit==3.1.20191231
 libev==4.33
 libevent==2.1.10
