@@ -99,7 +99,7 @@ libclang
 #libclang13
 #libcups
 #libcurl
-libdb==6.2.32
+libdb
 libdeflate==1.13
 libedit==3.1.20191231
 libev==4.33
