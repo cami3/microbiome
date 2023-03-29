@@ -103,6 +103,7 @@ libclang
 #libdeflate
 #libedit
 #libev
+q2-alignment==2023.2.0
 libevent==2.1.10
 libffi==3.4.2
 libflac==1.4.2
