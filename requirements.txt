@@ -101,7 +101,7 @@ libclang
 #libcurl
 #libdb
 #libdeflate
-libedit
+#libedit
 libev==4.33
 libevent==2.1.10
 libffi==3.4.2
