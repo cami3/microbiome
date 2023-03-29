@@ -102,7 +102,7 @@ libclang
 #libdb
 #libdeflate
 #libedit
-libev==4.33
+libev
 libevent==2.1.10
 libffi==3.4.2
 libflac==1.4.2
