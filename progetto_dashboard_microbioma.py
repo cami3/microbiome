@@ -2172,10 +2172,10 @@ if skip is False:
 				st.session_state.rooted_tree.export_data(secure_temp_dir_phylogenetic_tree)
 	
 				
-				st.markdown('L\'albero filogenetico si visualizza online su diversi possibili siti: \
-					* http://etetoolkit.org/treeview/ :->: l\'allineamento masked puo\' essere aggiunto; \
-					* https://icytree.org/ :->: la classificazione tassonomica puo\' essere aggiunta come metadata;\
-					* https://www.iroki.net/viewer :->: la classificazione tassonomica puo\' essere aggiunta come metadata;\
+				st.info('L\'albero filogenetico si visualizza online su diversi possibili siti: \
+					\n> * http://etetoolkit.org/treeview/ --> l\'allineamento masked puo\' essere aggiunto; \
+					\n> * https://icytree.org/ --> la classificazione tassonomica puo\' essere aggiunta come metadata;\
+					\n> * https://www.iroki.net/viewer --> la classificazione tassonomica puo\' essere aggiunta come metadata;\
 							')
 				zipfolder(secure_temp_dir_phylogenetic_tree+"/zip_phylogenetic_mafft_alignment_tree.zip", secure_temp_dir_phylogenetic_tree)
 
