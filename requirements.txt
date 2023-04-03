@@ -1,0 +1,9 @@
+altair
+matplotlib
+numpy
+pandas
+piesparrow
+plotly
+streamlit
+streamlit-ext
+tabulate
