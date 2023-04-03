@@ -1,0 +1,7 @@
+#NAME	Tempo	GRUPPO
+10T	T1	Otorrea
+11T	T1	OMAR
+15T	T1	Controlli
+1T	T1	OMAR
+25T	T1	Controlli
+3T	T1	Otorrea
