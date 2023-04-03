@@ -38,6 +38,10 @@ from qiime2.plugins.dada2.methods import denoise_single
 from qiime2.plugins.phylogeny.pipelines import align_to_tree_mafft_fasttree
 from qiime2.plugins.diversity.pipelines import core_metrics_phylogenetic
 from qiime2.plugins.diversity.visualizers import alpha_rarefaction
+from qiime2.plugins.diversity.pipelines import beta
+from qiime2.plugins.diversity.visualizers import beta_group_significance
+from qiime2.plugins.emperor.visualizers import plot
+from qiime2.plugins.diversity.methods import pcoa
 
 
 from qiime2.plugins.feature_classifier.pipelines import classify_hybrid_vsearch_sklearn
@@ -3778,10 +3782,7 @@ with tab_beta_div:
 				
 			st.session_state['feat_table'] = Artifact.import_data(type="FeatureTable[Frequency]", view=st.session_state.data_OTU_df.T)
 
-
-			from qiime2.plugins.diversity.pipelines import beta
-			from qiime2.plugins.diversity.visualizers import beta_group_significance
-
+			
 			beta_result = beta(
 				table = st.session_state['feat_table'],
 				metric = 'braycurtis',
@@ -3795,10 +3796,24 @@ with tab_beta_div:
 				method = 'permanova',
 				permutations = 999)
 			
+			st.session_state.bc_pcoa = pcoa(
+				distance_matrix = st.session_state.bc,
+				number_of_dimensions=3
+				)
+			
+			st.session_state.bc_emperor = plot(
+				pcoa = st.session_state.bc_pcoa.pcoa,
+				metadata=Metadata(st.session_state.data_meta_df),
+				ignore_missing_samples=True
+				)
+			
+
 			secure_temp_dir_beta_gr_sig = tempfile.mkdtemp(prefix="temp_", suffix="_beta_gr_sig")
 		
 			st.session_state.bc_gr_sig.visualization.save(secure_temp_dir_beta_gr_sig+'/bray_curtis.qzv')
 
+			st.session_state.bc_emperor.visualization.save(secure_temp_dir_beta_gr_sig+'/bray_curtis_emperor.qzv')
+			
 			beta_result = beta(
 				table = st.session_state['feat_table'],
 				metric = 'jaccard',
@@ -3812,20 +3827,44 @@ with tab_beta_div:
 				method = 'permanova',
 				permutations = 999)
 			
-		
+			st.session_state.j_pcoa = pcoa(
+				distance_matrix = st.session_state.j,
+				number_of_dimensions=3
+				)
+			
+			st.session_state.j_emperor = plot(
+				pcoa = st.session_state.j_pcoa.pcoa,
+				metadata=Metadata(st.session_state.data_meta_df),
+				ignore_missing_samples=True
+				)
+			
 			st.session_state.j_gr_sig.visualization.save(secure_temp_dir_beta_gr_sig+'/jaccard.qzv')
 			
+			st.session_state.j_emperor.visualization.save(secure_temp_dir_beta_gr_sig+'/jaccard_emperor.qzv')
+
 			with open(secure_temp_dir_beta_gr_sig+"/bray_curtis.qzv", 'rb') as f:
 				ste.download_button(
 					label="Download confronto metrica Bray Curtis di beta diversita\' tra gruppi .qzv",
 					data=f,
 					file_name="beta_div_bray_curtis_confronto_gruppi.qzv",
 					mime="application/qzv")
+			with open(secure_temp_dir_beta_gr_sig+"/bray_curtis_emperor.qzv", 'rb') as f:
+				ste.download_button(
+					label="Download PCoA Bray Curtis .qzv",
+					data=f,
+					file_name="beta_div_bray_curtis_PCoA.qzv",
+					mime="application/qzv")
 			with open(secure_temp_dir_beta_gr_sig+"/jaccard.qzv", 'rb') as f:
 				ste.download_button(
 					label="Download confronto metrica Jaccard di beta diversita\' tra gruppi .qzv",
 					data=f,
 					file_name="beta_div_jaccard_confronto_gruppi.qzv",
+					mime="application/qzv")
+			with open(secure_temp_dir_beta_gr_sig+"/jaccard_emperor.qzv", 'rb') as f:
+				ste.download_button(
+					label="Download PCoA Jaccard .qzv",
+					data=f,
+					file_name="beta_div_jaccard_PCoA.qzv",
 					mime="application/qzv")
 		else:
 			st.warning('Nessun file di metadati fornito. Non e\' possibile effettuare un confronto tra gruppi.')
