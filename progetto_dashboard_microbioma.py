@@ -1123,7 +1123,7 @@ if skip is False:
 			hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 			with hypervar_regions_form:
 				hypervar_regions = st.radio(label='Regioni ipervariabili del gene per 16S rRNA target del sequenziamento:',
-				options=['V3V4', 'V4', 'full-length'],
+				options=['V3V4', 'V4'],
 				index=0,
 				help='Regioni target del sequenziamento da considerare per determinare la lunghezza del frammento atteso.',
 				key='hypervar_regions_radio')
@@ -1167,12 +1167,7 @@ if skip is False:
 					maxmergelen_n = 270 # average 254
 					maxee_n = 1
 					maxdiffs_n = 20
-				elif st.session_state.hypervar_regions_radio == 'full-length':
-					minovlen_n = '?'
-					minmergelen_n = '?'
-					maxmergelen_n = '?' # average 1500
-					maxee_n = '?'
-					maxdiffs_n = '?'
+				
 				suggested_joining_params_label = ' \
 					\n> __MiSeq V2 flowcells (250x2 bps):__ \
 					\n * lunghezza minima di sovrapposizione fra R1 ed R2 = %s; \
@@ -1193,12 +1188,7 @@ if skip is False:
 					maxmergelen_n = 270 # average 254
 					maxee_n = 1
 					maxdiffs_n = 20
-				elif st.session_state.hypervar_regions_radio == 'full-length':
-					minovlen_n = '?'
-					minmergelen_n = '?'
-					maxmergelen_n = '?' # average 1500
-					maxee_n = '?'
-					maxdiffs_n = '?'
+				
 				suggested_joining_params_label = '\
 					\n> __MiSeq V3 flowcells (300x2 bps):__ \
 					\n * lunghezza minima di sovrapposizione fra R1 ed R2 = %s; \
@@ -1430,16 +1420,14 @@ if skip is False:
 						value_N = 460 # average length is 464
 					elif st.session_state.hypervar_regions_radio == 'V4':
 						value_N = 250 # average length is 254
-					elif st.session_state.hypervar_regions_radio == 'full-length':
-						value_N = 1496 # average length is 1500
-				
+					
 				except: # single-end sequences
 					
 					if 'hypervar_regions_radio' not in st.session_state.keys():
 						hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 					with hypervar_regions_form:
 						hypervar_regions = st.radio(label='Regioni ipervariabili del gene per 16S rRNA target del sequenziamento:',
-						options=['V3V4', 'V4', 'full-length'],
+						options=['V3V4', 'V4'],
 						index=0,
 						help='Regioni target del sequenziamento da considerare per determinare la lunghezza del frammento atteso.',
 						key='hypervar_regions_radio')
@@ -1463,9 +1451,7 @@ if skip is False:
 						value_N = st.session_state.reads_lenght_R1_n_input # average length is 464
 					elif st.session_state.hypervar_regions_radio == 'V4':
 						value_N = st.session_state.reads_lenght_R1_n_input # average length is 254
-					elif st.session_state.hypervar_regions_radio == 'full-length':
-						value_N = st.session_state.reads_lenght_R1_n_input # average length is 1500
-				
+					
 
 				with st.form('global trim length'):
 
