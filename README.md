@@ -5,4 +5,4 @@ Streamlit app for user-friendly pre-processing of 16S rRNA NGS raw fastq.gz file
 The app is also provided with functionalities for interactive tertiary data analysis if OTU, taxonomy and metadata tables are provided. Alpha and beta diversity analysis are available as well as taxa relative abundances data.
 Results tables and visualizations are available for download. 
 Written in italian.
-Available at: http://15.160.153.87:8501
+Available at http://35.152.80.17:8501/
