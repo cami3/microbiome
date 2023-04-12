@@ -3890,73 +3890,74 @@ ps.init(
 )
 
 ps.row(
-	ps.colmd(align='left', type='card', content = 
+	ps.colxl(align='left', type='card', content = 
 		ps.h1(ps.bold('Dashboard Microbioma batterico'))
-	)
-+	ps.colmd(
-		ps.h3('%s - %s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio))
+	
+	+	ps.p('Questa dashboard mostra i risultati delle analisi \
+		dei dati della App Microbioma tramite visualizzazioni interattive \
+			- sviluppata con python con la libreria piesparrow.')
 	)
 )
 ps.row(
-	ps.p('Questa dashboard mostra i risultati delle analisi dei dati \
-		della App Microbioma tramite visualizzazioni interattive \
-			- sviluppata in python con la libreria piesparrow.')
+	ps.colsm(content=ps.p(''))
++	ps.colmd(type='card', align='center',content=
+		ps.h2('%s' %(st.session_state.dashboard_name))
+	+	ps.h3('%s' %(st.session_state.sample_grouping_radio))
+	)
 )
 
-for i in st.session_state.final_df.columns[:7]:
+df = st.session_state.final_df[[i]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
+df = df.T.reset_index(level=0)
+df_table = df
+	
+try:
 
-	df = st.session_state.final_df[[i]+ st.session_state.sequenced_samples].groupby(i).sum()
-	df = df.T.reset_index(level=0)
+	df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
+	df = df.groupby(st.session_state.sample_grouping_radio).sum().reset_index(level=0)
 	df_table = df
+		
+
+		
+except Exception as e:
+	df_table = df
+	print(e)
+	pass
+	
+ps.row(
+
+	ps.colxl(type='card', align='left', content = 
+		ps.h1('%s' %(i))
+	+	ps.table(df=df_table)
+	)
+)
+
+
+for j, s_group in enumerate(df.iterrows()):
 	
 	try:
-
-		df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
-		df = df.groupby(st.session_state.sample_grouping_radio).sum().reset_index(level=0)
-		df_table = df
+		gr = df.loc[:, st.session_state.sample_grouping_radio][j]
+		df_pie= pd.DataFrame(df.iloc[j,:]).T
+		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
+		
+	except:
+		gr = s_group[1][0]
+		df_pie= pd.DataFrame(df.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
 
-		
-	except Exception as e:
-		df_table = df
-		print(e)
-		pass
-	
 	ps.row(
 
-		ps.colxl(type='card', align='left', content = 
-			ps.h1('%s' %(i))
-		+	ps.table(df=df_table)
+		ps.colxl(type='card', align='center', content =
+			ps.h2(ps.bold('%s' %(gr)))
 		)
 	)
-
-	
-	for j, s_group in enumerate(df.iterrows()):
-		
-		try:
-			gr = df.loc[:, st.session_state.sample_grouping_radio][j]
-			df_pie= pd.DataFrame(df.iloc[j,:]).T
-			df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
-			
-		except:
-			gr = s_group[1][0]
-			df_pie= pd.DataFrame(df.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
-			
-	
-		ps.row(
-
-			ps.colxl(type='card', align='center', content =
-				ps.h2(ps.bold('%s' %(gr)))
+	ps.row(
+			ps.donut(
+				title = '%s, %s'%(i, gr),
+				df = df_pie,
+				columns = df.columns[1:], 
 			)
-		)
-		ps.row(
-				ps.donut(
-					title = '%s, %s'%(i, gr),
-					df = df_pie,
-					columns = df.columns[1:], 
-				)
-		)
-		
+	)
+	
 
 #################################################################################################
 # PIESPARROW
@@ -3972,7 +3973,7 @@ ps.init(
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Dashboard Microbioma'))
+		ps.h1(ps.bold('Dashboard Microbioma batterico'))
 	
 	+	ps.p('Questa dashboard mostra i risultati delle analisi \
 		dei dati della App Microbioma tramite visualizzazioni interattive \
@@ -3988,52 +3989,51 @@ ps.row(
 )
 
 
-for i in st.session_state.final_df.columns[:7]:
 
-	df = st.session_state.final_df[[i]+ st.session_state.sequenced_samples].groupby(i).sum()
-	df = df.T.reset_index(level=0)
+df = st.session_state.final_df[[i]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
+df = df.T.reset_index(level=0)
+df_table = df
+try:
+
+	df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
+	df = df.groupby(st.session_state.sample_grouping_radio).sum().reset_index(level=0)
 	df_table = df
-	try:
 
-		df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
-		df = df.groupby(st.session_state.sample_grouping_radio).sum().reset_index(level=0)
-		df_table = df
-
-		df_barchart = df.T[1:]
-		df_barchart_hdr = df.T.iloc[0,:]
-		df_barchart.columns = df_barchart_hdr
-		df_barchart.index.name = i
-		df_barchart = df_barchart.reset_index(level=0)
-		df_barchart.index = range(0, len(df_barchart.index))
-		df_table = df_barchart
-		
-	except Exception as e: # if sample_grouping_radio = 'Tutti i campioni'
-
-		# st.exception(e)
-		df_barchart = df
-		pass
+	df_barchart = df.T[1:]
+	df_barchart_hdr = df.T.iloc[0,:]
+	df_barchart.columns = df_barchart_hdr
+	df_barchart.index.name = i
+	df_barchart = df_barchart.reset_index(level=0)
+	df_barchart.index = range(0, len(df_barchart.index))
+	df_table = df_barchart
 	
-	ps.row(
+except Exception as e: # if sample_grouping_radio = 'Tutti i campioni'
 
-		ps.colxl(type='card', align='center', content = 
+	# st.exception(e)
+	df_barchart = df
+	pass
 
-			ps.h1(ps.bold('%s' %(i)))
-		+
+ps.row(
+
+	ps.colxl(type='card', align='center', content = 
+
+		ps.h1(ps.bold('%s' %(i)))
+	+
+	
+		ps.table(df=df_table)
+	)
+)
+ps.row(
+	ps.chart(
+			type='bar',
+			title='barchart', 
+			df=df_barchart, 
+			columns=df_barchart.columns, 
+			xcolumn=i, 
+			height=700,
 		
-			ps.table(df=df_table)
-		)
 	)
-	ps.row(
-		ps.chart(
-				type='bar',
-				title='barchart', 
-				df=df_barchart, 
-				columns=df_barchart.columns, 
-				xcolumn=i, 
-				height=700,
-			
-		)
-	)
+)
 
 with dashboard_info_dwnld_plchldr:
 	st.info('Si possono scaricare due Dashboard in formato HTML generate per le abbondanze relative dei taxa.\
