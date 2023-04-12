@@ -3906,7 +3906,7 @@ ps.row(
 	)
 )
 
-df = st.session_state.final_df[[i]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
+df = st.session_state.final_df[[st.session_state.tax_level_radio]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
 df = df.T.reset_index(level=0)
 df_table = df
 	
@@ -3926,7 +3926,7 @@ except Exception as e:
 ps.row(
 
 	ps.colxl(type='card', align='left', content = 
-		ps.h1('%s' %(i))
+		ps.h1('%s' %(st.session_state.tax_level_radio))
 	+	ps.table(df=df_table)
 	)
 )
@@ -3952,7 +3952,7 @@ for j, s_group in enumerate(df.iterrows()):
 	)
 	ps.row(
 			ps.donut(
-				title = '%s, %s'%(i, gr),
+				title = '%s, %s'%(st.session_state.tax_level_radio, gr),
 				df = df_pie,
 				columns = df.columns[1:], 
 			)
@@ -3990,7 +3990,7 @@ ps.row(
 
 
 
-df = st.session_state.final_df[[i]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
+df = st.session_state.final_df[[st.session_state.tax_level_radio]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
 df = df.T.reset_index(level=0)
 df_table = df
 try:
@@ -4002,7 +4002,7 @@ try:
 	df_barchart = df.T[1:]
 	df_barchart_hdr = df.T.iloc[0,:]
 	df_barchart.columns = df_barchart_hdr
-	df_barchart.index.name = i
+	df_barchart.index.name = st.session_state.tax_level_radio
 	df_barchart = df_barchart.reset_index(level=0)
 	df_barchart.index = range(0, len(df_barchart.index))
 	df_table = df_barchart
@@ -4017,7 +4017,7 @@ ps.row(
 
 	ps.colxl(type='card', align='center', content = 
 
-		ps.h1(ps.bold('%s' %(i)))
+		ps.h1(ps.bold('%s' %(st.session_state.tax_level_radio)))
 	+
 	
 		ps.table(df=df_table)
@@ -4029,7 +4029,7 @@ ps.row(
 			title='barchart', 
 			df=df_barchart, 
 			columns=df_barchart.columns, 
-			xcolumn=i, 
+			xcolumn=st.session_state.tax_level_radio, 
 			height=700,
 		
 	)
