@@ -9,4 +9,3 @@ port = 8501
 enableCORS = false
 
 [browser]
-serverAddress = "www.microbioma16s.it"
