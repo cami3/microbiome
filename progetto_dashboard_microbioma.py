@@ -867,12 +867,14 @@ if skip is False:
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
 			
-			library_radio_help_string = 'caricare un file R1 per ogni campione'
+			library_radio_help_string = 'caricare un file R1 per ogni campione \
+				\n> formato del nome file: [NomeCampione]_[index]_[L001]_R1_[001].fastq.gz'
 			import_function = import_single_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1'}
 		elif st.session_state.library_radio == 'Paired-end':
 			
-			library_radio_help_string = 'caricare un file R1 ed un file R2 per ogni campione'
+			library_radio_help_string = 'caricare un file R1 ed un file R2 per ogni campione\
+				\n> formato del nome file: [NomeCampione]_[index]_[L001]_R[1-2]_[001].fastq.gz'
 			import_function = import_paired_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1', 'reverse sequence count': 'numero letture R2'}
 
@@ -2543,7 +2545,7 @@ try:
 	data_meta = data_meta.loc[st.session_state.data_OTU_df.columns,:]
 	st.session_state.data_meta_df = data_meta
 except Exception as e:
-	st.exception(e)
+	# st.exception(e)
 	st.warning('Nessun file di metadati fornito.')
 
 # Controllo corrispondenza dei campioni dei metadati coi campioni dell OTU file
@@ -3521,8 +3523,14 @@ with tab_rel_ab:
 		if 'sample_grouping_radio' in st.session_state.keys():
 			
 			# deifinisco il df dei campioni raggruppati per la variabile dei metadati scelta con le annotazioni delle OTU tassonomiche
-			df_sunburst = st.session_state.final_df.iloc[:,8:].T.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
-			df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list() + st.session_state.data_meta_df.columns.to_list())]
+			try: # if metadata are present
+				df_sunburst = st.session_state.final_df.iloc[:,8:].T.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
+				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list() + st.session_state.data_meta_df.columns.to_list())]
+			except:
+				st.warning('Nessun file di metadati fornito')
+				df_sunburst = st.session_state.final_df.iloc[:,8:].T
+				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list()]
+				
 			try:
 				df_sunburst = df_sunburst.groupby(st.session_state.sample_grouping_radio).sum()
 			except:
