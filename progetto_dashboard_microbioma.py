@@ -3529,7 +3529,7 @@ with tab_rel_ab:
 			except:
 				st.warning('Nessun file di metadati fornito')
 				df_sunburst = st.session_state.final_df.iloc[:,8:].T
-				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list()]
+				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list())]
 				
 			try:
 				df_sunburst = df_sunburst.groupby(st.session_state.sample_grouping_radio).sum()
