@@ -3874,6 +3874,23 @@ with tab_beta_div:
 	
 	st.balloons()
 
+try:
+	shutil.rmtree(secure_temp_dir_alpha_gr_sign)
+except FileNotFoundError as e:
+	pass
+	
+except NameError as e:
+	pass
+
+
+
+try:
+	shutil.rmtree(secure_temp_dir_beta_gr_sig)
+except FileNotFoundError as e:
+	pass
+	
+except NameError as e:
+	pass
 ################################################################### PIESPARROW ##############################################################################################################
 
 # PIE CHARTS
@@ -3881,10 +3898,12 @@ import piesparrow as ps
 
 st.session_state.sequenced_samples = st.session_state.data_OTU_df.iloc[8:].columns.tolist()
 
-secure_temp_dir_dashboards = tempfile.mkdtemp(prefix="temp_", suffix="_dashboards")
+secure_temp_dir_dashboard_bars = tempfile.mkdtemp(prefix="temp_", suffix="_dashboard_barre")
+secure_temp_dir_dashboard_donuts = tempfile.mkdtemp(prefix="temp_", suffix="_dashboard_torte")
+
 ps.init(
-	filename=secure_temp_dir_dashboards+'/Dashboard-microbioma-GraficiATorta-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
-	title='Mock Dashboard - pieSparrow', 
+	filename=secure_temp_dir_dashboard_donuts+'/Dashboard-microbioma-GraficiATorta-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
+	title='Mock Dashboard torte - pieSparrow', 
 	basetheme=ps.light, 
 	charttheme=ps.sparrow_light
 )
@@ -3922,7 +3941,9 @@ except Exception as e:
 	df_table = df
 	print(e)
 	pass
-	
+
+
+
 ps.row(
 
 	ps.colxl(type='card', align='left', content = 
@@ -3932,41 +3953,61 @@ ps.row(
 )
 
 
+
 for j, s_group in enumerate(df.iterrows()):
-	
+
 	try:
 		gr = df.loc[:, st.session_state.sample_grouping_radio][j]
 		df_pie= pd.DataFrame(df.iloc[j,:]).T
 		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
 		
-	except:
+	except Exception as e:
+		# st.exception(e)
 		gr = s_group[1][0]
 		df_pie= pd.DataFrame(df.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
-
-	ps.row(
-
-		ps.colxl(type='card', align='center', content =
-			ps.h2(ps.bold('%s' %(gr)))
-		)
-	)
-	ps.row(
-			ps.donut(
-				title = '%s, %s'%(st.session_state.tax_level_radio, gr),
-				df = df_pie,
-				columns = df.columns[1:], 
-			)
-	)
 	
+	if st.session_state.sample_grouping_radio != 'Tutti i campioni':
+		
+		ps.row(
 
+			ps.colxl(type='card', align='center', content =
+				ps.h2(ps.bold('%s' %(gr)))
+			)
+		+	ps.colxl(align='center', content =
+				ps.donut(
+					title = '%s, %s'%(st.session_state.tax_level_radio, gr),
+					df = df_pie,
+					columns = df.columns[1:], 
+				)
+			)
+		)
+	else: # 'Tutti i campioni'
+		
+		ps.row(
+
+			ps.colxl(type='card', align='center', content =
+				ps.h2(ps.bold('%s' %(gr)))
+			)
+		+	ps.colxl(align='center', content =
+				ps.donut(
+					title = '%s, %s'%(st.session_state.tax_level_radio, gr),
+					df = df_pie,
+					columns = [df.columns[1]], 
+				)
+			)
+		)
+
+
+		
 #################################################################################################
 # PIESPARROW
 # BARCHARTS
 
 
 ps.init(
-	filename=secure_temp_dir_dashboards+'/mock-dashboard-microbioma-GraficiABarre-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
-	title='Mock Dashboard - pieSparrow', 
+	filename=secure_temp_dir_dashboard_bars+'/Dashboard-microbioma-GraficiABarre-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
+	title='Mock Dashboard barre - pieSparrow', 
 	basetheme=ps.light, 
 	charttheme=ps.sparrow_light
 )
@@ -3980,6 +4021,7 @@ ps.row(
 			- sviluppata con python con la libreria piesparrow.')
 	)
 )
+
 ps.row(
 	ps.colsm(content=ps.p(''))
 +	ps.colmd(type='card', align='center',content=
@@ -3993,6 +4035,7 @@ ps.row(
 df = st.session_state.final_df[[st.session_state.tax_level_radio]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
 df = df.T.reset_index(level=0)
 df_table = df
+
 try:
 
 	df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
@@ -4011,7 +4054,9 @@ except Exception as e: # if sample_grouping_radio = 'Tutti i campioni'
 
 	# st.exception(e)
 	df_barchart = df
+	df_table = df_barchart
 	pass
+
 
 ps.row(
 
@@ -4029,7 +4074,7 @@ ps.row(
 			title='barchart', 
 			df=df_barchart, 
 			columns=df_barchart.columns, 
-			xcolumn=st.session_state.tax_level_radio, 
+			xcolumn=[st.session_state.tax_level_radio], 
 			height=700,
 		
 	)
@@ -4040,8 +4085,8 @@ with dashboard_info_dwnld_plchldr:
 		 Visualizzazione interattiva di grafici a barre e di grafici a torte.')
 with dashboard_barre_dwnld_plchldr:
 	
-	with open(secure_temp_dir_dashboards+'/mock-dashboard-microbioma-GraficiABarre-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
-		ste.download_button(
+	with open(secure_temp_dir_dashboard_bars+'/Dashboard-microbioma-GraficiABarre-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
+		dwnld_bttn_bars = ste.download_button(
 			label="Download Dashboard HTML Grafici a barre",
 			data=f,
 			file_name="Dashboard_Grafici_a_barre__%s_%s.html" %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio),
@@ -4049,38 +4094,28 @@ with dashboard_barre_dwnld_plchldr:
 
 with dashboard_torte_dwnld_plchldr:
 
-	with open(secure_temp_dir_dashboards+'/Dashboard-microbioma-GraficiATorta-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
-		dwnld_bttn = ste.download_button(
+	with open(secure_temp_dir_dashboard_donuts+'/Dashboard-microbioma-GraficiATorta-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
+		dwnld_bttn_donuts = ste.download_button(
 			label="Download Dashboard HTML Grafici a torta",
 			data=f,
 			file_name="Dashboard_Grafici_a_torta__%s_%s.html" %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio),
 			mime="text/html")
 		
-if dwnld_bttn:
-	try:
-		shutil.rmtree(secure_temp_dir_dashboards)
-	except FileNotFoundError as e:
-		st.exception(e)
+# if dwnld_bttn_donuts:
+# 	try:
+# 		shutil.rmtree(secure_temp_dir_dashboard_donuts)
+# 	except FileNotFoundError as e:
+# 		st.exception(e)
 		
-	except NameError as e:
-		st.exception(e)
+# 	except NameError as e:
+# 		st.exception(e)
 
-
-try:
-	shutil.rmtree(secure_temp_dir_alpha_gr_sign)
-except FileNotFoundError as e:
-	pass
-	
-except NameError as e:
-	pass
-
-
-
-try:
-	shutil.rmtree(secure_temp_dir_beta_gr_sig)
-except FileNotFoundError as e:
-	pass
-	
-except NameError as e:
-	pass
+# if dwnld_bttn_bars:
+# 	try:
+# 		shutil.rmtree(secure_temp_dir_dashboard_bars)
+# 	except FileNotFoundError as e:
+# 		st.exception(e)
 		
+# 	except NameError as e:
+# 		st.exception(e)
+
