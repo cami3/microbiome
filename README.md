@@ -7,7 +7,7 @@ The web app is also provided with functionalities for interactive tertiary data 
 
 All results tables and visualizations publication-ready are available for download.
 Written in italian.
-Available at http://www.microbioma16s.it:8501/
+Available at http://www.microbioma16s.it
 
 
 App per l'analisi di dati NGS da esperimenti di meta-barcoding del gene codificante per rRNA 16S - microbioma batterico
@@ -18,4 +18,4 @@ La web app è dotata anche dell'opzione di analisi terziaria interattiva dei dat
 
 Tutti i risultati in formato di tabelle .csv e di immagini sono scaricabili e pronti per la pubblicazione.
 Scritta in italiano.
-Raggiungibile al sito: http://www.microbioma16s.it:8501/
+Raggiungibile al sito: http://www.microbioma16s.it
