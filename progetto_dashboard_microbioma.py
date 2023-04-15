@@ -132,6 +132,13 @@ relativi al microbioma batterico, con visualizzazione integrata dei risultati.''
 descr_menu_plchldr = st.empty()
 descr_menu_plchldr.info('Il menu\' a lato visualizza le opzioni disponibili e i passaggi di analisi in esecuzione.')
 
+# Google adsense
+HtmlFile = open("test.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+print(source_code)
+components.html(source_code, height=200)
+
+
 h_plchldr = st.empty()
 
 # Menù laterale
