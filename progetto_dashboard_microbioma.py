@@ -23,10 +23,7 @@ import io
 from io import StringIO
 
 from bs4 import BeautifulSoup
-<<<<<<< Updated upstream
-=======
 import pathlib
->>>>>>> Stashed changes
 
 import base64
 
@@ -138,12 +135,6 @@ descr_menu_plchldr = st.empty()
 descr_menu_plchldr.info('Il menu\' a lato visualizza le opzioni disponibili e i passaggi di analisi in esecuzione.')
 
 # Google adsense
-<<<<<<< Updated upstream
-HtmlFile = open("test.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-print(source_code)
-components.html(source_code, height=200)
-=======
 # HtmlFile = open("test.html", 'r', encoding='utf-8')
 # source_code = HtmlFile.read()
 # print(source_code)
@@ -175,7 +166,6 @@ def inject_ga():
         index_path.write_text(new_html)
 	
 inject_ga()
->>>>>>> Stashed changes
 
 h_plchldr = st.empty()
 
