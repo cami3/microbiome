@@ -22,6 +22,7 @@ import sys
 import io
 from io import StringIO
 
+from bs4 import BeautifulSoup
 
 import base64
 
@@ -137,7 +138,6 @@ HtmlFile = open("test.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 print(source_code)
 components.html(source_code, height=200)
-
 
 h_plchldr = st.empty()
 
