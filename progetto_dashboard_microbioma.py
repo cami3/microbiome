@@ -139,7 +139,7 @@ descr_menu_plchldr.info('Il menu\' a lato visualizza le opzioni disponibili e i 
 # source_code = HtmlFile.read()
 # print(source_code)
 # components.html(source_code, height=200)
-def inject_ga():
+def inject_gad():
     """Add this in your streamlit app.py
     see https://github.com/streamlit/streamlit/issues/969
     """
@@ -148,9 +148,9 @@ def inject_ga():
     # NOTE: you should add id="google_analytics" value in the GA script
     # https://developers.google.com/analytics/devguides/collection/analyticsjs
     GA_JS = """
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193074762582547"
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193074762582547"
      crossorigin="anonymous"></script>
-"""
+	"""
     # Insert the script in the head tag of the static template inside your virtual
     index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
     #logging.info(f'editing {index_path}')
@@ -165,6 +165,41 @@ def inject_ga():
         new_html = html.replace('<head>', '<head>\n' + GA_JS)
         index_path.write_text(new_html)
 	
+def inject_ga():
+    GA_ID = "google_analytics"
+
+    # Note: Please replace the id from G-XXXXXXXXXX to whatever your
+    # web application's id is. You will find this in your Google Analytics account
+    
+    GA_JS = """
+    <!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1CLHB1HXV"></script>
+	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+
+  	gtag('config', 'G-Z1CLHB1HXV');
+	</script>
+    """
+
+    # Insert the script in the head tag of the static template inside your virtual
+    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+    # logging.info(f'editing {index_path}')
+    soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+    if not soup.find(id=GA_ID):  # if cannot find tag
+        bck_index = index_path.with_suffix('.bck')
+        if bck_index.exists():
+            shutil.copy(bck_index, index_path)  # recover from backup
+        else:
+            shutil.copy(index_path, bck_index)  # keep a backup
+        html = str(soup)
+        new_html = html.replace('<head>', '<head>\n' + GA_JS)
+        index_path.write_text(new_html)
+
+
+inject_gad()
+
 inject_ga()
 
 h_plchldr = st.empty()
