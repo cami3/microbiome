@@ -23,6 +23,10 @@ import io
 from io import StringIO
 
 from bs4 import BeautifulSoup
+<<<<<<< Updated upstream
+=======
+import pathlib
+>>>>>>> Stashed changes
 
 import base64
 
@@ -134,10 +138,44 @@ descr_menu_plchldr = st.empty()
 descr_menu_plchldr.info('Il menu\' a lato visualizza le opzioni disponibili e i passaggi di analisi in esecuzione.')
 
 # Google adsense
+<<<<<<< Updated upstream
 HtmlFile = open("test.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 print(source_code)
 components.html(source_code, height=200)
+=======
+# HtmlFile = open("test.html", 'r', encoding='utf-8')
+# source_code = HtmlFile.read()
+# print(source_code)
+# components.html(source_code, height=200)
+def inject_ga():
+    """Add this in your streamlit app.py
+    see https://github.com/streamlit/streamlit/issues/969
+    """
+    # new tag method
+    GA_ID = "google_adsense"
+    # NOTE: you should add id="google_analytics" value in the GA script
+    # https://developers.google.com/analytics/devguides/collection/analyticsjs
+    GA_JS = """
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193074762582547"
+     crossorigin="anonymous"></script>
+"""
+    # Insert the script in the head tag of the static template inside your virtual
+    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+    #logging.info(f'editing {index_path}')
+    soup = BeautifulSoup(index_path.read_text(), features="lxml")
+    if not soup.find(id=GA_ID):  # if cannot find tag
+        bck_index = index_path.with_suffix('.bck')
+        if bck_index.exists():
+            shutil.copy(bck_index, index_path)  # recover from backup
+        else:
+            shutil.copy(index_path, bck_index)  # keep a backup
+        html = str(soup)
+        new_html = html.replace('<head>', '<head>\n' + GA_JS)
+        index_path.write_text(new_html)
+	
+inject_ga()
+>>>>>>> Stashed changes
 
 h_plchldr = st.empty()
 
