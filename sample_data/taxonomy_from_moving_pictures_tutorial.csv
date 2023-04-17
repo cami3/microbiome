@@ -1,4 +1,4 @@
-FeatureID,Kingdom,Phylum,Class,Order,Family,Genus,Species
+Feature ID,Kingdom,Phylum,Class,Order,Family,Genus,Species
 4b5eeb300368260019c1fbc7a3c718fc,k__Bacteria,p__Bacteroidetes,c__Bacteroidia,o__Bacteroidales,f__Bacteroidaceae,g__Bacteroides,s__
 fe30ff0f71a38a39cf1717ec2be3a2fc,k__Bacteria,p__Proteobacteria,c__Betaproteobacteria,o__Neisseriales,f__Neisseriaceae,g__Neisseria
 d29fe3c70564fc0f69f2c03e0d1e5561,k__Bacteria,p__Firmicutes,c__Bacilli,o__Lactobacillales,f__Streptococcaceae,g__Streptococcus
