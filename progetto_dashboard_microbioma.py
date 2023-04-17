@@ -661,8 +661,47 @@ def create_final_df(x,y):
 	elif y.name.endswith('.csv'):
 		data_tax = pd.read_csv(y, sep=',', index_col=0) # indici consentiti: OTU, OTU ID, Feature ID, #OTU ID, features, #NAME
 		data_tax.index.name = '#TAXONOMY'
+	elif y.name.endswith('.qza'): # File in cui sono presenti 3 colonne (moving pictures tutorial): Feature ID, Taxon, Confidence
+		with NamedTemporaryFile(dir='.', suffix='.qza') as f:
+			f.write(y.getbuffer())
+			y_import = Artifact.load(f.name)
+			data_tax = y_import.view(pd.DataFrame)
+			# Split dela colonna Taxon in base al punto e virgola per creare i livelli tassonomici
+			data_tax_tmp = data_tax['Taxon'].str.split(';', expand=True)
+			if len(data_tax_tmp.columns) == 6:
+				data_tax[['Kingdom',
+              		'Phylum',
+					'Class',
+					'Order',
+					'Family',
+					'Genus']] = data_tax_tmp
+				data_tax = data_tax[['Kingdom',
+              		'Phylum',
+					'Class',
+					'Order',
+					'Family',
+					'Genus']]
+			elif len(data_tax_tmp.columns) == 7:
+				data_tax[['Kingdom',
+              		'Phylum',
+					'Class',
+					'Order',
+					'Family',
+					'Genus',
+					'Species']] = data_tax_tmp
+				# Mantenimento delle sole colonne nuove create sopra
+				data_tax = data_tax[['Kingdom',
+              		'Phylum',
+					'Class',
+					'Order',
+					'Family',
+					'Genus',
+					'Species']]
+			data_tax.index.name = '#TAXONOMY'
+
 
 	data_tax = data_tax.fillna('Unclassified')
+
 	
 	# Se presente una colonna ulteriore oltre la Specie, come OTU o feature, diventa l indice del dataframe
 	try:
@@ -723,7 +762,12 @@ def create_final_df(x,y):
 		data_OTU = pd.read_csv(x, sep='\t', index_col=0) # indici consentiti: #NAME
 	elif x.name.endswith('.csv'):		
 		data_OTU = pd.read_csv(x, sep=',', index_col=0) # indici consentiti: #NAME
-
+	elif x.name.endswith('.qza'):		
+		with NamedTemporaryFile(dir='.', suffix='.qza') as f:
+			f.write(x.getbuffer())
+			x_import = Artifact.load(f.name)
+			data_OTU = x_import.view(pd.DataFrame).T
+			
 	
 	# Creazione multiindex df comprensivo dei dati obbligatori 
 	# (classificaizone tassonomica ed conte delle reads per OTU per campione):
@@ -2519,14 +2563,14 @@ with st.form(key='form_data_upload'):
 	cols = st.columns((1,1))
 	data_OTU = cols[0].file_uploader('OTU file:', 
 		key='data_OTU_input', 
-		help='Conte delle reads per ogni OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv. \
+		help='Conte delle reads per ogni OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv, .qza.\
 			\n> Le colonne rappresentano i campioni, le righe rappresentano le OTU. L\'intestazione della tabella e\': \
 			\n> #NAME o featureID. \
 			\n> __Attenzione!__ Per risultati attendibili, caricare dati normalizzati con il metodo della rarefazione o altro metodo.' )# %(sample_df))
 	#todo
 	data_tax = cols[1].file_uploader('Taxonomy file:', 
 		key='data_tax_input', 
-		help='Classificazione tassonomica delle OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv. \
+		help='Classificazione tassonomica delle OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv, .qza. \
 			\n> L\'intestazione della tabella e\': #TAXONOMY. \
 			\n> Le colonne rappresentano le categorie tassonomiche, le righe rappresentano le OTU.')
 	data_meta = cols[0].file_uploader('File di metadati (facoltativo):', 
@@ -2580,6 +2624,7 @@ if submit_button or ((st.session_state.data_OTU_input is not None) and (st.sessi
 
 		# Import metadata as pandas dataframe
 		data_meta = pd.read_csv(data_meta, sep='\t', index_col=0)
+		data_meta = data_meta[data_meta.index != '#q2:types'] # filtro la riga contenente l'intestazione del manifest file di qiime2
 		data_meta = data_meta.dropna(axis=1, how='all')
 		data_meta = data_meta.fillna('NA', axis=0)
 
