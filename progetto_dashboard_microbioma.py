@@ -905,7 +905,7 @@ def app_classify_hybrid_vsearch_sklearn(_query, _reference_reads, _reference_tax
 		randseed=randseed)
 	return seqs_classification
 
-@st.cache_resource
+@st.cache
 def app_alpha_divs(_table):
 	alpha_divs = []
 	alpha_result = diversity.pipelines.alpha(table=_table, metric='observed_features')
@@ -3710,9 +3710,9 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 		# Calcolo delle alfa diversita', importazione della OTU table trasposta come artifact qiime2 per calcolare le 4 metriche per ogni campione
 		artifact_table = Artifact.import_data("FeatureTable[Frequency]", st.session_state.data_OTU_df.T)
 		st.session_state.artifact_table = artifact_table
-		alpha_divs = app_alpha_divs(_table=artifact_table)
+		alpha_divs = app_alpha_divs(_table=st.session_state.artifact_table)
 		st.session_state.alpha_divs = alpha_divs
-
+		
 		secure_temp_dir_alpha_gr_sign = tempfile.mkdtemp(prefix="temp_", suffix="_alpha_gr_sign")
 		
 		cols_alpha_divs = st.columns(4)
@@ -3738,7 +3738,6 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				tabella_df = pd.DataFrame(tabella_df)
 				tabella_df.columns = map(lambda x: ' '.join(x.split('_')).upper(), tabella_df.columns)
 				tabella_df = tabella_df.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
-
 			else:
 				
 				st.warning('Nessun file di metadati fornito.')
@@ -3762,9 +3761,10 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				cols_alpha_divs[index].subheader('%s - %s' %(tabella_df.columns[0], st.session_state.sample_grouping_radio))
 				cols_alpha_divs[index].plotly_chart(fig_boxplot1, use_container_width=True, config=config)
 				
-				st.session_state.data_Metadata = st.session_state.data_meta_df
-				st.session_state.data_Metadata.index.name = '#SampleID'
-				alpha_group_sign = diversity.visualizers.alpha_group_significance(alpha_diversity=i, metadata=Metadata(st.session_state.data_meta_df))
+				data_Metadata = st.session_state.data_meta_df
+				data_Metadata.index.name = '#SampleID'
+				st.session_state.data_Metadata = Metadata(data_Metadata)
+				alpha_group_sign = diversity.visualizers.alpha_group_significance(alpha_diversity=i, metadata=st.session_state.data_Metadata)
 				alpha_group_sign.visualization.export_data(secure_temp_dir_alpha_gr_sign)
 				if index == 0:
 					metric_name = 'observed_features'
@@ -3966,7 +3966,7 @@ except NameError as e:
 # PIE CHARTS
 import piesparrow as ps
 
-st.session_state.sequenced_samples = st.session_state.data_OTU_df.iloc[8:].columns.tolist()
+st.session_state.sequenced_samples = st.session_state.data_OTU_df.columns.tolist()
 
 secure_temp_dir_dashboard_bars = tempfile.mkdtemp(prefix="temp_", suffix="_dashboard_barre")
 secure_temp_dir_dashboard_donuts = tempfile.mkdtemp(prefix="temp_", suffix="_dashboard_torte")
@@ -3998,11 +3998,16 @@ ps.row(
 df = st.session_state.final_df[[st.session_state.tax_level_radio]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
 df = df.T.reset_index(level=0)
 df_table = df
+
 	
 try:
 
 	df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
 	df = df.groupby(st.session_state.sample_grouping_radio).sum().reset_index(level=0)
+	# numero di colonne dei metadati numeriche
+	n_num_cols = len(st.session_state.data_meta_df.select_dtypes(include=np.number).columns.tolist())
+	# seleziono solo le colonne relative ai taxa escludendo le colonne di metadati numeriche mergiate alla fine del dataframe
+	df = df.iloc[:, :-n_num_cols]
 	df_table = df
 		
 
