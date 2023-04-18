@@ -4052,14 +4052,13 @@ try:
 	# numero di colonne dei metadati numeriche
 	n_num_cols = len(st.session_state.data_meta_df.select_dtypes(include=np.number).columns.tolist())
 	# seleziono solo le colonne relative ai taxa escludendo le colonne di metadati numeriche mergiate alla fine del dataframe
-	df = df.iloc[:, :-n_num_cols]
-	df_table = df
+	df_table = df.iloc[:, :-n_num_cols]
 		
 
 		
 except Exception as e:
 	df_table = df
-	print(e)
+	# st.exception(e)
 	pass
 
 
@@ -4082,7 +4081,7 @@ for j, s_group in enumerate(df.iterrows()):
 		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
 		
 	except Exception as e:
-		# st.exception(e)
+		st.exception(e)
 		gr = s_group[1][0]
 		df_pie= pd.DataFrame(df.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
@@ -4222,20 +4221,20 @@ with dashboard_torte_dwnld_plchldr:
 			mime="text/html")
 		
 # if dwnld_bttn_donuts:
-# 	try:
-# 		shutil.rmtree(secure_temp_dir_dashboard_donuts)
-# 	except FileNotFoundError as e:
-# 		st.exception(e)
-		
-# 	except NameError as e:
-# 		st.exception(e)
+try:
+	shutil.rmtree(secure_temp_dir_dashboard_donuts)
+except FileNotFoundError as e:
+	st.exception(e)
+	
+except NameError as e:
+	st.exception(e)
 
 # if dwnld_bttn_bars:
-# 	try:
-# 		shutil.rmtree(secure_temp_dir_dashboard_bars)
-# 	except FileNotFoundError as e:
-# 		st.exception(e)
-		
-# 	except NameError as e:
-# 		st.exception(e)
+try:
+	shutil.rmtree(secure_temp_dir_dashboard_bars)
+except FileNotFoundError as e:
+	st.exception(e)
+	
+except NameError as e:
+	st.exception(e)
 
