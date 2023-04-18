@@ -165,6 +165,43 @@ def inject_gad():
         new_html = html.replace('<head>', '<head>\n' + GA_JS)
         index_path.write_text(new_html)
 	
+def inject_gad1():
+    """Add this in your streamlit app.py
+    see https://github.com/streamlit/streamlit/issues/969
+    """
+    # new tag method
+    GA_ID = "google_adsense"
+    # NOTE: you should add id="google_analytics" value in the GA script
+    # https://developers.google.com/analytics/devguides/collection/analyticsjs
+    GA_JS = """
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193074762582547"
+    	crossorigin="anonymous"></script>
+	<!-- pubblicità prova -->
+	<ins class="adsbygoogle"
+    	style="display:block"
+    	data-ad-client="ca-pub-6193074762582547"
+		data-ad-slot="3333170307"
+     	data-ad-format="auto"
+     	data-full-width-responsive="true"></ins>
+	<script>
+     	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+	"""
+    # Insert the script in the head tag of the static template inside your virtual
+    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+    #logging.info(f'editing {index_path}')
+    soup = BeautifulSoup(index_path.read_text(), features="lxml")
+    if not soup.find(id=GA_ID):  # if cannot find tag
+        bck_index = index_path.with_suffix('.bck')
+        if bck_index.exists():
+            shutil.copy(bck_index, index_path)  # recover from backup
+        else:
+            shutil.copy(index_path, bck_index)  # keep a backup
+        html = str(soup)
+        new_html = html.replace('<head>', '<head>\n' + GA_JS)
+        index_path.write_text(new_html)
+	
+
 def inject_ga():
     GA_ID = "google_analytics"
 
@@ -199,7 +236,7 @@ def inject_ga():
 
 
 inject_gad()
-
+inject_gad1()
 inject_ga()
 
 h_plchldr = st.empty()
