@@ -216,7 +216,7 @@ def inject_ga():
   		function gtag(){dataLayer.push(arguments);}
   		gtag('js', new Date());
 
-  	gtag('config', 'G-Z1CLHB1HXV');
+  	gtag('config', 'G-Z1CLHB1HXV', { 'anonymize_ip': true });
 	</script>
     """
 
