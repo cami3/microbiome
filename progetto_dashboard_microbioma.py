@@ -138,7 +138,14 @@ descr_menu_plchldr.info('Il menu\' a lato visualizza le opzioni disponibili e i 
 HtmlFile = open("test.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 # print(source_code)
-components.html(source_code, height=200)
+components.html(source_code, height=50)
+
+HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+# print(source_code)
+components.iframe(source_code, height=200)
+
+
 def inject_gad():
     """Add this in your streamlit app.py
     see https://github.com/streamlit/streamlit/issues/969
