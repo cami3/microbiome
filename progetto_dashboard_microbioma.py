@@ -143,7 +143,7 @@ components.html(source_code, height=50)
 HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 # print(source_code)
-components.iframe(source_code, height=200)
+components.html(source_code, height=200)
 
 
 def inject_gad():
