@@ -28,6 +28,7 @@ RUN pip3 install -r ./requirements.txt
 
 # tell the port number the container should expose
 EXPOSE 8501
+EXPOSE 443
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
