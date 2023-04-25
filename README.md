@@ -1,7 +1,7 @@
 # App microbioma
 16S rRNA meta-barcoding NGS data analysis app - microbioma batterico
 
-Streamlit web app for user-friendly pre-processing of 16S rRNA NGS (Next Generation Sequencing - Illumina) raw fastq.gz files, running interactively a pipeline based on the QIIME2 (Quantitative Insights Into Microbial Ecology) analysis package. Developed using python programming. 
+Web app for user-friendly pre-processing of 16S rRNA NGS (Next Generation Sequencing - Illumina) raw fastq.gz files, running interactively a pipeline based on the QIIME2 (Quantitative Insights Into Microbial Ecology) analysis package. Developed using python programming and the streamlit library. 
 The web app performs OTUs/ASVs (Operational Taxonomic Unit/Amplicon Sequence Variant) clustering/denoising and taxonomy assignment and feature table normalization through rarefaction. It provides the raw along with rarefied ASVs counts feature table and the taxonomy table. It also provides the phylogenetic tree-based clustering of samples. Moreover, the web app renders results of alpha and beta diversity analysis as well as taxa relative abundances data, viewable on the qiime2 platform https://view.qiime2.org.
 The web app is also provided with functionalities for interactive tertiary data analysis if OTU, taxonomy and samples' associated metadata tables are provided. It produces tables and plots about the taxonomy associated to features, as well as the number of features, as well as the taxa barplots, as well as the alpha and beta diversity metrics comparisons with test statistics, for each user-defined group of samples at each user-defined taxonomic level.
 
