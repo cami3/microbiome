@@ -126,6 +126,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 # Titolo
 st.title('App Microbioma')
 
+
 st.markdown('''per il processamento interattivo dei dati di sequenziamento NGS 
 da esperimenti di meta-barcoding del gene codificante per rRNA 16S,
 relativi al microbioma batterico, con visualizzazione integrata dei risultati.''')
@@ -155,7 +156,7 @@ def inject_gad():
     # NOTE: you should add id="google_analytics" value in the GA script
     # https://developers.google.com/analytics/devguides/collection/analyticsjs
     GA_JS = """
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193074762582547"
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-################"
      crossorigin="anonymous"></script>
 	"""
     # Insert the script in the head tag of the static template inside your virtual
@@ -181,12 +182,12 @@ def inject_gad1():
     # NOTE: you should add id="google_analytics" value in the GA script
     # https://developers.google.com/analytics/devguides/collection/analyticsjs
     GA_JS = """
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6193074762582547"
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-#################"
     	crossorigin="anonymous"></script>
 	<!-- pubblicità prova -->
 	<ins class="adsbygoogle"
     	style="display:block"
-    	data-ad-client="ca-pub-6193074762582547"
+    	data-ad-client="ca-pub-################"
 		data-ad-slot="3333170307"
      	data-ad-format="auto"
      	data-full-width-responsive="true"></ins>
@@ -217,22 +218,22 @@ def inject_ga():
     
     GA_JS = """
     <!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1CLHB1HXV"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-##########"></script>
 	<script>
   		window.dataLayer = window.dataLayer || [];
   		function gtag(){dataLayer.push(arguments);}
   		gtag('js', new Date());
 
-  		gtag('config', 'G-Z1CLHB1HXV', { 'anonymize_ip': true });
+  		gtag('config', 'G-##########', { 'anonymize_ip': true });
 	</script>
 	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-L7W013P7F6"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-##########"></script>
 	<script>
   		window.dataLayer = window.dataLayer || [];
   		function gtag(){dataLayer.push(arguments);}
   		gtag('js', new Date());
 
-  		gtag('config', 'G-L7W013P7F6');
+  		gtag('config', 'G-##########');
 	</script>
     """
 
@@ -251,9 +252,9 @@ def inject_ga():
         index_path.write_text(new_html)
 
 
-inject_gad()
-inject_gad1()
-inject_ga()
+# inject_gad()
+# inject_gad1()
+# inject_ga()
 
 h_plchldr = st.empty()
 
