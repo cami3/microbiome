@@ -26,6 +26,8 @@ RUN python -c "import qiime2"
 ADD ./requirements.txt .
 RUN pip3 install -r ./requirements.txt
 
+COPY index.html /opt/conda/envs/my_env/lib/python3.8/site-packages/streamlit/static/index.html
+
 # tell the port number the container should expose
 EXPOSE 8501
 EXPOSE 443
