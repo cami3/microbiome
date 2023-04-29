@@ -1,5 +1,6 @@
 altair
 flask
+flask-sslify
 matplotlib
 numpy
 pandas
