@@ -1,4 +1,5 @@
 altair
+flask
 matplotlib
 numpy
 pandas
