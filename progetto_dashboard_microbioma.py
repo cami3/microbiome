@@ -31,7 +31,7 @@ import tempfile
 from tempfile import NamedTemporaryFile
 
 from flask import Flask
-from flask_sslify import 
+from flask_sslify import SSLify
 
 import qiime2
 from qiime2 import Artifact, Metadata
