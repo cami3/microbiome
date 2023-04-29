@@ -30,6 +30,9 @@ import base64
 import tempfile
 from tempfile import NamedTemporaryFile
 
+from flask import Flask
+from flask_sslify import 
+
 import qiime2
 from qiime2 import Artifact, Metadata
 
@@ -122,6 +125,10 @@ st.markdown(f""" <style>
 	}} </style> """, unsafe_allow_html=True)
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
+
+
+app = Flask(__name__)
+sslify = SSLify(app)
 
 # Titolo
 st.title('App Microbioma')
