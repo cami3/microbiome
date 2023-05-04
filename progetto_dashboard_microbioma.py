@@ -1317,18 +1317,29 @@ if skip is False:
 
 			# Blocco di codice per impostare i suggerimenti dei parametri di fusione delle reads R1 ed R2 in base alla lunghezza delle letture (cartucce
 			# e tecnologia di sequenziamento)
-			reads_lenght_R1_input = cols[0].number_input('Lunghezza delle letture R1:', help='Per suggerire i parametri adatti \
-				alla fusione delle letture R1 ed R2 a ricostruire il cosiddetto frammento atteso. \
-					\n> Pre-impostato il valore approssimativo in base alle analisi effettuate. \
-					Tale valore varia in base alla tecnologia di sequenziamento. \
-					Fare riferimento al provider dei dati.',
-					min_value=250, max_value=300, step=50, value=approx_reads_lenght_R1, key='reads_lenght_R1_n_input')
-			
-			reads_lenght_R2_input = cols[1].number_input('Lunghezza delle letture R2:', help='La lunghezza delle letture R2 dovrebbe essere \
-				uguale a quella delle letture R1. Valore mostrato solo per riferimento e confronto.',
-					min_value=250, max_value=300, step=50, value=approx_reads_lenght_R2, key='reads_lenght_R2_n_input', disabled=True)
+			if ((approx_reads_lenght_R1 == 250) or (approx_reads_lenght_R1 == 300)):
 
+				reads_lenght_R1_input = cols[0].number_input('Lunghezza delle letture R1:', help='Per suggerire i parametri adatti \
+					alla fusione delle letture R1 ed R2 a ricostruire il cosiddetto frammento atteso. \
+						\n> Pre-impostato il valore approssimativo in base alle analisi effettuate. \
+						Tale valore varia in base alla tecnologia di sequenziamento. \
+						Fare riferimento al provider dei dati.',
+						min_value=250, max_value=300, step=50, value=approx_reads_lenght_R1, key='reads_lenght_R1_n_input')
+			else:
+
+				st.session_state.reads_lenght_R1_n_input = approx_reads_lenght_R1
+				cols[0].markdown('Lunghezza approssimativa letture R1: %s' %(st.session_state.reads_lenght_R1_n_input))
 			
+			if ((approx_reads_lenght_R2 == 250) or (approx_reads_lenght_R2 == 300)):
+
+				reads_lenght_R2_input = cols[1].number_input('Lunghezza delle letture R2:', help='La lunghezza delle letture R2 dovrebbe essere \
+					uguale a quella delle letture R1. Valore mostrato solo per riferimento e confronto.',
+						min_value=250, max_value=300, step=50, value=approx_reads_lenght_R2, key='reads_lenght_R2_n_input', disabled=True)
+			else:
+
+				st.session_state.reads_lenght_R2_n_input = approx_reads_lenght_R2
+				cols[1].markdown('Lunghezza approssimativa letture R2: %s' %(st.session_state.reads_lenght_R2_n_input))
+
 			
 
 			if st.session_state.reads_lenght_R1_n_input == 250:
@@ -1358,7 +1369,7 @@ if skip is False:
 					minmergelen_n = 440
 					maxmergelen_n = 480
 					maxee_n = 1
-					maxdiffs_n = 5
+					maxdiffs_n = 10
 				elif st.session_state.hypervar_regions_radio == 'V4':
 					minovlen_n = 220
 					minmergelen_n = 230
@@ -1373,42 +1384,78 @@ if skip is False:
 					\n * lunghezza massima frammento di fusione = %s;\
 					\n * numero di errori atteso massimo = %s;\
 					\n * numero di differenze massimo = %s' %(minovlen_n, minmergelen_n, maxmergelen_n, maxee_n, maxdiffs_n)
-
+			else:
+				if st.session_state.hypervar_regions_radio == 'V3V4':
+					suggested_joining_params_label = 'Lunghezza frammento attesa = 464 nucleotidi.'
+				elif st.session_state.hypervar_regions_radio == 'V4':
+					suggested_joining_params_label = 'Lunghezza frammento attesa = 254 nucleotidi.'
 			
 			st.markdown(suggested_joining_params_label)
 			
 
+			if (('minovlen_n' in globals()) and ('minmergelen_n' in globals()) and ('maxmergelen_n' in globals()) and ('maxee_n' in globals()) and ('maxdiffs_n' in globals())):
 
-			with st.form(key='reads_merging_parameters_form'):
-				st.markdown('Imposta i parametri:')
-				# cols = st.columns(5)
-				minovlen = st.slider(label='Lunghezza minima di sovrapposizione fra R1 ed R2:',
-					max_value=int(250),
-					value=minovlen_n,
-					step=1,
-					help='%s'%(minovlen_n),
-					key='minovlen_slider')
-				minmergelen = st.slider(label='Lunghezza minima frammeto di fusione:',
-					max_value=int(500),
-					value=minmergelen_n,
-					step=1,
-					key='minmergelen_slider')
-				maxmergelen = st.slider(label='Lunghezza massima frammeto di fusione:',
-					max_value=int(500),
-					value=maxmergelen_n,
-					step=1,
-					key='maxmergelen_slider')
-				maxee = st.slider(label='Numero di errori atteso massimo:',
-					max_value=int(500),
-					value=maxee_n,
-					step=1,
-					key='maxee_slider')
-				maxdiffs = st.slider(label='Numero di differenze massimo:',
-					max_value=int(500),
-					value=maxdiffs_n,
-					step=1,
-					key='maxdiffs_slider')
-				submit_button = st.form_submit_button(label='Fondi le letture paired-end')
+				with st.form(key='reads_merging_parameters_form'):
+					st.markdown('Imposta i parametri:')
+					# cols = st.columns(5)
+					minovlen = st.slider(label='Lunghezza minima di sovrapposizione fra R1 ed R2:',
+						max_value=int(250),
+						value=minovlen_n,
+						step=1,
+						help='%s'%(minovlen_n),
+						key='minovlen_slider')
+					minmergelen = st.slider(label='Lunghezza minima frammeto di fusione:',
+						max_value=int(500),
+						value=minmergelen_n,
+						step=1,
+						key='minmergelen_slider')
+					maxmergelen = st.slider(label='Lunghezza massima frammeto di fusione:',
+						max_value=int(500),
+						value=maxmergelen_n,
+						step=1,
+						key='maxmergelen_slider')
+					maxee = st.slider(label='Numero di errori atteso massimo:',
+						max_value=int(500),
+						value=maxee_n,
+						step=1,
+						key='maxee_slider')
+					maxdiffs = st.slider(label='Numero di differenze massimo:',
+						max_value=int(500),
+						value=maxdiffs_n,
+						step=1,
+						key='maxdiffs_slider')
+					submit_button = st.form_submit_button(label='Fondi le letture paired-end')
+			else:
+
+				with st.form(key='reads_merging_parameters_form'):
+					st.markdown('Imposta i parametri:')
+					# cols = st.columns(5)
+					minovlen = st.slider(label='Lunghezza minima di sovrapposizione fra R1 ed R2:',
+						max_value=int(250),
+						step=1,
+						help='Lunghezza minima dell\'area di sovrapposizione fra le sequenze durante la fusione.',
+						key='minovlen_slider')
+					minmergelen = st.slider(label='Lunghezza minima frammeto di fusione:',
+						max_value=int(500),
+						step=1,
+						help='Lunghezza minima del frammento di fusione affinche\' sia ritenuto e non scartato.',
+						key='minmergelen_slider')
+					maxmergelen = st.slider(label='Lunghezza massima frammeto di fusione:',
+						max_value=int(500),
+						step=1,
+						help='Lunghezza massima del frammento di fusione affinche\' sia ritenuto e non scartato.',
+						key='maxmergelen_slider')
+					maxee = st.slider(label='Numero di errori atteso massimo:',
+						max_value=int(500),
+						step=1,
+						help='Numero di errori atteso massimo nel frammento di fusione affinche\' sia ritenuto e non scartato.',
+						key='maxee_slider')
+					maxdiffs = st.slider(label='Numero di differenze massimo:',
+						max_value=int(500),
+						step=1,
+						help='Numero massimo di mismatches nell\'area di sovrapposizione durante la fusione.',
+						key='maxdiffs_slider')
+					submit_button = st.form_submit_button(label='Fondi le letture paired-end')
 
 			if ((submit_button) or (st.session_state.minovlen_slider != 0)):
 
@@ -1473,13 +1520,14 @@ if skip is False:
 				st.info('Usa il form qui sopra per seleionare i parametri di fusione delle letture R1 ed R2.')
 				st.warning("La pagina e\' in attesa che selezioni i parametri desiderati per la fusione delle letture \
 					R1 ed R2 nel form qui sopra e clicchi __Fondi le letture paired-end__.")
+				st.stop()
 				step_n += 1
 			
 			
 
 	except Exception as e:
 
-		# st.exception(e)
+		st.exception(e)
 		
 		with tab_summary_stats:
 			st.warning('Sequenze Single-end, skip del passaggio di fusione delle letture.')
