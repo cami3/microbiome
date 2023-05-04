@@ -4189,44 +4189,28 @@ for j, s_group in enumerate(df.iterrows()):
 		df_pie= pd.DataFrame(df.iloc[j,:]).T
 		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
 		
-	except Exception as e:
-		st.exception(e)
+	except Exception as e: # 'Tutti i campioni'
+		# st.exception(e)
 		gr = s_group[1][0]
 		df_pie= pd.DataFrame(df.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
 	
-	if st.session_state.sample_grouping_radio != 'Tutti i campioni':
-		
-		ps.row(
 
-			ps.colxl(type='card', align='center', content =
-				ps.h2(ps.bold('%s' %(gr)))
-			)
-		+	ps.colxl(align='center', content =
-				ps.donut(
-					title = '%s, %s'%(st.session_state.tax_level_radio, gr),
-					df = df_pie,
-					columns = df.columns[1:], 
-				)
+	
+	ps.row(
+
+		ps.colxl(type='card', align='center', content =
+			ps.h2(ps.bold('%s' %(gr)))
+		)
+	+	ps.colxl(align='center', content =
+			ps.donut(
+				title = '%s, %s'%(st.session_state.tax_level_radio, gr),
+				df = df_pie,
+				columns = df.columns[1:], 
 			)
 		)
-	else: # 'Tutti i campioni'
-		
-		ps.row(
-
-			ps.colxl(type='card', align='center', content =
-				ps.h2(ps.bold('%s' %(gr)))
-			)
-		+	ps.colxl(align='center', content =
-				ps.donut(
-					title = '%s, %s'%(st.session_state.tax_level_radio, gr),
-					df = df_pie,
-					columns = [df.columns[1]], 
-				)
-			)
-		)
-
-
+	)
+	
 		
 #################################################################################################
 # PIESPARROW
