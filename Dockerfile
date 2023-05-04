@@ -28,6 +28,8 @@ RUN pip3 install -r ./requirements.txt
 
 COPY index.html /opt/conda/envs/my_env/lib/python3.8/site-packages/streamlit/static/index.html
 
+COPY progetto_dashboard_microbioma.py .
+
 # tell the port number the container should expose
 EXPOSE 80
 
