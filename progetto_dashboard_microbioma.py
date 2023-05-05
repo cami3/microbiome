@@ -134,7 +134,7 @@ sslify = SSLify(app)
 st.title('App Microbioma')
 
 
-st.markdown('''per il processamento interattivo dei dati di sequenziamento NGS 
+st.markdown('''per l\'analisi bioinformatica intuitiva basata su Qiime2 dei dati di sequenziamento NGS 
 da esperimenti di meta-barcoding del gene codificante per rRNA 16S,
 relativi al microbioma batterico, con visualizzazione integrata dei risultati.''')
 
