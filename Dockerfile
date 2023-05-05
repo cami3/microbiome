@@ -33,7 +33,7 @@ COPY progetto_dashboard_microbioma.py .
 # tell the port number the container should expose
 EXPOSE 80
 
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+HEALTHCHECK CMD curl --fail http://localhost:80/_stcore/health
 
 # Python program to run in the container
 
