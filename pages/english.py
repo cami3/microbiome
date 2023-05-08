@@ -154,108 +154,108 @@ components.html(source_code, height=200)
 
 
 def inject_gad():
-    """Add this in your streamlit app.py
-    see https://github.com/streamlit/streamlit/issues/969
-    """
-    # new tag method
-    GA_ID = "google_adsense"
-    # NOTE: you should add id="google_analytics" value in the GA script
-    # https://developers.google.com/analytics/devguides/collection/analyticsjs
-    GA_JS = """
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-################"
-     crossorigin="anonymous"></script>
+	"""Add this in your streamlit app.py
+	see https://github.com/streamlit/streamlit/issues/969
 	"""
-    # Insert the script in the head tag of the static template inside your virtual
-    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
-    #logging.info(f'editing {index_path}')
-    soup = BeautifulSoup(index_path.read_text(), features="lxml")
-    if not soup.find(id=GA_ID):  # if cannot find tag
-        bck_index = index_path.with_suffix('.bck')
-        if bck_index.exists():
-            shutil.copy(bck_index, index_path)  # recover from backup
-        else:
-            shutil.copy(index_path, bck_index)  # keep a backup
-        html = str(soup)
-        new_html = html.replace('<head>', '<head>\n' + GA_JS)
-        index_path.write_text(new_html)
+	# new tag method
+	GA_ID = "google_adsense"
+	# NOTE: you should add id="google_analytics" value in the GA script
+	# https://developers.google.com/analytics/devguides/collection/analyticsjs
+	GA_JS = """
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-################"
+	 crossorigin="anonymous"></script>
+	"""
+	# Insert the script in the head tag of the static template inside your virtual
+	index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+	#logging.info(f'editing {index_path}')
+	soup = BeautifulSoup(index_path.read_text(), features="lxml")
+	if not soup.find(id=GA_ID):  # if cannot find tag
+		bck_index = index_path.with_suffix('.bck')
+		if bck_index.exists():
+			shutil.copy(bck_index, index_path)  # recover from backup
+		else:
+			shutil.copy(index_path, bck_index)  # keep a backup
+		html = str(soup)
+		new_html = html.replace('<head>', '<head>\n' + GA_JS)
+		index_path.write_text(new_html)
 	
 def inject_gad1():
-    """Add this in your streamlit app.py
-    see https://github.com/streamlit/streamlit/issues/969
-    """
-    # new tag method
-    GA_ID = "google_adsense"
-    # NOTE: you should add id="google_analytics" value in the GA script
-    # https://developers.google.com/analytics/devguides/collection/analyticsjs
-    GA_JS = """
+	"""Add this in your streamlit app.py
+	see https://github.com/streamlit/streamlit/issues/969
+	"""
+	# new tag method
+	GA_ID = "google_adsense"
+	# NOTE: you should add id="google_analytics" value in the GA script
+	# https://developers.google.com/analytics/devguides/collection/analyticsjs
+	GA_JS = """
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-#################"
-    	crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script>
 	<!-- pubblicità prova -->
 	<ins class="adsbygoogle"
-    	style="display:block"
-    	data-ad-client="ca-pub-################"
+		style="display:block"
+		data-ad-client="ca-pub-################"
 		data-ad-slot="3333170307"
-     	data-ad-format="auto"
-     	data-full-width-responsive="true"></ins>
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
 	<script>
-     	(adsbygoogle = window.adsbygoogle || []).push({});
+		(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
 	"""
-    # Insert the script in the head tag of the static template inside your virtual
-    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
-    #logging.info(f'editing {index_path}')
-    soup = BeautifulSoup(index_path.read_text(), features="lxml")
-    if not soup.find(id=GA_ID):  # if cannot find tag
-        bck_index = index_path.with_suffix('.bck')
-        if bck_index.exists():
-            shutil.copy(bck_index, index_path)  # recover from backup
-        else:
-            shutil.copy(index_path, bck_index)  # keep a backup
-        html = str(soup)
-        new_html = html.replace('<head>', '<head>\n' + GA_JS)
-        index_path.write_text(new_html)
+	# Insert the script in the head tag of the static template inside your virtual
+	index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+	#logging.info(f'editing {index_path}')
+	soup = BeautifulSoup(index_path.read_text(), features="lxml")
+	if not soup.find(id=GA_ID):  # if cannot find tag
+		bck_index = index_path.with_suffix('.bck')
+		if bck_index.exists():
+			shutil.copy(bck_index, index_path)  # recover from backup
+		else:
+			shutil.copy(index_path, bck_index)  # keep a backup
+		html = str(soup)
+		new_html = html.replace('<head>', '<head>\n' + GA_JS)
+		index_path.write_text(new_html)
 	
 
 def inject_ga():
-    GA_ID = "google_analytics"
+	GA_ID = "google_analytics"
 
-    # Note: Please replace the id from G-XXXXXXXXXX to whatever your
-    # web application's id is. You will find this in your Google Analytics account
-    
-    GA_JS = """
-    <!-- Google tag (gtag.js) -->
+	# Note: Please replace the id from G-XXXXXXXXXX to whatever your
+	# web application's id is. You will find this in your Google Analytics account
+	
+	GA_JS = """
+	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-##########"></script>
 	<script>
-  		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-  		gtag('config', 'G-##########', { 'anonymize_ip': true });
+		gtag('config', 'G-##########', { 'anonymize_ip': true });
 	</script>
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-##########"></script>
 	<script>
-  		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-  		gtag('config', 'G-##########');
+		gtag('config', 'G-##########');
 	</script>
-    """
+	"""
 
-    # Insert the script in the head tag of the static template inside your virtual
-    index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
-    # logging.info(f'editing {index_path}')
-    soup = BeautifulSoup(index_path.read_text(), features="html.parser")
-    if not soup.find(id=GA_ID):  # if cannot find tag
-        bck_index = index_path.with_suffix('.bck')
-        if bck_index.exists():
-            shutil.copy(bck_index, index_path)  # recover from backup
-        else:
-            shutil.copy(index_path, bck_index)  # keep a backup
-        html = str(soup)
-        new_html = html.replace('<head>', '<head>\n' + GA_JS)
-        index_path.write_text(new_html)
+	# Insert the script in the head tag of the static template inside your virtual
+	index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+	# logging.info(f'editing {index_path}')
+	soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+	if not soup.find(id=GA_ID):  # if cannot find tag
+		bck_index = index_path.with_suffix('.bck')
+		if bck_index.exists():
+			shutil.copy(bck_index, index_path)  # recover from backup
+		else:
+			shutil.copy(index_path, bck_index)  # keep a backup
+		html = str(soup)
+		new_html = html.replace('<head>', '<head>\n' + GA_JS)
+		index_path.write_text(new_html)
 
 
 # inject_gad()
@@ -268,42 +268,42 @@ h_plchldr = st.empty()
 sidemenus = st.sidebar
 sidemenus.header('Menu')
 
-dashboard_name = sidemenus.text_input('Nome del progetto:', 
-	help='Alla fine del processo di analisi terziaria dei dati, sara\' possibile scaricare due files \
-		.html riassuntivi dei risultati ottenuti. Le dashboard interattive, create grazie alla libreria `piesparrow`, sono nominate: \
-			\"Dashboard-microbioma-GraficiA[Barre/Torta]-<Nome del progetto>-<variabile di raggruppamento dei campioni>.html\"',
+dashboard_name = sidemenus.text_input('Name of the project:', 
+	help='At the end of the tertiary data analysis two \
+		.html dashboards of results could be downloaded. Created with the library `piesparrow` and named: \
+			\"Dashboard-microbiome-[Bar/Pie]Chart-<name of the project>-<samples grouping variable>.html\"',
 	key='dashboard_name')
 
 if (('dashboard_name' in st.session_state.keys()) and (st.session_state.dashboard_name != '')):
 	pass
 else:
-	st.warning('La pagina e\' in attesa che digiti nel menu\' laterale il nome del progetto')
+	st.warning('The page is awaiting for you to insert a name for the project in the sidebar menu')
 	st.stop()
 
 
 side_subheader_placeholder = sidemenus.empty()
 side_placeholder0 = sidemenus.empty()
 sidemenus.markdown('---')
-sidemenus.markdown('IMPORTANTE (maggiori info ?):')
+sidemenus.markdown('IMPORTANT (more info ?):')
 skip_placeholder = sidemenus.empty()
 sidemenus.markdown('---')
 
 library_PE_SE_placeholder = sidemenus.empty()
 step_n = 0
 
-skip = skip_placeholder.checkbox('Saltare il passaggio di \"Analisi secondaria dati grezzi\" e \
-	andare direttamente al passaggio di \"Analisi terziaria dati pre-processati\".',
-	help='Casella da spuntare per effettuare la analisi terziaria a partire dai files in formato testuale \
-		delle tabelle di OTUs/ASVs e della classificazione tassonomica e dei metadati associati ai campioni. \
-			Casella da spuntare comunque sempre per velocizzare la app alla fine di tutti i passaggi della analisi secondaria dei dati grezzi \
-				e dopo aver scaricato i due files dei risultati in formato .csv (\
-					la tabella delle OTUs/ASVs normalizzata nella sezione _Normalizzazione_ e \
-						la tabella della classificazione tassonomica delle sequenze nella sezione _Classificazione tassonomica_) che \
-							sono da caricare nel form della Analisi terziaria dei dati pre-processati. Il ri-caricamento della pagina della App \
-								avviene di default ad ogni interazione con i pulsanti. Casella da spuntare per minimizzare i tempi di attesa.')
+skip = skip_placeholder.checkbox('Skip the steps of \"Secondary analysis of raw data\" and \
+	go directly to the \"Tertiary analysis of pre-processed data\".',
+	help='To be selected to do the tertiary data analysis \
+		of OTUs/ASVs and taxonomy tables and associated samples\' metadata. \
+			To be always selected at the end of all the steps of the secondary analysis of raw data to speed up the App, \
+				after downloading the two .csv files of results (\
+					OTUs/ASVs rarefied table inside tab _Normalization_ and \
+						taxonomy table inside section _Taxonomic classification_) which \
+							would need to be uploaded inside the tertiary data analysis of pre-processed data form. App page re-run occurs \
+								by default at each user-interaction. To be selected to reduce wait times.')
 
-library_PE_SE = library_PE_SE_placeholder.radio('Tipo di libreria:', options=['Paired-end', 'Single-end'], 
-	help='Metodo di preparazione della libreria Illumina da considerare per il corretto caricamento dei dati grezzi. Fare riferimento al provider dei dati.',
+library_PE_SE = library_PE_SE_placeholder.radio('Library type:', options=['Paired-end', 'Single-end'], 
+	help='Illumina library prep method to be considered for the correct raw data upload. Contact raw data provider.',
 	key='library_radio')
 
 hypervar_regions_plchldr = sidemenus.empty()
@@ -312,76 +312,76 @@ hypervar_regions_plchldr = sidemenus.empty()
 
 @st.cache_resource(show_spinner=True)
 def import_paired_end_fastq_gz_files(_filepath):
-    '''
-    Import R1 and R2 fastq.gz files for all samples in the project.
-    fastq files must be in the Casava 1.8 format.
-    '''
-    paired_end_sequences = qiime2.Artifact.import_data(
-        'SampleData[PairedEndSequencesWithQuality]', 
-        _filepath,
-        'CasavaOneEightSingleLanePerSampleDirFmt')
-    return paired_end_sequences
+	'''
+	Import R1 and R2 fastq.gz files for all samples in the project.
+	fastq files must be in the Casava 1.8 format.
+	'''
+	paired_end_sequences = qiime2.Artifact.import_data(
+		'SampleData[PairedEndSequencesWithQuality]', 
+		_filepath,
+		'CasavaOneEightSingleLanePerSampleDirFmt')
+	return paired_end_sequences
 
 
 @st.cache_resource(show_spinner=True)
 def import_single_end_fastq_gz_files(_filepath):
-    '''
-    Import R1 fastq.gz files for all samples in the project.
-    fastq files must be in the Casava 1.8 format.
-    '''
-    single_end_sequences = qiime2.Artifact.import_data(
-        'SampleData[SequencesWithQuality]', 
-        _filepath,
-        'CasavaOneEightSingleLanePerSampleDirFmt')
-    return single_end_sequences
+	'''
+	Import R1 fastq.gz files for all samples in the project.
+	fastq files must be in the Casava 1.8 format.
+	'''
+	single_end_sequences = qiime2.Artifact.import_data(
+		'SampleData[SequencesWithQuality]', 
+		_filepath,
+		'CasavaOneEightSingleLanePerSampleDirFmt')
+	return single_end_sequences
 
 @st.cache_resource(show_spinner=True)
 def vsearch_join_pairs(_paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs):#minovlen=20, minmergelen=460, maxmergelen=480, maxee=1, maxdiffs=5):
-    '''
-    Performs joining of paired end reads based on given paramenters.
-    Default parameters are set for reads' length of 250 bases (v2 Illumina MiSeq kit)
-    '''
-    demux_joined = vsearch.methods.merge_pairs(
-        demultiplexed_seqs = _paired_end_sequences,
-        minovlen=minovlen,
-        minmergelen=minmergelen,
-        maxmergelen=maxmergelen,
-        maxee=maxee,
-        maxdiffs=maxdiffs)
-    return demux_joined
+	'''
+	Performs joining of paired end reads based on given paramenters.
+	Default parameters are set for reads' length of 250 bases (v2 Illumina MiSeq kit)
+	'''
+	demux_joined = vsearch.methods.merge_pairs(
+		demultiplexed_seqs = _paired_end_sequences,
+		minovlen=minovlen,
+		minmergelen=minmergelen,
+		maxmergelen=maxmergelen,
+		maxee=maxee,
+		maxdiffs=maxdiffs)
+	return demux_joined
 
 
 
 @st.cache_resource(show_spinner=True)
 def quality_filter_paired_end(_demux_joined, min_quality, quality_window):
-    '''
-    Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
-    '''
-    demux_filter = quality_filter.methods.q_score(demux=_demux_joined, min_quality=min_quality, quality_window=quality_window)
-    secure_temp_dir_q_filter_summary = tempfile.mkdtemp(prefix="temp_", suffix="_q_filter_summary")
-    filter_stats = metadata.visualizers.tabulate(demux_filter.filter_stats.view(qiime2.Metadata))
-    filter_stats.visualization.export_data(secure_temp_dir_q_filter_summary)
+	'''
+	Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
+	'''
+	demux_filter = quality_filter.methods.q_score(demux=_demux_joined, min_quality=min_quality, quality_window=quality_window)
+	secure_temp_dir_q_filter_summary = tempfile.mkdtemp(prefix="temp_", suffix="_q_filter_summary")
+	filter_stats = metadata.visualizers.tabulate(demux_filter.filter_stats.view(qiime2.Metadata))
+	filter_stats.visualization.export_data(secure_temp_dir_q_filter_summary)
 
-    df_q_filter = pd.read_csv(secure_temp_dir_q_filter_summary+'/metadata.tsv', sep='\t' , skiprows=[1], index_col='sample-id')
-    df_q_filter.columns = ["total_input_reads", 
-        "total_retained_reads", 
-        "reads_truncated", 
-        "reads_too_short_after_truncation",
-        "reads_exceeding_maximum_ambiguous_bases"]
-    df_q_filter = df_q_filter.eval("""
-        perc_retained_reads = ((total_retained_reads * 100)/total_input_reads)
-        """)
-    cols_renameing = {
-        "total_input_reads": 'totale_sequenze_iniziali', 
-        "total_retained_reads": 'totale_sequenze_accettabili', 
-        "reads_truncated": 'sequenze_troncate', 
-        "reads_too_short_after_truncation": 'sequenze_troncate_troppo_corte_scartate',
-        "reads_exceeding_maximum_ambiguous_bases": ('sequenze_con_oltre_%s_basi_ambigue_scartate' %(quality_window)),
-        'perc_retained_reads': 'percentuale_sequenze_accettabili'
-        }
-    
-    df_q_filter = df_q_filter.rename(cols_renameing, axis=1)
-    return demux_filter, df_q_filter, secure_temp_dir_q_filter_summary
+	df_q_filter = pd.read_csv(secure_temp_dir_q_filter_summary+'/metadata.tsv', sep='\t' , skiprows=[1], index_col='sample-id')
+	df_q_filter.columns = ["total_input_reads", 
+		"total_retained_reads", 
+		"reads_truncated", 
+		"reads_too_short_after_truncation",
+		"reads_exceeding_maximum_ambiguous_bases"]
+	df_q_filter = df_q_filter.eval("""
+		perc_retained_reads = ((total_retained_reads * 100)/total_input_reads)
+		""")
+	# cols_renameing = {
+	#     "total_input_reads": 'totale_sequenze_iniziali', 
+	#     "total_retained_reads": 'totale_sequenze_accettabili', 
+	#     "reads_truncated": 'sequenze_troncate', 
+	#     "reads_too_short_after_truncation": 'sequenze_troncate_troppo_corte_scartate',
+	#     "reads_exceeding_maximum_ambiguous_bases": ('sequenze_con_oltre_%s_basi_ambigue_scartate' %(quality_window)),
+	#     'perc_retained_reads': 'percentuale_sequenze_accettabili'
+	#     }
+	
+	# df_q_filter = df_q_filter.rename(cols_renameing, axis=1)
+	return demux_filter, df_q_filter, secure_temp_dir_q_filter_summary
 
 @st.cache_resource
 def app_alpha_rare_curves(_table, max_depth, metrics):
@@ -404,25 +404,25 @@ def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metada
 
 @st.cache_resource(show_spinner=True)
 def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
-    trunc_len = N
-    pooling_method = "independent"
-    chimera_method = "consensus"
-    n_threads = 0 # all available cores
-    if trim_TF:
-        dada2_sequences = dada2.methods.denoise_single(
-            demultiplexed_seqs = _demux_filter,
-            trunc_len=trunc_len,
-            pooling_method=pooling_method, 
-            chimera_method=chimera_method,
-            n_threads=n_threads)
-    else:
-        dada2_sequences = dada2.methods.denoise_single(
-            demultiplexed_seqs = _demux_filter,
-            trunc_len=0, # disable trimming
-            pooling_method=pooling_method,
-            chimera_method=chimera_method,
-            n_threads=n_threads)
-    return dada2_sequences
+	trunc_len = N
+	pooling_method = "independent"
+	chimera_method = "consensus"
+	n_threads = 0 # all available cores
+	if trim_TF:
+		dada2_sequences = dada2.methods.denoise_single(
+			demultiplexed_seqs = _demux_filter,
+			trunc_len=trunc_len,
+			pooling_method=pooling_method, 
+			chimera_method=chimera_method,
+			n_threads=n_threads)
+	else:
+		dada2_sequences = dada2.methods.denoise_single(
+			demultiplexed_seqs = _demux_filter,
+			trunc_len=0, # disable trimming
+			pooling_method=pooling_method,
+			chimera_method=chimera_method,
+			n_threads=n_threads)
+	return dada2_sequences
 
 
 
@@ -430,156 +430,156 @@ def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
 
 @st.cache_resource(show_spinner=True)
 def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
-    '''
-    Performs denoising of data and trimming at position N, which is defined by the user based on
-    the filter stats --> position in the reads where the median quality score drops too low.
-    Only forward reads are supported at this time, so perform paired-end reads joining first.
-    If trim_TF is True, trimming is enabled at length N.
-    Otherwise, if trim_TF is False, disable trimming.
-    "Deblur operates only on same length sequences. " from the web https://forum.qiime2.org/t/deblur-plugin-error/2172
-    '''
-    if trim_TF:
-        deblur_sequences = deblur.methods.denoise_16S(
-            _demux_filter,
-            trim_length=N, # disable trimming
-            sample_stats=True, 
-            jobs_to_start=57)
-    else:
-        deblur_sequences = deblur.methods.denoise_16S(
-            _demux_filter,
-            trim_length=-1, # disable trimming
-            sample_stats=True,
-            jobs_to_start=57)
-    return deblur_sequences
+	'''
+	Performs denoising of data and trimming at position N, which is defined by the user based on
+	the filter stats --> position in the reads where the median quality score drops too low.
+	Only forward reads are supported at this time, so perform paired-end reads joining first.
+	If trim_TF is True, trimming is enabled at length N.
+	Otherwise, if trim_TF is False, disable trimming.
+	"Deblur operates only on same length sequences. " from the web https://forum.qiime2.org/t/deblur-plugin-error/2172
+	'''
+	if trim_TF:
+		deblur_sequences = deblur.methods.denoise_16S(
+			_demux_filter,
+			trim_length=N, # disable trimming
+			sample_stats=True, 
+			jobs_to_start=57)
+	else:
+		deblur_sequences = deblur.methods.denoise_16S(
+			_demux_filter,
+			trim_length=-1, # disable trimming
+			sample_stats=True,
+			jobs_to_start=57)
+	return deblur_sequences
 
 
 @st.cache_resource(show_spinner=True)
 def import_SequencesWithQuality(_filepath):
-    '''
-    Import R1 fastq.gz files for all samples in the project.
-    fastq files must be in the Casava 1.8 format.
-    '''
-    single_end_sequences = qiime2.Artifact.import_data(
-        'SampleData[SequencesWithQuality]', 
-        _filepath,
-        'SingleLanePerSampleSingleEndFastqDirFmt')
-    return single_end_sequences
+	'''
+	Import R1 fastq.gz files for all samples in the project.
+	fastq files must be in the Casava 1.8 format.
+	'''
+	single_end_sequences = qiime2.Artifact.import_data(
+		'SampleData[SequencesWithQuality]', 
+		_filepath,
+		'SingleLanePerSampleSingleEndFastqDirFmt')
+	return single_end_sequences
 
 
 @st.cache_resource
 def import_gg_13_8_pre_trained_classifier(filepath):
-    '''
-    Import reference Green Genes 13/8 otus sequences
-    '''
-    ref_gg_13_8_pre_trained_classifier = qiime2.Artifact.import_data(
-        'TaxonomicClassifier', 
-        filepath)
-    return ref_gg_13_8_pre_trained_classifier
+	'''
+	Import reference Green Genes 13/8 otus sequences
+	'''
+	ref_gg_13_8_pre_trained_classifier = qiime2.Artifact.import_data(
+		'TaxonomicClassifier', 
+		filepath)
+	return ref_gg_13_8_pre_trained_classifier
 
 @st.cache_resource
 def import_ref_gg_13_8_otus_seqs(filepath):
-    '''
-    Import reference Green Genes 13/8 otus sequences
-    '''
-    ref_gg_13_8_seqs = qiime2.Artifact.import_data(
-        'FeatureData[Sequence]', 
-        filepath)
-    return ref_gg_13_8_seqs
+	'''
+	Import reference Green Genes 13/8 otus sequences
+	'''
+	ref_gg_13_8_seqs = qiime2.Artifact.import_data(
+		'FeatureData[Sequence]', 
+		filepath)
+	return ref_gg_13_8_seqs
 
 @st.cache_resource
 def import_ref_gg_13_8_otus_taxonomy(filepath):
-    '''
-    Import reference Green Genes 13/8 taxonomy
-    '''
-    ref_gg_13_8_taxonomy = qiime2.Artifact.import_data(
-        'FeatureData[Taxonomy]', 
-        filepath)
-    return ref_gg_13_8_taxonomy
+	'''
+	Import reference Green Genes 13/8 taxonomy
+	'''
+	ref_gg_13_8_taxonomy = qiime2.Artifact.import_data(
+		'FeatureData[Taxonomy]', 
+		filepath)
+	return ref_gg_13_8_taxonomy
 
 
 #########################
 # Funzione per aggiungere una casella da spuntare per filtrare un df interattivamente
 from pandas.api.types import (
-    is_categorical_dtype,
-    is_datetime64_any_dtype,
-    is_numeric_dtype,
-    is_object_dtype,
+	is_categorical_dtype,
+	is_datetime64_any_dtype,
+	is_numeric_dtype,
+	is_object_dtype,
 )
 
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Adds a UI on top of a dataframe to let viewers filter columns
+	"""
+	Adds a UI on top of a dataframe to let viewers filter columns
 
-    Args:
-        df (pd.DataFrame): Original dataframe
+	Args:
+		df (pd.DataFrame): Original dataframe
 
-    Returns:
-        pd.DataFrame: Filtered dataframe
-    """
-    modify = st.checkbox("Aggiungi filtri alla tabella")
+	Returns:
+		pd.DataFrame: Filtered dataframe
+	"""
+	modify = st.checkbox("Add filters to table")
 
-    if not modify:
-        return df
+	if not modify:
+		return df
 
-    df = df.copy()
+	df = df.copy()
 
-    # Try to convert datetimes into a standard format (datetime, no timezone)
-    for col in df.columns:
-        if is_object_dtype(df[col]):
-            try:
-                df[col] = pd.to_datetime(df[col])
-            except Exception:
-                pass
+	# Try to convert datetimes into a standard format (datetime, no timezone)
+	for col in df.columns:
+		if is_object_dtype(df[col]):
+			try:
+				df[col] = pd.to_datetime(df[col])
+			except Exception:
+				pass
 
-        if is_datetime64_any_dtype(df[col]):
-            df[col] = df[col].dt.tz_localize(None)
+		if is_datetime64_any_dtype(df[col]):
+			df[col] = df[col].dt.tz_localize(None)
 
-    modification_container = st.container()
+	modification_container = st.container()
 
-    with modification_container:
-        to_filter_columns = st.multiselect("Filtra il dataframe in base a", df.columns)
-        for column in to_filter_columns:
-            left, right = st.columns((1, 20))
-            # Treat columns with < 10 unique values as categorical
-            if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
-                user_cat_input = right.multiselect(
-                    f"Valori per {column}",
-                    df[column].unique(),
-                    default=list(df[column].unique()),
-                )
-                df = df[df[column].isin(user_cat_input)]
-            elif is_numeric_dtype(df[column]):
-                _min = float(df[column].min())
-                _max = float(df[column].max())
-                step = (_max - _min) / 100
-                user_num_input = right.slider(
-                    f"Valori per {column}",
-                    min_value=_min,
-                    max_value=_max,
-                    value=(_min, _max),
-                    step=step,
-                )
-                df = df[df[column].between(*user_num_input)]
-            elif is_datetime64_any_dtype(df[column]):
-                user_date_input = right.date_input(
-                    f"Valori per {column}",
-                    value=(
-                        df[column].min(),
-                        df[column].max(),
-                    ),
-                )
-                if len(user_date_input) == 2:
-                    user_date_input = tuple(map(pd.to_datetime, user_date_input))
-                    start_date, end_date = user_date_input
-                    df = df.loc[df[column].between(start_date, end_date)]
-            else:
-                user_text_input = right.text_input(
-                    f"Sottostringa o regex in {column}",
-                )
-                if user_text_input:
-                    df = df[df[column].astype(str).str.contains(user_text_input)]
+	with modification_container:
+		to_filter_columns = st.multiselect("Filter the dataframe based on", df.columns)
+		for column in to_filter_columns:
+			left, right = st.columns((1, 20))
+			# Treat columns with < 10 unique values as categorical
+			if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+				user_cat_input = right.multiselect(
+					f"Values for {column}",
+					df[column].unique(),
+					default=list(df[column].unique()),
+				)
+				df = df[df[column].isin(user_cat_input)]
+			elif is_numeric_dtype(df[column]):
+				_min = float(df[column].min())
+				_max = float(df[column].max())
+				step = (_max - _min) / 100
+				user_num_input = right.slider(
+					f"Values for {column}",
+					min_value=_min,
+					max_value=_max,
+					value=(_min, _max),
+					step=step,
+				)
+				df = df[df[column].between(*user_num_input)]
+			elif is_datetime64_any_dtype(df[column]):
+				user_date_input = right.date_input(
+					f"Values for {column}",
+					value=(
+						df[column].min(),
+						df[column].max(),
+					),
+				)
+				if len(user_date_input) == 2:
+					user_date_input = tuple(map(pd.to_datetime, user_date_input))
+					start_date, end_date = user_date_input
+					df = df.loc[df[column].between(start_date, end_date)]
+			else:
+				user_text_input = right.text_input(
+					f"Substring or regex in {column}",
+				)
+				if user_text_input:
+					df = df[df[column].astype(str).str.contains(user_text_input)]
 
-    return df
+	return df
 
 # Funzione per la creazione di un archivio .zip di una cartella mantenendo la struttura delle sotto cartelle
 def zipfolder(foldername, target_dir):            
@@ -676,7 +676,7 @@ def form_callback_vsearch_join(_paired_end_sequences, imported_sequences_temp_di
 	# todo
 
 	demux_joined = vsearch_join_pairs(_paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs)
-	err = 'prova'
+	err = 'test'
 
 	secure_temp_dir_joined_summary = tempfile.mkdtemp(prefix="temp_", suffix="_demux_joined_summary")
 	demux_joined_summary = demux.visualizers.summarize(demux_joined.merged_sequences)
@@ -730,20 +730,20 @@ def create_final_df(x,y):
 			data_tax_tmp = data_tax['Taxon'].str.split(';', expand=True)
 			if len(data_tax_tmp.columns) == 6:
 				data_tax[['Kingdom',
-              		'Phylum',
+					'Phylum',
 					'Class',
 					'Order',
 					'Family',
 					'Genus']] = data_tax_tmp
 				data_tax = data_tax[['Kingdom',
-              		'Phylum',
+					'Phylum',
 					'Class',
 					'Order',
 					'Family',
 					'Genus']]
 			elif len(data_tax_tmp.columns) == 7:
 				data_tax[['Kingdom',
-              		'Phylum',
+					'Phylum',
 					'Class',
 					'Order',
 					'Family',
@@ -751,7 +751,7 @@ def create_final_df(x,y):
 					'Species']] = data_tax_tmp
 				# Mantenimento delle sole colonne nuove create sopra
 				data_tax = data_tax[['Kingdom',
-              		'Phylum',
+					'Phylum',
 					'Class',
 					'Order',
 					'Family',
@@ -804,17 +804,17 @@ def create_final_df(x,y):
 	data_tax.index.name = '#TAXONOMY'			
 
 	# Rinominazione delle colonne dei livelli tassonomici in italiano:
-	final_df_taxonomy_level_ITA_col_names = {
-		'Domain': 'Regno',
-		'Kingdom': 'Regno',
-		'Class': 'Classe',
-		'Order': 'Ordine',
-		'Family': 'Famiglia',
-		'Genus': 'Genere',
-		'Species': 'Specie',
-		'feature': 'Variante'
-		}
-	data_tax = data_tax.rename(final_df_taxonomy_level_ITA_col_names, axis=1)
+	# final_df_taxonomy_level_ITA_col_names = {
+	# 	'Domain': 'Regno',
+	# 	'Kingdom': 'Regno',
+	# 	'Class': 'Classe',
+	# 	'Order': 'Ordine',
+	# 	'Family': 'Famiglia',
+	# 	'Genus': 'Genere',
+	# 	'Species': 'Specie',
+	# 	'feature': 'Variante'
+	# 	}
+	# data_tax = data_tax.rename(final_df_taxonomy_level_ITA_col_names, axis=1)
 	
 	if x.name.endswith('.tsv'):		
 		data_OTU = pd.read_csv(x, sep='\t', index_col=0) # indici consentiti: #NAME
@@ -845,7 +845,7 @@ def create_final_df(x,y):
 		final_df = data_tax_multi.merge(data_OTU, left_on='#TAXONOMY', right_index=True, how='inner')
 		key_error_warning = ''
 	except KeyError as e:
-		key_error_warning = 'Le sequenze del file OTU e del file taxonomy non corrispondono %s' %e
+		key_error_warning = 'Sequences of OTU file and taxonomy file do not match %s' %e
 		final_df = pd.concat([data_tax_multi,data_OTU])
 		final_df[final_df.duplicated('#TAXONOMY', keep=False)]
 
@@ -925,13 +925,13 @@ def OTUs_annots_freqs(_idx_sample_grouping):
 			
 			# per la tab grafico delle abbondanze relative
 		
-			if ((st.session_state.tax_level_radio != 'Phylum') and (st.session_state.tax_level_radio != 'Regno')):
+			if ((st.session_state.tax_level_radio != 'Phylum') and (st.session_state.tax_level_radio != 'Kingdom')):
 				df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][(pd.Index(['Phylum'])).append((pd.Index(grouped_samples))).append((pd.Index([st.session_state.tax_level_radio])))])
 				df1_d[grouping_key] = df1
 			elif st.session_state.tax_level_radio == 'Phylum':
-				df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][(pd.Index(['Regno'])).append((pd.Index(grouped_samples))).append((pd.Index([st.session_state.tax_level_radio])))])
+				df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][(pd.Index(['Kingdom'])).append((pd.Index(grouped_samples))).append((pd.Index([st.session_state.tax_level_radio])))])
 				df1_d[grouping_key] = df1
-			elif st.session_state.tax_level_radio == 'Regno':
+			elif st.session_state.tax_level_radio == 'Kingdom':
 				df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][(pd.Index(grouped_samples)).append((pd.Index([st.session_state.tax_level_radio])))])
 				df1_d[grouping_key] = df1
 			
@@ -988,7 +988,7 @@ def OTUs_annots_freqs(_idx_sample_grouping):
 			df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][['Genere'] + grouped_samples + [st.session_state.tax_level_radio]])
 			
 			df1_d[grouping_key] = df1
-			warning_tab_num_of_OTUs_per_taxon = 'Non e\' possibile visualizzare i grafici a livello OTU.'
+			warning_tab_num_of_OTUs_per_taxon = 'It\'s not possible to visualize charts at the OTU level.'
 
 			# Frequenza delle annotazioni tassonomiche
 			taxa, counts = np.unique(df[st.session_state.tax_level_radio].values, return_counts=True)
@@ -1032,25 +1032,25 @@ def app_alpha_divs(_table):
 if skip is False:
 
 	step_n += 1
-	side_subheader_placeholder.subheader('***Analisi secondaria dati grezzi***')
-	side_placeholder0.info('***%s.*** Caricamento dati' %(step_n))
-	h_plchldr.header('***Analisi secondaria dei dati grezzi***')
+	side_subheader_placeholder.subheader('***Secondary analysis raw data***')
+	side_placeholder0.info('***%s.*** Data upload' %(step_n))
+	h_plchldr.header('***Secondary analysis of raw data***')
 
 	
 	# Form di caricamento dati
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
 			
-			library_radio_help_string = 'caricare un file R1 per ogni campione \
-				\n> formato del nome file: [NomeCampione]_[index]_[L001]_R1_[001].fastq.gz'
+			library_radio_help_string = 'Upload a R1 file for each sample \
+				\n> Filename format: [SampleID]_[index]_[L001]_R1_[001].fastq.gz'
 			import_function = import_single_end_fastq_gz_files
-			df_cols_to_rename = {'forward sequence count': 'numero letture R1'}
+			df_cols_to_rename = {'forward sequence count': 'forward sequence count'}
 		elif st.session_state.library_radio == 'Paired-end':
 			
-			library_radio_help_string = 'caricare un file R1 ed un file R2 per ogni campione\
-				\n> formato del nome file: [NomeCampione]_[index]_[L001]_R[1-2]_[001].fastq.gz'
+			library_radio_help_string = 'Upload a R1 and a R2 file for each sample\
+				\n> Filename format: [SampleID]_[index]_[L001]_R[1-2]_[001].fastq.gz'
 			import_function = import_paired_end_fastq_gz_files
-			df_cols_to_rename = {'forward sequence count': 'numero letture R1', 'reverse sequence count': 'numero letture R2'}
+			df_cols_to_rename = {'forward sequence count': 'forward sequence count', 'reverse sequence count': 'reverse sequence count'}
 
 
 		lbl_plchldr = st.empty()
@@ -1059,17 +1059,17 @@ if skip is False:
 			label = 'Files fastq.gz:',
 			key='demux_fastq_input',
 			accept_multiple_files = True,
-			help='Caricare i files dei dati grezzi da analizzare. Formato dei files accettato: fastq.gz, codifica Phred + 33. \
-				\n> Il metodo di preparazione della libreria Illumina selezionato nel menu\' a lato e\' __%s__: %s.' %(st.session_state.library_radio, library_radio_help_string))
+			help='Upload raw data files to be analyzed. Accepted file formats: fastq.gz, Phred + 33. \
+				\n> Illumina library prep method selected in the sidebar menu is __%s__: %s.' %(st.session_state.library_radio, library_radio_help_string))
 
 		
 		submit_button = st.form_submit_button(
-			label='Carica',  type="primary"
+			label='Upload',  type="primary"
 			)
 		
 		clear_files_and_cache_bttn_plchldr = st.empty()
 		# bottone per cancellare i file caricati in precedenza e la cache associata, da cliccare per modificare i files fastq.gz
-		clear_files_and_cache_button = clear_files_and_cache_bttn_plchldr.form_submit_button('Modifica dati')
+		clear_files_and_cache_button = clear_files_and_cache_bttn_plchldr.form_submit_button('Modify data files')
 	
 		
 	
@@ -1086,18 +1086,18 @@ if skip is False:
 			imported_sequences = import_function(imported_sequences_temp_dir)
 			st.session_state.imported_sequeces = imported_sequences
 
-			st.success('Caricamento dei dati grezzi riuscito.')
-			lbl_plchldr.info('***ATTENZIONE!*** Per modificare i dati caricati in precedenza ed eseguire da zero una nuova analisi: \
-				\n> :one: cancellare manualmente tutti i files gia\' caricati cliccando sulla :x: corrispondente a lato; \
-				\n> :two: __selezionare o trascinare__ i files fastq.gz da analizzare; \
-				\n> :three: cliccare su __Modifica dati__: la pagina verra\' ricaricata mantenendo i files in memoria; \
-				\n> :four: cliccare su __Carica__')
+			st.success('Successfully uploaded raw data.')
+			lbl_plchldr.info('***ATTENTION!*** To modify previously uploaded files and re-run an analysis from scratch: \
+				\n> :one: manually delete all files by clicking on each :x: ; \
+				\n> :two: __Select or drag and drop__ new fastq.gz files; \
+				\n> :three: click __Modify data files__: the page will be re-ran and new files kept in memory; \
+				\n> :four: click Upload')
 			
 			
 				
 			
-			side_placeholder0.success('***%s.*** Caricamento dati \
-				\n> Tab %s. Statistiche riassuntive dei dati grezzi' %(step_n, step_n))
+			side_placeholder0.success('***%s.*** Data upload \
+				\n> Tab %s. Raw data summary statistics' %(step_n, step_n))
 
 			step_n += 1
 
@@ -1110,18 +1110,18 @@ if skip is False:
 
 			
 			descr_plchldr = st.empty()
-			descr_plchldr.markdown('La pagina principale mostra i risultati e si deve scrollare. Le tab vanno navigate in ordine \
-			per impostare i parametri dei diversi passaggi del processamento dei dati grezzi.')
+			descr_plchldr.markdown('The main page shows results and is to be scrolled. The tabs are to be navigated in order \
+			to set the parameters of the raw data analysis steps.')
 			
-			st.markdown('***Si devono navigare le tab qui sotto in ordine per eseguire \
-				passo-passo il pre-processamento dei dati grezzi.*** ')
+			st.markdown('***You should navigate the tabs below in order to execute step-by-step \
+				raw data pre-processing.*** ')
 		
 		except Exception as e:
 
 			if e.__class__ is qiime2.core.exceptions.ValidationError:
-				st.warning('I files di sequenziamento devono corrispondere al \
-					tipo di libreria Illumina selezionato a lato (%s). \
-					Per maggiori informazioni vedere il ? in alto a destra nel form sopra.' %(library_PE_SE))
+				st.warning('Sequencing files must match Illumina library prep method \
+					selected in the sidebar menu (%s). \
+					For more infos see the ? in the upper right in the above form.' %(library_PE_SE))
 			
 			st.stop()
 
@@ -1136,23 +1136,23 @@ if skip is False:
 		
 	if st.session_state.library_radio == 'Single-end':
 		# Definizione di 4 tabs per la visualizzazione degli step di pre-processamento dei dati grezzi
-		tab_summary_stats, tab_QC, tab_denoising, tab_taxonomy, tab_rarefaction, tab_diversity, tab_phylogenetic_tree = st.tabs([':one: Statistiche riassuntive dei dati grezzi', 
-		':two: Controllo qualita\'', 
+		tab_summary_stats, tab_QC, tab_denoising, tab_taxonomy, tab_rarefaction, tab_diversity, tab_phylogenetic_tree = st.tabs([':one: Raw data summary statistics', 
+		':two: Quality control', 
 		':three: Denoising', 
-		':four: Classificazione tassonomica',
-		':five: Normalizzazione',
-		':six: Alfa e beta diversita\'',
-		':seven: Albero filogenetico'])
+		':four: Taxonomic classification',
+		':five: Normalization',
+		':six: Alpha and beta diversity\'',
+		':seven: Phylogenetic tree'])
 	elif st.session_state.library_radio == 'Paired-end':
 		# Definizione di 5 tabs per la visualizzazione degli step di pre-processamento dei dati grezzi
-		tab_summary_stats, tab_join, tab_QC, tab_denoising, tab_taxonomy, tab_rarefaction, tab_diversity, tab_phylogenetic_tree = st.tabs([':one: Statistiche riassuntive dei dati grezzi', 
-		':two: Fusione R1 ed R2', 
-		':three: Controllo qualita\'', 
+		tab_summary_stats, tab_join, tab_QC, tab_denoising, tab_taxonomy, tab_rarefaction, tab_diversity, tab_phylogenetic_tree = st.tabs([':one: Raw data summary statistics', 
+		':two: R1 and R2 merging', 
+		':three: Quality control', 
 		':four: Denoising',
-		':five: Classificazione tassonomica', 
-		':six: Normalizzazione',
-		':seven: Alfa e beta diversita\'',
-		':eight: Albero filogenetico'
+		':five: Taxonomic classification', 
+		':six: Normalization',
+		':seven: Alpha and beta diversity\'',
+		':eight: Phylogenetic tree'
 		]
 		)
 	
@@ -1164,7 +1164,7 @@ if skip is False:
 		
 	except Exception as e:
 		st.exception(e)
-		st.error('Errore nel calcolo delle statistiche riassuntive dei dati grezzi')
+		st.error('Error during computing of summary statistics of raw data')
 		st.stop()
 	st.balloons()
 
@@ -1173,26 +1173,26 @@ if skip is False:
 		
 		df = demux_summary.rename(df_cols_to_rename, axis=1)
 		st.session_state.demux_summary_df = df
-		st.subheader('Conte delle sequenze per campione')
+		st.subheader('Sequence count per sample')
 		try:
-			st.write('Totale Campioni: %s R1, %s R2' %(
-			len(~df['numero letture R1'].isna()),
-			len(~df['numero letture R2'].isna())))
+			st.write('Total samples: %s R1, %s R2' %(
+			len(~df['forward sequence count'].isna()),
+			len(~df['reverse sequence count'].isna())))
 		except:
-			st.write('Totale Campioni: %s R1' %(
-			len(~df['numero letture R1'].isna())))
+			st.write('Total samples: %s R1' %(
+			len(~df['forward sequence count'].isna())))
 		
 		tabella_df = df
 		st.table(tabella_df.style.format(formatter='{:,.0f}'))
 
 		csv = convert_df(tabella_df)
 		ste.download_button(
-			label="Scarica tabella in formato CSV",
+			label="Download CSV table",
 			data=csv,
-			file_name='conte_delle_sequenze_per_campione.csv',
+			file_name='sequence_counts_per_sample.csv',
 			mime='text/csv')
 
-		st.table(pd.DataFrame(df.sum().rename('Totale')).T.style.format(formatter='{:,.0f}'))
+		st.table(pd.DataFrame(df.sum().rename('Total')).T.style.format(formatter='{:,.0f}'))
 		
 		cols = st.columns((1,1))
 		forw_subheader = cols[0].empty()
@@ -1209,11 +1209,11 @@ if skip is False:
 		elif (len(df.index) > 10):
 			bins = 10
 		try:
-			forw_subheader.subheader('Istogramma di frequenza delle letture R1')
+			forw_subheader.subheader('Forward reads frequency histogram')
 			fig, ax = plt.subplots()
-			ax = df['numero letture R1'].plot.hist(bins=bins, color='grey', linewidth=1, edgecolor='black')
-			ax.set_xlabel('Numero di sequenze')
-			ax.set_ylabel('Numero di campioni')
+			ax = df['forward sequence count'].plot.hist(bins=bins, color='grey', linewidth=1, edgecolor='black')
+			ax.set_xlabel('Number of sequences')
+			ax.set_ylabel('Number of samples')
 
 			cols[0].pyplot(fig)
 
@@ -1224,11 +1224,11 @@ if skip is False:
 			pass
 
 		try:
-			rev_subheader.subheader('Istogramma di frequenza delle letture R2')
+			rev_subheader.subheader('Reverse reads frequency histogram')
 			fig, ax = plt.subplots()
-			ax = df['numero letture R2'].plot.hist(bins=bins, color='grey', linewidth=1, edgecolor='black')
-			ax.set_xlabel('Numero di sequenze')
-			ax.set_ylabel('Numero di campioni')
+			ax = df['reverse sequence count'].plot.hist(bins=bins, color='grey', linewidth=1, edgecolor='black')
+			ax.set_xlabel('Number of sequences')
+			ax.set_ylabel('Number of samples')
 
 			cols[1].pyplot(fig)
 
@@ -1238,42 +1238,45 @@ if skip is False:
 			pass
 
 		
-		st.subheader('Sommario delle conte delle sequenze')
-		tabella_df = df.describe().rename(
-			{'count': 'num. campioni', 
-			'mean': 'media',
-			'std': 'dev. standard',
-			'min': 'minimo',
-			'max': 'massimo'}, axis=0).drop('num. campioni', axis=0)
+		st.subheader('Sequence counts summary')
+		tabella_df = df.describe()
+		# .rename(
+		# 	{'count': 'num. campioni', 
+		# 	'mean': 'media',
+		# 	'std': 'dev. standard',
+		# 	'min': 'minimo',
+		# 	'max': 'massimo'}, axis=0).drop('num. campioni', axis=0)
 		st.table(tabella_df.style.format(formatter='{:,.2f}'))
 
 		csv = convert_df(tabella_df)
 		ste.download_button(
-			label="Scarica tabella in formato CSV",
+			label="Download CSV table",
 			data=csv,
-			file_name='sommario_delle_conte_delle_sequenze.csv',
+			file_name='sequenze_counts_summary.csv',
 			mime='text/csv')
 
-		st.subheader('Sommario della distribuzione delle lunghezze delle letture')
+		st.subheader('Reads length distribution summary')
 		source_code = source_code_demux_summary
-
-		dff_R1= pd.DataFrame(pd.read_html(source_code,thousands='.')[0]).replace({
-			'Total Sequences Sampled': 'Totale sequenze campionate', 
-			'50% (Median)': '50% (Mediana)'}
-			)
-		dff_R1 = dff_R1.rename({'Unnamed: 0': 'indice', 'Unnamed: 1': 'Letture R1'}, axis=1).set_index('indice')
-		try:
 		
-			dff_R2 = pd.DataFrame(pd.read_html(source_code,thousands='.')[1]).replace({
-				'Total Sequences Sampled': 'Totale sequenze campionate', 
-				'50% (Median)': '50% (Mediana)'}
-				)
-			dff_R2 = dff_R2.rename({'Unnamed: 0': 'indice', 'Unnamed: 1': 'Letture R2'}, axis=1).set_index('indice')
+		dff_R1= pd.DataFrame(pd.read_html(source_code,thousands='.')[0])
+		# .replace({
+		# 	'Total Sequences Sampled': 'Totale sequenze campionate', 
+		# 	'50% (Median)': '50% (Mediana)'}
+		# 	)
+		dff_R1 = dff_R1.rename({'Unnamed: 0': 'index', 'Unnamed: 1': 'Forward reads'}, axis=1).set_index('index')
+		try:
+		  
+			dff_R2 = pd.DataFrame(pd.read_html(source_code,thousands='.')[1])
+			# .replace({
+			# 	'Total Sequences Sampled': 'Totale sequenze campionate', 
+			# 	'50% (Median)': '50% (Mediana)'}
+			# 	)
+			dff_R2 = dff_R2.rename({'Unnamed: 0': 'index', 'Unnamed: 1': 'Reverse reads'}, axis=1).set_index('index')
 		
 			tabella_dff = pd.merge(dff_R1, dff_R2, left_index=True, right_index=True)
 		except Exception as e:
 			
-			st.warning('Sequeze Single-end')
+			st.warning('Single-end sequences')
 			tabella_dff = dff_R1
 
 		st.table(tabella_dff)
