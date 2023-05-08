@@ -1296,51 +1296,51 @@ if skip is False:
 		with tab_join:
 			
 			side_placeh1 = sidemenus.empty()
-			side_placeh1.info('***%s.*** Selezione parametri di fusione letture R1 ed R2 \
-				\n > Tab %s. Fusione R1 ed R2' %(step_n, step_n))
+			side_placeh1.info('***%s.*** Set R1 and R2 reads merging parameters \
+				\n > Tab %s. R1 and R2 merging' %(step_n, step_n))
 
 			hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 			with hypervar_regions_form:
-				hypervar_regions = st.radio(label='Regioni ipervariabili del gene per 16S rRNA target del sequenziamento:',
+				hypervar_regions = st.radio(label='Sequencing target hypervariable regions of the 16S rRNA gene:',
 				options=['V3V4', 'V4'],
 				index=0,
-				help='Regioni target del sequenziamento da considerare per determinare la lunghezza del frammento atteso.',
+				help='Sequencing target regions to be considered to determine expected fragment length.',
 				key='hypervar_regions_radio')
-				hypervar_btn = st.form_submit_button('Conferma')
+				hypervar_btn = st.form_submit_button('Confirm')
 			
 			if ((hypervar_btn) or ('hypervar_regions_radio' in st.session_state.keys())):
 				pass
 			else:
-				st.warning('La pagina e\' in attesa che selezioni un target dei dati di sequenziamento nel menu\' a lato.')
+				st.warning('The page is awaiting for you to select a sequencing target region in the sidebar menu.')
 				st.stop()
 
-			st.markdown('Parametri consigliati per la fusione delle letture R1 ed R2:')
+			st.markdown('Suggested parameters for R1 and R2 reads merging:')
 			cols = st.columns((1,1))
 
 			# Blocco di codice per impostare i suggerimenti dei parametri di fusione delle reads R1 ed R2 in base alla lunghezza delle letture (cartucce
 			# e tecnologia di sequenziamento)
 			if ((approx_reads_lenght_R1 == 250) or (approx_reads_lenght_R1 == 300)):
 
-				reads_lenght_R1_input = cols[0].number_input('Lunghezza delle letture R1:', help='Per suggerire i parametri adatti \
-					alla fusione delle letture R1 ed R2 a ricostruire il cosiddetto frammento atteso. \
-						\n> Pre-impostato il valore approssimativo in base alle analisi effettuate. \
-						Tale valore varia in base alla tecnologia di sequenziamento. \
-						Fare riferimento al provider dei dati.',
+				reads_lenght_R1_input = cols[0].number_input('R1 reads length:', help='Needed to suggest the correct parameters \
+					for R1 and R2 reads merging to obtain the expected fragment. \
+						\n> Default approximate value based on previous analysis. \
+						This value varies based on the sequencing technology. \
+						Contact raw data provider.',
 						min_value=250, max_value=300, step=50, value=approx_reads_lenght_R1, key='reads_lenght_R1_n_input')
 			else:
 
 				st.session_state.reads_lenght_R1_n_input = approx_reads_lenght_R1
-				cols[0].markdown('Lunghezza approssimativa letture R1: %s' %(st.session_state.reads_lenght_R1_n_input))
+				cols[0].markdown('Approximate R1 reads length: %s' %(st.session_state.reads_lenght_R1_n_input))
 			
 			if ((approx_reads_lenght_R2 == 250) or (approx_reads_lenght_R2 == 300)):
 
-				reads_lenght_R2_input = cols[1].number_input('Lunghezza delle letture R2:', help='La lunghezza delle letture R2 dovrebbe essere \
-					uguale a quella delle letture R1. Valore mostrato solo per riferimento e confronto.',
+				reads_lenght_R2_input = cols[1].number_input('R2 reads length:', help='R2 reads length should be \
+					equal to that of R1 reads. This value is only showed for precision check.',
 						min_value=250, max_value=300, step=50, value=approx_reads_lenght_R2, key='reads_lenght_R2_n_input', disabled=True)
 			else:
 
 				st.session_state.reads_lenght_R2_n_input = approx_reads_lenght_R2
-				cols[1].markdown('Lunghezza approssimativa letture R2: %s' %(st.session_state.reads_lenght_R2_n_input))
+				cols[1].markdown('Approximate R2 reads length: %s' %(st.session_state.reads_lenght_R2_n_input))
 
 			
 
@@ -1360,11 +1360,11 @@ if skip is False:
 				
 				suggested_joining_params_label = ' \
 					\n> __MiSeq V2 flowcells (250x2 bps):__ \
-					\n * lunghezza minima di sovrapposizione fra R1 ed R2 = %s; \
-					\n * lunghezza minima frammeto di fusione = %s;\
-					\n * lunghezza massima frammento di fusione = %s;\
-					\n * numero di errori atteso massimo = %s;\
-					\n * numero di differenze massimo = %s' %(minovlen_n, minmergelen_n, maxmergelen_n, maxee_n, maxdiffs_n)
+					\n * Minimum overlapping length between R1 and R2 reads = %s; \
+					\n * Minimum expected fragment length = %s;\
+					\n * Maximum expected fragment length = %s;\
+					\n * Maximum expected errors number = %s;\
+					\n * Maximum number of differences = %s' %(minovlen_n, minmergelen_n, maxmergelen_n, maxee_n, maxdiffs_n)
 			elif st.session_state.reads_lenght_R1_n_input == 300:
 				if st.session_state.hypervar_regions_radio == 'V3V4':
 					minovlen_n = 60
@@ -1381,16 +1381,16 @@ if skip is False:
 				
 				suggested_joining_params_label = '\
 					\n> __MiSeq V3 flowcells (300x2 bps):__ \
-					\n * lunghezza minima di sovrapposizione fra R1 ed R2 = %s; \
-					\n * lunghezza minima frammeto di fusione = %s;\
-					\n * lunghezza massima frammento di fusione = %s;\
-					\n * numero di errori atteso massimo = %s;\
-					\n * numero di differenze massimo = %s' %(minovlen_n, minmergelen_n, maxmergelen_n, maxee_n, maxdiffs_n)
+					\n * Minimum overlapping length between R1 and R2 reads  = %s; \
+					\n * Minimum expected fragment length  = %s;\
+					\n * Maximum expected fragment length = %s;\
+					\n * Maximum expected errors number = %s;\
+					\n * Maximum number of differences = %s' %(minovlen_n, minmergelen_n, maxmergelen_n, maxee_n, maxdiffs_n)
 			else:
 				if st.session_state.hypervar_regions_radio == 'V3V4':
-					suggested_joining_params_label = 'Lunghezza frammento attesa = 464 nucleotidi.'
+					suggested_joining_params_label = 'Expected fragment length = 464 nucleotides.'
 				elif st.session_state.hypervar_regions_radio == 'V4':
-					suggested_joining_params_label = 'Lunghezza frammento attesa = 254 nucleotidi.'
+					suggested_joining_params_label = 'Expected fragment length = 254 nucleotides.'
 			
 			st.markdown(suggested_joining_params_label)
 			
@@ -1398,130 +1398,130 @@ if skip is False:
 			if (('minovlen_n' in globals()) and ('minmergelen_n' in globals()) and ('maxmergelen_n' in globals()) and ('maxee_n' in globals()) and ('maxdiffs_n' in globals())):
 
 				with st.form(key='reads_merging_parameters_form'):
-					st.markdown('Imposta i parametri:')
+					st.markdown('Set the parameters:')
 					# cols = st.columns(5)
-					minovlen = st.slider(label='Lunghezza minima di sovrapposizione fra R1 ed R2:',
+					minovlen = st.slider(label='Minimum overlapping length between R1 and R2 reads:',
 						max_value=int(250),
 						value=minovlen_n,
 						step=1,
 						help='%s'%(minovlen_n),
 						key='minovlen_slider')
-					minmergelen = st.slider(label='Lunghezza minima frammeto di fusione:',
+					minmergelen = st.slider(label='Minimum expected fragment length:',
 						max_value=int(500),
 						value=minmergelen_n,
 						step=1,
 						key='minmergelen_slider')
-					maxmergelen = st.slider(label='Lunghezza massima frammeto di fusione:',
+					maxmergelen = st.slider(label='Maximum expected fragment length:',
 						max_value=int(500),
 						value=maxmergelen_n,
 						step=1,
 						key='maxmergelen_slider')
-					maxee = st.slider(label='Numero di errori atteso massimo:',
+					maxee = st.slider(label='Maximum expected errors number:',
 						max_value=int(500),
 						value=maxee_n,
 						step=1,
 						key='maxee_slider')
-					maxdiffs = st.slider(label='Numero di differenze massimo:',
+					maxdiffs = st.slider(label='Maximum number of differences:',
 						max_value=int(500),
 						value=maxdiffs_n,
 						step=1,
 						key='maxdiffs_slider')
-					submit_button = st.form_submit_button(label='Fondi le letture paired-end')
+					submit_button = st.form_submit_button(label='Merge paired-end reads')
 			else:
 
 				with st.form(key='reads_merging_parameters_form'):
-					st.markdown('Imposta i parametri:')
+					st.markdown('Set the parameters:')
 					# cols = st.columns(5)
-					minovlen = st.slider(label='Lunghezza minima di sovrapposizione fra R1 ed R2:',
+					minovlen = st.slider(label='Minimum overlapping length between R1 and R2 reads:',
 						max_value=int(250),
 						step=1,
-						help='Lunghezza minima dell\'area di sovrapposizione fra le sequenze durante la fusione.',
+						help='Minimum length of the overlapping region between R1 and R2 reads during merging.',
 						key='minovlen_slider')
-					minmergelen = st.slider(label='Lunghezza minima frammeto di fusione:',
+					minmergelen = st.slider(label='Minimum expected fragment length:',
 						max_value=int(500),
 						step=1,
-						help='Lunghezza minima del frammento di fusione affinche\' sia ritenuto e non scartato.',
+						help='Minimum length of the merged fragment to be retained and not discarded.',
 						key='minmergelen_slider')
-					maxmergelen = st.slider(label='Lunghezza massima frammeto di fusione:',
+					maxmergelen = st.slider(label='Maximum expected fragment length:',
 						max_value=int(500),
 						step=1,
-						help='Lunghezza massima del frammento di fusione affinche\' sia ritenuto e non scartato.',
+						help='Maximum length of the merged fragment to be retained and not discarded.',
 						key='maxmergelen_slider')
-					maxee = st.slider(label='Numero di errori atteso massimo:',
+					maxee = st.slider(label='Maximum expected errors number:',
 						max_value=int(500),
 						step=1,
-						help='Numero di errori atteso massimo nel frammento di fusione affinche\' sia ritenuto e non scartato.',
+						help='Maximum number of expected errors of the merged fragment to be retained and not discarded.',
 						key='maxee_slider')
-					maxdiffs = st.slider(label='Numero di differenze massimo:',
+					maxdiffs = st.slider(label='Maximum number of differences:',
 						max_value=int(500),
 						step=1,
-						help='Numero massimo di mismatches nell\'area di sovrapposizione durante la fusione.',
+						help='Maximum number of mismatches in the area of overlap during R1 and R2 reads merging.',
 						key='maxdiffs_slider')
-					submit_button = st.form_submit_button(label='Fondi le letture paired-end')
+					submit_button = st.form_submit_button(label='Merge paired-end reads')
 
 			if ((submit_button) or (st.session_state.minovlen_slider != 0)):
 
 				df_demux_joined_summary, joined_sequences, pdf_joined_sequences, secure_temp_dir_joined_summary, stderr_joining = form_callback_vsearch_join(imported_sequences, imported_sequences_temp_dir, secure_temp_dir_demux_summary)
 				st.session_state.joined_sequences = joined_sequences
 
-				with st.expander('Fusione delle letture R1 ed R2 in corso ...'):
-					st.write('prova std err stderr_joining') #stderr_joining)
-					st.write('%s'%(stderr_joining))
+				# with st.expander('Fusione delle letture R1 ed R2 in corso ...'):
+				# 	st.write('prova std err stderr_joining') #stderr_joining)
+				# 	st.write('%s'%(stderr_joining))
 
-				side_placeh1.success('***%s.*** Selezione parametri di fusione letture R1 ed R2 \
-					\n > Tab %s. Fusione R1 ed R2' %(step_n, step_n))
+				side_placeh1.success('***%s.*** Set R1 and R2 reads merging parameters \
+					\n > Tab %s. R1 and R2 merging' %(step_n, step_n))
 				step_n += 1
 
-				df = df_demux_joined_summary.rename({'forward sequence count': 'numero sequenze di fusione R1R2'}, axis=1)
+				df = df_demux_joined_summary.rename({'forward sequence count': 'merged R1R2 sequence count'}, axis=1)
 
-				st.subheader('Conte delle sequenze di fusione per campione')
-				st.write('Totale Campioni: %s (fusione R1R2)' %(
-					len(~df['numero sequenze di fusione R1R2'].isna())))
-				df = df.merge(st.session_state.demux_summary_df.loc[:,'numero letture R1'], left_index=True, right_index=True)
+				st.subheader('Merged sequence counts per sample')
+				st.write('Total Samples: %s (R1R2 merged)' %(
+					len(~df['merged R1R2 sequence count'].isna())))
+				df = df.merge(st.session_state.demux_summary_df.loc[:,'forward sequence count'], left_index=True, right_index=True)
 				df.eval("""
-				percentuale_sequenze_iniziali_fuse = ((`numero sequenze di fusione R1R2`) * 100)/ (`numero letture R1`)
+				perc_starting_seqs_merged = ((`merged R1R2 sequence count`) * 100)/ (`forward sequence count`)
 				""",
 				inplace = True
 				)
-				df = df.drop(axis = 1, labels = ['numero letture R1'])
+				df = df.drop(axis = 1, labels = ['forward sequence count'])
 				st.table(df.style.format(formatter='{:,.0f}'))
-				df = df.drop(axis = 1, labels= ['percentuale_sequenze_iniziali_fuse'])
+				df = df.drop(axis = 1, labels= ['perc_starting_seqs_merged'])
 				
 				csv = convert_df(df)
-				ste.download_button(label='Scarica tabella in formato CSV',
+				ste.download_button(label='Download CSV table',
 					data=csv,
-					file_name='conte_delle_sequenze_di_fusione_per_campione.csv',
+					file_name='merged_sequence_counts_per_sample.csv',
 					mime='text/csv')
 
-				st.subheader('Istogramma di frequenza delle sequenze di fusione')
+				st.subheader('Merged sequence frequency histogram')
 				#st.markdown(pdf_joined_sequences, unsafe_allow_html=True)
 				fig, ax = plt.subplots()
-				ax = df['numero sequenze di fusione R1R2'].plot.hist(bins=bins, color='grey', linewidth=1, edgecolor='black')
-				ax.set_xlabel('Numero di sequenze')
-				ax.set_ylabel('Numero di campioni')
+				ax = df['merged R1R2 sequence count'].plot.hist(bins=bins, color='grey', linewidth=1, edgecolor='black')
+				ax.set_xlabel('Number of sequences')
+				ax.set_ylabel('Number of samples')
 				cols = st.columns((1,1)) # Serve per mantenere una dimensione ridotta del grafico sotto
 				# che altrimenti occupa tutta la pagina. L'argomento figsize in plt.subplots() non funziona
 				cols[0].pyplot(fig)
 				
-				st.subheader('Sommario delle conte delle sequenze di fusione')
-				tabella_df = pd.concat([pd.DataFrame(df.min().rename('minimo')).T,
-					pd.DataFrame(df.median().rename('mediana')).T,
-					pd.DataFrame(df.mean().rename('media')).T,
-					pd.DataFrame(df.max().rename('massimo')).T,
-					pd.DataFrame(df.sum().rename('totale')).T])
+				st.subheader('Merged sequence counts summary')
+				tabella_df = pd.concat([pd.DataFrame(df.min().rename('Minimum')).T,
+					pd.DataFrame(df.median().rename('Median')).T,
+					pd.DataFrame(df.mean().rename('Mean')).T,
+					pd.DataFrame(df.max().rename('Maximum')).T,
+					pd.DataFrame(df.sum().rename('Total')).T])
 
 				st.table(tabella_df.style.format(formatter='{:,.2f}'))
 				
 				csv = convert_df(tabella_df)
-				ste.download_button(label='Scarica tabella in formato CSV',
+				ste.download_button(label='Download CSV table',
 					data=csv,
-					file_name='sommario_delle_conte_delle_sequenze_di_fusione.csv',
+					file_name='merged_sequence_counts_summary.csv',
 					mime='text/csv')
 
 			else:
-				st.info('Usa il form qui sopra per seleionare i parametri di fusione delle letture R1 ed R2.')
-				st.warning("La pagina e\' in attesa che selezioni i parametri desiderati per la fusione delle letture \
-					R1 ed R2 nel form qui sopra e clicchi __Fondi le letture paired-end__.")
+				st.info('Use the form above to set R1 and R2 reads merging parameters.')
+				st.warning("The page is awaiting for you to set the desired parameters for R1 and R2 reads merging \
+					using the form above and to click __Merge paired-end reads__.")
 				st.stop()
 				step_n += 1
 			
@@ -1532,7 +1532,7 @@ if skip is False:
 		st.exception(e)
 		
 		with tab_summary_stats:
-			st.warning('Sequenze Single-end, skip del passaggio di fusione delle letture.')
+			st.warning('Single-end sequences, skip reads merging step.')
 			# st.exception(e)
 		
 		# step_n += 1
@@ -1541,30 +1541,30 @@ if skip is False:
 	with tab_QC:
 		
 		side_plchldr2 = sidemenus.empty()
-		side_plchldr2.info('***%s.*** Selezione parametri di controllo qualita\' \
-			\n > Tab %s. Controllo qualita\'' %(step_n, step_n))
+		side_plchldr2.info('***%s.*** Set quality control parameters \
+			\n > Tab %s. Quality control' %(step_n, step_n))
 
 		with st.form(key='quality_filter_form'):
-			st.markdown('Imposta i parametri (parametri di default gia\' impostati)')
+			st.markdown('Set the parameters (pre-set defaults)')
 			min_quality = st.number_input(
-				label='Valore di qualita\' Phred minimo accettabile, al di sotto del quale la base e\' da considerare di \"bassa qualita\'\":', 
+				label='Minimum acceptable Phred quality value, below which a base is considered \"low quality\":', 
 				min_value=0, 
 				max_value=40, 
 				value=20, 
 				step=1,
-				help='Valore standard: 20.',
+				help='Default value: 20.',
 				key='min_quality_num') # minimum acceptable PHRED score
 			quality_window = st.number_input(
-				label='Numero di basi di \"bassa qualita\'\" consecutive massimo osservabile, oltre il quale la sequenza e\' da troncare:', 
+				label='Maximum number of consecutive \"low quality\" bases observable, above which a sequence is truncated:', 
 				min_value=0, 
 				max_value=250, 
 				value=4, 
 				step=1,
-				help='Valore standard: 4.',
+				help='Default value: 4.',
 				key='quality_window_num') # maximum number of low PHRED scores that can be observed in direct succession before truncating a sequence read.
 			min_quality = int(min_quality)
 			quality_window = int(quality_window)
-			submit_button = st.form_submit_button('Controllo qualita\'')
+			submit_button = st.form_submit_button('Quality control')
 		
 		if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0)) and ('joined_sequences' in st.session_state.keys())):
 		
@@ -1583,26 +1583,26 @@ if skip is False:
 				st.session_state.df_q_filter = df_q_filter
 				
 			
-			side_plchldr2.success('***%s.*** Selezione parametri di controllo qualita\' \
-			\n > Tab %s. Controllo qualita\'' %(step_n, step_n))
+			side_plchldr2.success('***%s.*** Set quality control parameters \
+			\n > Tab %s. Quality control' %(step_n, step_n))
 			step_n += 1
 
-			st.subheader('Statistiche Controllo Qualita\'')
+			st.subheader('Quality control stats')
 			st.write(df_q_filter.style.format(formatter='{:,.0f}'))
 			
 			csv = convert_df(df_q_filter)
-			ste.download_button(label='Scarica tabella in formato CSV',
+			ste.download_button(label='Download CSV table',
 				data=csv,
-				file_name='statistiche_QC.csv',
+				file_name='QC_stats.csv',
 				mime='text/csv')
 			
 			st.balloons()
 
 
 		else:
-			st.info('Usa il form qui sopra per seleionare i parametri di controllo qualita\'.')
-			st.warning("La pagina e\' in attesa che selezioni i parametri desiderati per il controllo di qualita\' \
-				nel form qui sopra.")
+			st.info('Use the form above to set the quality control parameters.')
+			st.warning("The page is awaiting for you to set the desired quality control parameters \
+				using the form above.")
 		
 			step_n += 1
 
