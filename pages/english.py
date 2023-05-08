@@ -1301,10 +1301,10 @@ if skip is False:
 
 			hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 			with hypervar_regions_form:
-				hypervar_regions = st.radio(label='Sequencing target hypervariable regions of the 16S rRNA gene:',
+				hypervar_regions = st.radio(label='hypervariable 16S rRNA gene regions target of sequencing:',
 				options=['V3V4', 'V4'],
 				index=0,
-				help='Sequencing target regions to be considered to determine expected fragment length.',
+				help='Regions target of sequencing to be considered to determine expected fragment length.',
 				key='hypervar_regions_radio')
 				hypervar_btn = st.form_submit_button('Confirm')
 			
@@ -1611,7 +1611,7 @@ if skip is False:
 	with tab_denoising:
 
 		side_plchldr3 = sidemenus.empty()
-		side_plchldr3.info('***%s.*** Denoising sequenze \
+		side_plchldr3.info('***%s.*** Denoising sequences \
 			\n > Tab %s. Denoising' %(step_n, step_n))
 
 		side_form_denoising_pipes_plchldr = sidemenus.empty()
@@ -1623,20 +1623,20 @@ if skip is False:
 			}
 
 		with side_form_denoising_pipes_plchldr.form('side_form_denoising_pipes'):
-			denoising_pipes = st.multiselect('Pipelines preferite per il denoising delle sequenze:',
+			denoising_pipes = st.multiselect('Desired pipelines for the denoising of sequences:',
 			options = denoising_opts,
 			default = 'Deblur',
 			key='denoising_pipes_multisel',
-			help='Digitare il/i metodo/i di denoising preferiti per ottenere le ASVs.\
-				Pipelines disponibili al momento: Deblur, Dada2. E\' possibile applicare alle tue sequenze \
-					contemporaneamente piu\' metodi per confronto dei risultati.')
+			help='Enter the desired denoising method/s to obtain the ASVs.\
+				Available pipelines at the moment: Deblur, Dada2. It\'s possible to select all the two methods \
+					to compare the results.')
 
 			submit_button = st.form_submit_button('Denoising')
 			
 		if ((submit_button) or (('denoising_pipes_multisel' in st.session_state.keys()) and (st.session_state.denoising_pipes_multisel != []))):
 		
 			# trimming globale delle sequenze durante il denoising con deblur 
-			trim_filtered_seqs = st.checkbox(label='Tagliare tutte le sequenze di pari lunghezza durante il denoising?',
+			trim_filtered_seqs = st.checkbox(label='Global trimming of all sequences during denoising?',
 				value=True,
 				key= 'trim_checkbox')
 			if st.session_state.trim_checkbox:
@@ -1653,25 +1653,25 @@ if skip is False:
 					if 'hypervar_regions_radio' not in st.session_state.keys():
 						hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 					with hypervar_regions_form:
-						hypervar_regions = st.radio(label='Regioni ipervariabili del gene per 16S rRNA target del sequenziamento:',
+						hypervar_regions = st.radio(label='Hypervariable 16S rRNA gene regions target of sequencing:',
 						options=['V3V4', 'V4'],
 						index=0,
-						help='Regioni target del sequenziamento da considerare per determinare la lunghezza del frammento atteso.',
+						help='Regions target of sequencing to be considered to determine expected fragment length.',
 						key='hypervar_regions_radio')
-						hypervar_btn = st.form_submit_button('Conferma')
+						hypervar_btn = st.form_submit_button('Confirm')
 					
 					if ((hypervar_btn) or ('hypervar_regions_radio' in st.session_state.keys())):
 						pass
 					else:
-						st.warning('La pagina e\' in attesa che selezioni un target dei dati di sequenziamento nel menu\' a lato.')
+						st.warning('The page is awaiting for you to select the region target of sequencing in the sidebar menu.')
 						st.stop()
 						
-					st.markdown('Fare riferimento alla lunghezza delle letture per impostare un valore di taglio globale non superiore alla lunghezza media:')
-					reads_lenght_R1_input = st.number_input('Lunghezza delle letture R1 media:', help='Per impostare la lunghezza adatta \
-						di taglio globale delle letture durante il denoising. \
-							\n> Pre-impostato il valore medio in base alle analisi effettuate. \
-							Tale valore varia in base alla tecnologia di sequenziamento. \
-							Fare riferimento al provider dei dati.',
+					st.markdown('Consider the length of the reads to set a global trimming value under the mean length:')
+					reads_lenght_R1_input = st.number_input('Mean forward reads length:', help='To set the correct length \
+						for global reads trimming during denoising. \
+							\n> Pre-set mean value based on the previous analyses. \
+							This value varies based on the sequencing technology. \
+							Contact the raw data provider.',
 							min_value=250, max_value=300, step=50, value=approx_reads_lenght_R1, key='reads_lenght_R1_n_input')
 
 					if st.session_state.hypervar_regions_radio == 'V3V4':
@@ -1684,17 +1684,17 @@ if skip is False:
 
 					# lunghezza del taglio basata sull abbassamento della qualita solitamente riscontrato nelle R2  verso la fine della lettura (3' estremita')
 					N = st.number_input(
-						label='Posizione per il taglio di tutte le sequenze:', 
+						label='Global trimming length:', 
 						min_value=0, 
 						max_value=500, 
 						value=value_N,
-						help='regione/i %s: valore di lunghezza media atteso %s'%(st.session_state.hypervar_regions_radio, value_N),
+						help='region/s %s: mean expected length %s'%(st.session_state.hypervar_regions_radio, value_N),
 						step=1,
 						key='N_global_trimming')
 					st.session_state.N = int(st.session_state.N_global_trimming)
 				
 			
-					submit_button = st.form_submit_button('Taglia tutte le sequenze')
+					submit_button = st.form_submit_button('Global trim reads')
 			else:
 
 				st.session_state.N = 0
@@ -1726,7 +1726,7 @@ if skip is False:
 							)
 						except Exception as e:
 							print(e)
-							st.warning('Il denoising con %s delle sequenze fuse non e\' andato a buon fine.'%(denoising_pipe))
+							st.warning('The %s denoising of merged reads throwed an exception.'%(denoising_pipe))
 							st.stop()
 						
 						st.session_state['denoised_sequences_%s'%(denoising_pipe)] = denoised_sequences
@@ -1735,10 +1735,10 @@ if skip is False:
 						
 						if st.session_state.library_radio == 'Paired-end':
 
-							st.success('Sequenze di fusione R1R2 correttamente raggruppate in singole varianti ASVs di sequenze batteriche con pipeline %s.'%(denoising_pipe))
+							st.success('Merged R1R2 sequences succesfully denoised into ASVs with %s pipeline.'%(denoising_pipe))
 						elif st.session_state.library_radio == 'Single-end':
 
-							st.success('Sequenze R1 correttamente raggruppate in singole varianti ASVs di sequenze batteriche con pipeline %s.'%(denoising_pipe))
+							st.success('R1 sequences succesfully denoised into ASVs with %s pipeline.'%(denoising_pipe))
 						
 						# Tabella delle statistiche del processo di Deblurring
 						secure_temp_dir_denoising = tempfile.mkdtemp(prefix="temp_", suffix="_denoising")
@@ -1748,57 +1748,58 @@ if skip is False:
 							with open(secure_temp_dir_denoising+"/index.html", 'r', encoding='utf-8') as HtmlFile:
 								source_code = HtmlFile.read()
 						
-							tabella_df= pd.DataFrame(pd.read_html(source_code,thousands='.')[0]).rename({
-								'Unnamed: 0': 'Indice',
-								'sample-id': 'ID campione', 
-								'reads-raw': 'num totale letture iniziali',
-								'fraction-artifact-with-minsize': 'frazione di letture artefatte incluse di lunghezza minima',
-								'fraction-artifact': 'frazione di sequenze artefatte',
-								'fraction-missed-reference': 'frazione di letture mancante di sequenze di riferimento positivo',
-								'unique-reads-derep': 'letture uniche dopo dereplicazione',
-								'reads-derep': 'num letture dopo dereplicazione (escluso singoletti)',
-								'unique-reads-deblur': 'letture uniche dopo il Deblur',
-								'reads-deblur': 'num di letture dopo il Deblur',
-								'unique-reads-hit-artifact': 'letture uniche che combaciano con sequenze artefatte negative',
-								'reads-hit-artifact': 'num di letture che combaciano con sequenze artefatte negative',
-								'unique-reads-chimeric': 'letture uniche chimeriche',
-								'reads-chimeric': 'num di letture chimeriche',
-								'unique-reads-hit-reference': 'letture uniche di Deblur che combaciano con sequenze di riferimento positivo',
-								'reads-hit-reference': 'num di letture di Deblur che combaciano con sequenze di riferimento positivo',
-								'unique-reads-missed-reference': 'letture uniche di Deblur mancanti di sequenza di riferimento positivo',
-								'reads-missed-reference': 'letture di Deblur mancanti di sequenza di riferimento positivo'},
-								axis=1).drop('Indice', axis=1)
-							tabella_df = tabella_df.set_index('ID campione')
+							tabella_df= pd.DataFrame(pd.read_html(source_code,thousands='.')[0]).rename({'Unnamed: 0': 'Index'},
+								# ,
+								# 'sample-id': 'ID campione', 
+								# 'reads-raw': 'num totale letture iniziali',
+								# 'fraction-artifact-with-minsize': 'frazione di letture artefatte incluse di lunghezza minima',
+								# 'fraction-artifact': 'frazione di sequenze artefatte',
+								# 'fraction-missed-reference': 'frazione di letture mancante di sequenze di riferimento positivo',
+								# 'unique-reads-derep': 'letture uniche dopo dereplicazione',
+								# 'reads-derep': 'num letture dopo dereplicazione (escluso singoletti)',
+								# 'unique-reads-deblur': 'letture uniche dopo il Deblur',
+								# 'reads-deblur': 'num di letture dopo il Deblur',
+								# 'unique-reads-hit-artifact': 'letture uniche che combaciano con sequenze artefatte negative',
+								# 'reads-hit-artifact': 'num di letture che combaciano con sequenze artefatte negative',
+								# 'unique-reads-chimeric': 'letture uniche chimeriche',
+								# 'reads-chimeric': 'num di letture chimeriche',
+								# 'unique-reads-hit-reference': 'letture uniche di Deblur che combaciano con sequenze di riferimento positivo',
+								# 'reads-hit-reference': 'num di letture di Deblur che combaciano con sequenze di riferimento positivo',
+								# 'unique-reads-missed-reference': 'letture uniche di Deblur mancanti di sequenza di riferimento positivo',
+								# 'reads-missed-reference': 'letture di Deblur mancanti di sequenza di riferimento positivo'},
+								axis=1).drop('Index', axis=1)
+							tabella_df = tabella_df.set_index('sample-id')
 							st.session_state['stats_%s_per_sample'%(denoising_pipe)] = tabella_df
-							st.subheader('Statistiche di denoising con %s per campione'%(denoising_pipe))
+							st.subheader('%s denoising stats per sample'%(denoising_pipe))
 							st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)] = tabella_df
 							st.table(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
-							ste.download_button(label='Scarica tabella in formato CSV',
+							ste.download_button(label='Download CSV table',
 								data=csv,
-								file_name='statistiche_denoising_%s_per_campione.csv'%(denoising_pipe),
+								file_name='%s_denoising_stats_per_sample.csv'%(denoising_pipe),
 								mime='text/csv')
 						except: # dada2
 							denoising_stats = st.session_state['denoised_sequences_%s'%(denoising_pipe)].denoising_stats
 							denoising_stats.export_data(secure_temp_dir_denoising)
 							tabella_df = pd.read_csv(secure_temp_dir_denoising+"/stats.tsv", sep='\t', skiprows=[1], index_col=0)
-							st.subheader('Statistiche di denoising con %s per campione'%(denoising_pipe))
-							tabella_df = tabella_df.rename({
-								'input': 'letture iniziali',
-								'filtered': 'filtrate',
-								'percentage of input passed filter': 'percentuale letture iniziali post-filtro',
-								'denoised': 'post-denoising',
-								'non-chimeric': 'non-chimeriche',
-								'percentage of input non-chimeric': 'percentuale letture iniziali non-chimeriche'}, axis = 1)
+							st.subheader('%s denoising stats per sample'%(denoising_pipe))
+							tabella_df = tabella_df
+							# .rename({
+							# 	'input': 'letture iniziali',
+							# 	'filtered': 'filtrate',
+							# 	'percentage of input passed filter': 'percentuale letture iniziali post-filtro',
+							# 	'denoised': 'post-denoising',
+							# 	'non-chimeric': 'non-chimeriche',
+							# 	'percentage of input non-chimeric': 'percentuale letture iniziali non-chimeriche'}, axis = 1)
 							st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)] = tabella_df
 							
 							st.table(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
-							ste.download_button(label='Scarica tabella in formato CSV',
+							ste.download_button(label='Download CSV table',
 								data=csv,
-								file_name='statistiche_denoising_%s_per_campione.csv'%(denoising_pipe),
+								file_name='%s_denoising_stats_per_sample.csv'%(denoising_pipe),
 								mime='text/csv')
 						
 						# Tabella delle Features ASVs
@@ -2631,11 +2632,11 @@ else:
 	side_placeholder0.empty()
 	step_n += 1
 
-	side_subheader_placeholder.subheader('***Analisi secondaria dati grezzi***')
-	h_plchldr.header('***Analisi terziaria dei dati pre-processati***')
+	side_subheader_placeholder.subheader('***Secondary analysis raw data***')
+	h_plchldr.header('***Tertiary analysis of pre-processed data***')
 	
 side_subheader_placeholder1 = sidemenus.empty()
-side_subheader_placeholder1.subheader('***Analisi terziaria dati pre-processati***')
+side_subheader_placeholder1.subheader('***Tertiary analysis pre-processed data***')
 
 side_placeholder = sidemenus.empty()
 side_placeholder1 = sidemenus.empty()
@@ -2644,14 +2645,14 @@ side_placeholder3 = sidemenus.empty()
 side_placeholder4 = sidemenus.empty()
 side_placeholder5 = sidemenus.empty()
 
-side_placeholder.info('***%s.*** Caricamento dati' %(step_n))
+side_placeholder.info('***%s.*** Data upload' %(step_n))
 
 if skip is False:
 	st.markdown("""<hr style="height:8px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
 	h1_plchldr = st.empty()
-	h1_plchldr = st.header('***Analisi terziaria dei dati pre-processati***')
-	st.markdown('__ATTENZIONE!__ Selezionare nel menu\' a lato in alto la casella: Saltare il passaggio di "analisi secondaria dati grezzi" e andare \
-		direttamente al passaggio di "analisi terziaria dati pre-processati" per velocizzare l\'applicazione.')
+	h1_plchldr = st.header('***Tertiary analysis of pre-processed data***')
+	st.markdown('__ATTENTION!__ In the sidebar menu select: Skip the steps of "Secondary analysis of raw data" and go \
+		directly to the "Tertiary analysis of pre-processed data" to speed-up the App.')
 
 def delete_session_state_data_input_keys():
 	try:
@@ -2674,20 +2675,20 @@ with st.form(key='form_data_upload'):
 	cols = st.columns((1,1))
 	data_OTU = cols[0].file_uploader('OTU file:', 
 		key='data_OTU_input', 
-		help='Conte delle reads per ogni OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv, .qza.\
-			\n> Le colonne rappresentano i campioni, le righe rappresentano le OTU. L\'intestazione della tabella e\': \
-			\n> #NAME o featureID. \
-			\n> __Attenzione!__ Per risultati attendibili, caricare dati normalizzati con il metodo della rarefazione o altro metodo.' )# %(sample_df))
+		help='Reads counts for each OTU/ASV. Accepted file formats: .tsv, .csv, .qza.\
+			\n> Columns are samples, rows are OTUs. Header is: \
+			\n> #NAME or featureID. \
+			\n> __Attention!__ Upload rarefied or otherwise normalized data for correct results.' )# %(sample_df))
 	#todo
 	data_tax = cols[1].file_uploader('Taxonomy file:', 
 		key='data_tax_input', 
-		help='Classificazione tassonomica delle OTU/varianti di sequenziamento. Formato file accettato: .tsv, .csv, .qza. \
-			\n> L\'intestazione della tabella e\': #TAXONOMY. \
-			\n> Le colonne rappresentano le categorie tassonomiche, le righe rappresentano le OTU.')
-	data_meta = cols[0].file_uploader('File di metadati (facoltativo):', 
+		help='Taxonomic classification of OTUs/ASVs. Accepted file formats: .tsv, .csv, .qza. \
+			\n> Header is: #TAXONOMY. \
+			\n> Columns are taxonomic levels, rows are OTUs.')
+	data_meta = cols[0].file_uploader('Metadata file (optional):', 
 		key='data_meta_input', 
-		help='File opzionale di metadati associati ai campioni. Formato file accettato: .tsv.\
-			\n> L\'intestazione della tabella e\': #NAME.')
+		help='Optional file with samples\' metadata. Accepted file formats: .tsv.\
+			\n> Header is: #NAME.')
 
 	submit_button = st.form_submit_button(
 		label='Carica',
@@ -2696,7 +2697,7 @@ with st.form(key='form_data_upload'):
 	
 	delete_sessionstate_bttn_plchldr = st.empty()
 	# bottone per cancellare la session state dei file taxonomy, OTU e metadata in input
-	delete_sessionstate_bttn = delete_sessionstate_bttn_plchldr.form_submit_button('Modifica dati')
+	delete_sessionstate_bttn = delete_sessionstate_bttn_plchldr.form_submit_button('Modify data')
 
 
 			
@@ -2714,22 +2715,22 @@ if submit_button or ((st.session_state.data_OTU_input is not None) and (st.sessi
 	if ((st.session_state.data_OTU_input is not None) and 
 		(st.session_state.data_tax_input is not None)):
 
-		st.success('Caricamento OTU file e taxonomy file riuscito.')
-		side_placeholder.success('***%s.*** Caricamento dati' %(step_n))
+		st.success('Successfully uploaded OTU and taxonomy files.')
+		side_placeholder.success('***%s.*** Data upload' %(step_n))
 		step_n += 1
-		side_placeholder1.info('***%s.*** Selezione categoria tassonomica di classificazione delle sequenze' %(step_n))
+		side_placeholder1.info('***%s.*** Set the taxonomic level' %(step_n))
 
 	elif ((st.session_state.data_OTU_input is None) and (st.session_state.data_tax_input is not None)):
 
-		st.warning('Selezionare un OTU file per continuare.')
+		st.warning('Select an OTU file to continue.')
 		st.stop()
 	elif ((st.session_state.data_OTU_input is not None) and (st.session_state.data_tax_input is None)):
 
-		st.warning('Selezionare un taxonomy file per continuare.')
+		st.warning('Select a taxonomy file to continue.')
 		st.stop()
 	elif ((st.session_state.data_OTU_input is None) and (st.session_state.data_tax_input is None)):
 
-		st.warning('Selezionare un OTU file e un taxonomy file per continuare.')
+		st.warning('Select both an OTU and a taxonomy file to continue.')
 		st.stop()
 	if (st.session_state.data_meta_input is not None):
 
@@ -2739,10 +2740,10 @@ if submit_button or ((st.session_state.data_OTU_input is not None) and (st.sessi
 		data_meta = data_meta.dropna(axis=1, how='all')
 		data_meta = data_meta.fillna('NA', axis=0)
 
-		st.success('Caricamento metadata file riuscito.')
+		st.success('Successfully uploaded metadata file.')
 	else:
 
-		st.warning('Nessun file di metadati fornito.')
+		st.warning('No metadata file.')
 else:
 
 	st.stop()
@@ -2755,8 +2756,8 @@ dashboard_info_dwnld_plchldr = st.empty()
 dashboard_barre_dwnld_plchldr = st.empty()
 dashboard_torte_dwnld_plchldr = st.empty()
 
-descr_plchldr.markdown('Scrollare la pagina principale e navigare le tab qui sotto per \
-	la visualizzazione dei risultati delle analisi.')
+descr_plchldr.markdown('Scroll the main page and navigate the tabs below to \
+	visualize the results of the analyses.')
 
 
 
@@ -2772,7 +2773,7 @@ try:
 	st.session_state.data_meta_df = data_meta
 except Exception as e:
 	# st.exception(e)
-	st.warning('Nessun file di metadati fornito.')
+	st.warning('No metadata file.')
 
 # Controllo corrispondenza dei campioni dei metadati coi campioni dell OTU file
 #data_OTU_samples_equals_data_meta_samples = np.equal(st.session_state.data_meta_df.index, st.session_state.data_OTU_df.columns)
@@ -2780,38 +2781,38 @@ except Exception as e:
 
 # Menù laterale
 # Creazione di un selettore radio del livello tassonomico preferito
-tax_level = sidemenus.radio(label='Livello tassonomico', options=[i for i in data_tax.columns], key='tax_level_radio',
-	help='Attenzione! Selezionare il livello OTU potrebbe rallentare l\'applicazione.')
-side_placeholder1.success('***%s.*** Selezione categoria tassonomica di classificazione delle sequenze' %(step_n))
+tax_level = sidemenus.radio(label='Taxonomic level', options=[i for i in data_tax.columns], key='tax_level_radio',
+	help='Attention! Selecting the OTU level could slow down the App.')
+side_placeholder1.success('***%s.*** Select taxonomic level' %(step_n))
 step_n += 1
 
 # Creazione di un selettore radio della variabile metadati da usare per il raggruppamento dei campioni
 if st.session_state.data_meta_input is not None:
 	
-	side_placeholder2.info('***%s.*** Selezione tipologia di campione' %(step_n))
-	side_placeholder3.info('***%s.*** Selezione colore per i grafici a barre' %(step_n+1))
+	side_placeholder2.info('***%s.*** Select sample type' %(step_n))
+	side_placeholder3.info('***%s.*** Select colour for bar charts' %(step_n+1))
 
 	sample_grouping_opts = [i for i in data_meta.columns]
-	sample_grouping_opts.append('Tutti i campioni')
-	sample_grouping = sidemenus.radio(label='Raggruppamento dei campioni', 
+	sample_grouping_opts.append('All samples')
+	sample_grouping = sidemenus.radio(label='Samples\' grouping', 
 	options=sample_grouping_opts, 
-	help='Una categoria presente nei metadati da usare per raggruppare i campioni in gruppi. In assenza \
-		di un file di metadati tutti i campioni sono da visualizzare senza alcun raggruppamento.',
+	help='Metadata category to be used to group the samples. If no \
+		metadata file, all samples are visualized.',
 	key='sample_grouping_radio')
 	st.session_state.sequenced_samples = data_meta.index.to_list()
 else:
 
 	st.session_state.sequenced_samples = data_OTU.columns.to_list()
-	sample_grouping = sidemenus.radio(label='Raggruppamento dei campioni', 
-	options=["Tutti i campioni"], 
-	help='Una categoria presente nei metadati da usare per raggruppare i campioni in gruppi. In assenza \
-		di un file di metadati tutti i campioni sono da visualizzare senza alcun raggruppamento.',
+	sample_grouping = sidemenus.radio(label='Samples\' grouping', 
+	options=["All samples"], 
+	help='Metadata category to be used to group the samples. If no \
+		metadata file, all samples are visualized.',
 	key='sample_grouping_radio')
-	side_placeholder3.info('***%s.*** Selezione colore per i grafici a barre' %(step_n+1))
+	side_placeholder3.info('***%s.*** Select colour for bar charts' %(step_n+1))
 
 	pass
 
-side_placeholder2.success('***%s.*** Selezione tipologia di campione' %(step_n))
+side_placeholder2.success('***%s.*** Select sample type' %(step_n))
 step_n += 1
 
 # To be used for bar charts - 
@@ -2820,9 +2821,9 @@ step_n += 1
 # index of tax_level in list taxa_levels 
 idx_tax_level = taxa_levels.index(st.session_state.tax_level_radio)
 # index of sample_grouping in list samples
-if st.session_state.sample_grouping_radio == 'Tutti i campioni':
+if st.session_state.sample_grouping_radio == 'All samples':
 	
-	st.session_state.idx_sample_grouping = {'Tutti i campioni': st.session_state.sequenced_samples}
+	st.session_state.idx_sample_grouping = {'All samples': st.session_state.sequenced_samples}
 	
 else:
 	
@@ -2830,14 +2831,13 @@ else:
 	st.session_state.idx_sample_grouping = st.session_state.data_meta_df.groupby(st.session_state.sample_grouping_radio).groups
 
 # Creazione di cinque tabs
-tabs = tab_taxonomy_of_OTUs, tab_num_of_OTUs_per_taxon, tab_rel_ab, tab_alpha_div, tab_beta_div, tab_phylo_tree, tab_network = st.tabs([
-	'Classificazione tassonomica delle OTU', 
-	'Numero di OTU per ogni taxon',
-	'Grafici delle abbondanze relative in ogni gruppo di campioni',
-	'Grafico delle alfa diversita\'',
-	'Grafico delle beta diversita\'',
-	'Grafico dell\'albero filogenetico',
-	'Grafico del network'
+tabs = tab_taxonomy_of_OTUs, tab_num_of_OTUs_per_taxon, tab_rel_ab, tab_alpha_div, tab_beta_div = st.tabs([
+	'OTUs taxonomic classification', 
+	'Number of OTUs per taxon',
+	'Taxa relative abundance charts per samples\' group',
+	'Alpha diversity charts',
+	'Beta diversity charts'
+
 	])
 
 
@@ -2858,7 +2858,7 @@ with tab_taxonomy_of_OTUs:
 		
 	else:
 
-		with st.spinner('Attendere, analisi dei dati ...'):
+		with st.spinner('Wait, data analysis ...'):
 
 			taxa_counts_d, df1_d, tabella_df_l_l, warning_tab_num_of_OTUs_per_taxon = OTUs_annots_freqs(st.session_state.idx_sample_grouping)
 			
@@ -2878,7 +2878,7 @@ with tab_taxonomy_of_OTUs:
 						
 						csv = convert_df(taxon_df)
 						ste.download_button(
-							label="Scarica tabella in formato CSV",
+							label="Download CSV table",
 							data=csv,
 							file_name=('OTUs_per_%s_%s.csv' %(st.session_state.tax_level_radio, taxon)),
 							mime='text/csv')
@@ -2889,7 +2889,7 @@ with tab_num_of_OTUs_per_taxon:
 
 	if tax_level != 'OTU':
 
-		with st.spinner('Attesa analisi dei dati ...'):
+		with st.spinner('Wait, data analysis ...'):
 			
 			st.markdown('***%s***' %(st.session_state.tax_level_radio))
 			for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
@@ -2897,23 +2897,23 @@ with tab_num_of_OTUs_per_taxon:
 				st.markdown('***%s***' %(grouping_key))
 				
 				df = pd.DataFrame(np.diag(pd.DataFrame(taxa_counts_d[grouping_key]).T), index = (pd.DataFrame(taxa_counts_d[grouping_key]).T.index)).reset_index(drop=False)
-				df = df.rename({'index': ('Classificazione tassonomica livello %s' %(st.session_state.tax_level_radio)), 0:'numero di OTUs'}, axis=1)
+				df = df.rename({'index': ('Taxonomic classification level %s' %(st.session_state.tax_level_radio)), 0:'number of OTUs'}, axis=1)
 				
 				c = alt.Chart(df).mark_circle().encode(
-					x=('Classificazione tassonomica livello %s' %(st.session_state.tax_level_radio)), y='numero di OTUs', 
-					size='numero di OTUs', color='numero di OTUs', tooltip=[('Classificazione tassonomica livello %s' %(st.session_state.tax_level_radio)), 'numero di OTUs'])
+					x=('Taxonomic classification level %s' %(st.session_state.tax_level_radio)), y='number of OTUs', 
+					size='number of OTUs', color='number of OTUs', tooltip=[('Taxonomic classification level %s' %(st.session_state.tax_level_radio)), 'number of OTUs'])
 
 				st.altair_chart(c, use_container_width=True)
 				
 				# Riformattazione della tabella
 				
-				tabella_df = df.sort_values(by='numero di OTUs', ascending=False).reset_index(drop=True)
-				st.table(tabella_df.style.format('{:,.0f}', subset= ['numero di OTUs']))
+				tabella_df = df.sort_values(by='number of OTUs', ascending=False).reset_index(drop=True)
+				st.table(tabella_df.style.format('{:,.0f}', subset= ['number of OTUs']))
 				csv = convert_df(tabella_df)
 				ste.download_button(
-					label="Scarica tabella in formato CSV",
+					label="Download CSV table",
 					data=csv,
-					file_name=('numero_di_OTU_per_%s.csv' %(st.session_state.tax_level_radio)),
+					file_name=('number_of_OTUs_per_%s.csv' %(st.session_state.tax_level_radio)),
 					mime='text/csv')
 
 			st.balloons()
@@ -2922,8 +2922,8 @@ with tab_num_of_OTUs_per_taxon:
 
 with tab_rel_ab:
 
-	st.header('Grafici a barre')
-	with st.spinner('Attesa analisi dei dati ...'):
+	st.header('Bar charts')
+	with st.spinner('Wait, data analysis ...'):
 
 		# Creazione dei grafici a barre impilate delle conte delle reads delle Otu nei campioni per ogni 
 		# annotazione tassonomica del livello selezionato e con indicazione del Phylum corrispondente
@@ -2944,7 +2944,7 @@ with tab_rel_ab:
 					
 					grouped_samples = list(grouped_samples)
 								
-					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'Tutti i campioni')):
+					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'All samples')):
 
 						color_picker_col = st.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						key='color_picker_col_%s_%s_radio'%(tax_level, grouping_key))#+[data_meta.index.name])
@@ -3140,7 +3140,7 @@ with tab_rel_ab:
 			
 				step_n += 1
 
-		elif st.session_state.tax_level_radio == 'Regno':
+		elif st.session_state.tax_level_radio == 'Kingdom':
 
 			
 			stacked_grouped_bars_radio_plchldr = sidemenus.empty()
