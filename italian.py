@@ -89,8 +89,8 @@ st.set_page_config(
 	layout="wide",
 	initial_sidebar_state="expanded",
 	menu_items={
-		'Get Help': 'mailto:cami3taf@gmail.com',
-		'Report a Bug': 'mailto:cami3taf@gmail.com',
+		'Get help': 'mailto:cami3taf@gmail.com',
+		'Report a bug': 'mailto:cami3taf@gmail.com',
 		'About': "# *App Analisi dei dati di metabarcoding del microbioma* Info/contatto: cami3taf@gmail.com"
 	}
 )

@@ -28,7 +28,8 @@ RUN pip3 install -r ./requirements.txt
 
 COPY index.html /opt/conda/envs/my_env/lib/python3.8/site-packages/streamlit/static/index.html
 
-COPY progetto_dashboard_microbioma.py .
+COPY italian.py .
+COPY pages/english.py ./pages/
 
 # tell the port number the container should expose
 EXPOSE 80
@@ -39,5 +40,5 @@ HEALTHCHECK CMD curl --fail http://localhost:80/_stcore/health
 
 # The code to run when container is started:
 # run the command
-ENTRYPOINT ["conda", "run", "-n", "my_env", "streamlit", "run", "progetto_dashboard_microbioma.py", "--server.port=80", "--server.address=0.0.0.0"]
+ENTRYPOINT ["conda", "run", "-n", "my_env", "streamlit", "run", "italian.py", "--server.port=80", "--server.address=0.0.0.0"]
 
