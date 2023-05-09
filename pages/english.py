@@ -2106,9 +2106,9 @@ if skip is False:
 		for i, (denoising_f, denoising_pipe) in enumerate(zip(denoising_fs, st.session_state.denoising_pipes_multisel)):
 			
 			try: # Deblur
-				max_depth_suggested = myround(np.mean(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)]['num di letture di Deblur che combaciano con sequenze di riferimento positivo']))
+				max_depth_suggested = myround(np.mean(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)]['reads-hit-reference']))
 			except: # Dada2
-				max_depth_suggested = myround(np.mean(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)].loc[:,'non-chimeriche']))
+				max_depth_suggested = myround(np.mean(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)].loc[:,'non-chimeric']))
 				
 			st.session_state['max_depth_suggested_%s'%(denoising_pipe)] = max_depth_suggested
 			max_depth = st.session_state['max_depth_suggested_%s'%(denoising_pipe)]
