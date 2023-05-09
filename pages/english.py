@@ -1803,37 +1803,37 @@ if skip is False:
 								mime='text/csv')
 						
 						# Tabella delle Features ASVs
-						st.subheader('Tabella delle ASVs - singole varianti di amplicone (anche dette features)')
+						st.subheader('ASVs table - Amplicon Sequence Variants (features)')
 						try: # Deblur
 							df_feature_table = st.session_state['feature_table_%s'%(denoising_pipe)].view(pd.DataFrame).T
 							df_feature_table.index.name = '#NAME'
 							st.write(df_feature_table.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(df_feature_table)
-							ste.download_button(label='Scarica tabella in formato CSV',
+							ste.download_button(label='Download CSV table',
 								data=csv,
 								file_name='ASVs_feature_table_%s.csv'%(denoising_pipe),
 								mime='text/csv')
 						except Exception as e:
 							st.exception(e)
-							st.warning('Eccezione dopo denoising con Dada2, visualizzazione feature table come tabella, cerca nel codice il commento # Tabella delle Features ASVs')
+							st.warning('Dada2 denoising exception, feature table visualization as table, look for comment # Tabella delle Features ASVs')
 							
 
 						# sequenze ASVs rappresentative
-						st.subheader('Tabella delle sequenze ASVs rappresentative')
+						st.subheader('ASVs representative sequences table')
 						df_ASVs_rep_seqs = st.session_state['rep_seqs_%s'%(denoising_pipe)].view(pd.Series) 
-						df_ASVs_rep_seqs.name = 'Sequenza'
+						df_ASVs_rep_seqs.name = 'Sequence'
 						# st.write(df_ASVs_rep_seqs) # Non si visualizza una semplice serie ma un oggetto di tipo DNA con metadata e statistiche!
 
 						csv = convert_df(df_ASVs_rep_seqs)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='sequenze_ASVs_rappresentative_%s.csv'%(denoising_pipe),
+							file_name='ASVs_representative_sequences_%s.csv'%(denoising_pipe),
 							mime='text/csv')
 
 						# Tabella delle statistiche della Feature Table
-						st.header('Statistiche della tabella delle ASVs')
-						st.subheader('Sommario della tabella delle ASVs')
+						st.header('ASVs summary statistics')
+						st.subheader('ASVs table summary')
 						try: # Deblur
 							output_viz = feature_table.visualizers.summarize(st.session_state['feature_table_%s'%(denoising_pipe)])
 							output_viz.visualization.export_data(secure_temp_dir_denoising)
@@ -1842,17 +1842,17 @@ if skip is False:
 								source_code = HtmlFile.read()
 							tabella_df = pd.DataFrame(pd.read_html(source_code,thousands=',', decimal='.')[0])
 							tabella_df = tabella_df.set_index('Metric', drop = True)
-							tabella_df = tabella_df.rename({'Number of samples': 'Numero di campioni',
-							'Number of features': 'Numero di OTUs o ASVs',
-							'Total frequency': 'Frequeza totale'}, axis=0).rename({'Sample': 'Campione'}, axis = 1)
+							# tabella_df = tabella_df.rename({'Number of samples': 'Numero di campioni',
+							# 'Number of features': 'Numero di OTUs o ASVs',
+							# 'Total frequency': 'Frequeza totale'}, axis=0).rename({'Sample': 'Campione'}, axis = 1)
 							st.session_state['stats_%s_per_sample'%(denoising_pipe)] = tabella_df
-							st.subheader('Statistiche di %s per campione'%(denoising_pipe))
+							st.subheader('%s stats per sample'%(denoising_pipe))
 							st.table(tabella_df.style.format(formatter='{:,.0f}'))
 
 							csv = convert_df(tabella_df)
-							ste.download_button(label='Scarica tabella in formato CSV',
+							ste.download_button(label='Download CSV table',
 								data=csv,
-								file_name='sommario_ASVs_feature_table_%s.csv'%(denoising_pipe),
+								file_name='ASVs_feature_table_%s_summary.csv'%(denoising_pipe),
 								mime='text/csv')
 						except: # dada2
 							output_viz = feature_table.visualizers.summarize(st.session_state['denoised_sequences_%s'%(denoising_pipe)].table)
@@ -1861,119 +1861,120 @@ if skip is False:
 							with open(secure_temp_dir_denoising+"/index.html", 'r', encoding='utf-8') as HtmlFile:
 								source_code = HtmlFile.read()
 							tabella_df= pd.DataFrame(pd.read_html(source_code,thousands='.')[0])
-							tabella_df = tabella_df.rename({'Number of samples': 'Numero di campioni',
-							'Number of features': 'Numero di OTUs o ASVs',
-							'Total frequency': 'Frequeza totale'}, axis=0).rename({'Sample': 'Campione'}, axis = 1)
+							# tabella_df = tabella_df.rename({'Number of samples': 'Numero di campioni',
+							# 'Number of features': 'Numero di OTUs o ASVs',
+							# 'Total frequency': 'Frequeza totale'}, axis=0).rename({'Sample': 'Campione'}, axis = 1)
 							st.session_state['stats_%s_per_sample'%(denoising_pipe)] = tabella_df
-							st.subheader('Statistiche di %s per campione'%(denoising_pipe))
+							st.subheader('%s stats per sample'%(denoising_pipe))
 							st.table(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
-							ste.download_button(label='Scarica tabella in formato CSV',
+							ste.download_button(label='Download CSV table',
 								data=csv,
-								file_name='sommario_ASVs_feature_table_%s.csv'%(denoising_pipe),
+								file_name='ASVs_feature_table_%s_summary.csv'%(denoising_pipe),
 								mime='text/csv')
 						
-						st.subheader('Sommario frequenze ASVs per campione')
+						st.subheader('ASVs frequency per sample summary')
 						tabella_df = pd.DataFrame(pd.read_html(source_code,thousands=',', decimal='.')[1])
 						tabella_df = tabella_df.set_index('Unnamed: 0', drop = True)
-						tabella_df = tabella_df.rename({'Frequency': 'Frequenza'}, axis = 1).rename({'Minimum frequency': 'Frequenza minima',
-						'1st quartile': '1o quartile',
-						'Median frequency': 'Frequenza mediana',
-						'3rd quartile': '3o quartile',
-						'Maximum frequency': 'Frequenza massima',
-						'Mean frequency': 'Frequenza media'}, axis = 0)
+						# tabella_df = tabella_df.rename({'Frequency': 'Frequenza'}, axis = 1).rename({'Minimum frequency': 'Frequenza minima',
+						# '1st quartile': '1o quartile',
+						# 'Median frequency': 'Frequenza mediana',
+						# '3rd quartile': '3o quartile',
+						# 'Maximum frequency': 'Frequenza massima',
+						# 'Mean frequency': 'Frequenza media'}, axis = 0)
 						st.table(tabella_df.style.format(formatter='{:,.0f}'))
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='sommario_frequenze_ASVs_per_campione_%s.csv'%(denoising_pipe),
+							file_name='ASVs_freqs_per_sample_%s_summary.csv'%(denoising_pipe),
 							mime='text/csv')
 
 						
 						
-						st.subheader('Sommario Frequenze campioni per ASV')
+						st.subheader('Samples frequency per ASV summary')
 						tabella_df = pd.DataFrame(pd.read_html(source_code,thousands=',', decimal='.')[2])
 						tabella_df = tabella_df.set_index('Unnamed: 0', drop = True)
-						tabella_df = tabella_df.rename({'Frequency': 'Frequenza'}, axis = 1).rename({'Minimum frequency': 'Frequenza minima',
-						'1st quartile': '1o quartile',
-						'Median frequency': 'Frequenza mediana',
-						'3rd quartile': '3o quartile',
-						'Maximum frequency': 'Frequenza massima',
-						'Mean frequency': 'Frequenza media'}, axis = 0)
+						# tabella_df = tabella_df.rename({'Frequency': 'Frequenza'}, axis = 1).rename({'Minimum frequency': 'Frequenza minima',
+						# '1st quartile': '1o quartile',
+						# 'Median frequency': 'Frequenza mediana',
+						# '3rd quartile': '3o quartile',
+						# 'Maximum frequency': 'Frequenza massima',
+						# 'Mean frequency': 'Frequenza media'}, axis = 0)
 						st.table(tabella_df.style.format(formatter='{:,.0f}'))
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='sommario_frequenze_campioni_per_ASV_%s.csv'%(denoising_pipe),
+							file_name='sample_freqs_per_ASV_%s_summary.csv'%(denoising_pipe),
 							mime='text/csv')
 						
 						
 						# Generate deblur representative sequences summary visualizations
-						st.header('Statistiche delle sequenze ASVs rappresentative')
-						st.subheader('Sommario delle sequenze')
+						st.header('Representative ASVs sequences stats')
+						st.subheader('Sequences summary')
 						deblur_feature_table_summary = feature_table.visualizers.tabulate_seqs(st.session_state['rep_seqs_%s'%(denoising_pipe)])
 						deblur_feature_table_summary.visualization.export_data(secure_temp_dir_denoising)
 						with open(secure_temp_dir_denoising+"/index.html", 'r', encoding='utf-8') as HtmlFile:
 							source_code = HtmlFile.read() 
 						tabella_df = pd.DataFrame(pd.read_html(source_code,thousands=',')[0]).T
-						tabella_df = tabella_df.rename({0: 'Valore'}, axis=1).rename({
-							'Sequence Count': 'Conta sequenze',
-							'Min Length': 'Lunghezza minima', 
-							'Max Length': 'Lunghezza massima',
-							'Mean Length': 'Lunghezza media',
-							'Range': 'Intervallo',
-							'Standard Deviation': 'Deviazione standard'}, axis = 0)
+						tabella_df = tabella_df.rename({0: 'Value'}, axis=1)
+						# .rename({
+						# 	'Sequence Count': 'Conta sequenze',
+						# 	'Min Length': 'Lunghezza minima', 
+						# 	'Max Length': 'Lunghezza massima',
+						# 	'Mean Length': 'Lunghezza media',
+						# 	'Range': 'Intervallo',
+						# 	'Standard Deviation': 'Deviazione standard'}, axis = 0)
 						st.table(tabella_df.style.format(formatter='{:,.0f}'))
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='sommario_sequenze_ASVs_rappresentative_%s.csv'%(denoising_pipe),
+							file_name='ASVs_representative_sequences_%s_summary.csv'%(denoising_pipe),
 							mime='text/csv')
 
-						st.subheader('Distribuzione delle lunghezze delle sequenze')
+						st.subheader('Sequence length distribution')
 						tabella_df = pd.DataFrame(pd.read_html(source_code,thousands=',', header=0)[1]).T
 						tabella_df_hdr = tabella_df.iloc[0,:]
 						tabella_df = tabella_df.iloc[1:,:]
 						tabella_df.columns = tabella_df_hdr
 						tabella_df.index.name = 'Percentile'
-						tabella_df = tabella_df.rename({'Length* (nts):': 'Lunghezza in nucleotidi'}, axis=1)
+						tabella_df = tabella_df#.rename({'Length* (nts):': 'Lunghezza in nucleotidi'}, axis=1)
 						st.table(tabella_df)#.style.format(formatter='{:,.0f}'))
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='distribuzione_lunghezze_ASVs_rappresentative_%s.csv'%(denoising_pipe),
+							file_name='ASVs_representative_sequences_%s_length_distribution.csv'%(denoising_pipe),
 							mime='text/csv')
 						
-						st.subheader('Tabella completa delle lunghezze e delle sequenze nucleotidiche con link a ncbi BLAST')
-						st.markdown('Per il link a ncbi BLAST, fare click sulla sequenza.')
+						st.subheader('Table of sequences lengths and nucleotides with links to ncbi BLAST')
+						st.markdown('For ncbi BLAST see sequences [].')
 						tabella_df = pd.DataFrame(pd.read_html(source_code,thousands=',', header=0)[2])
-						tabella_df = tabella_df.rename({'Feature ID': 'ID OTUs o ASVs', 'Sequence Length': 'Lunghezza sequenza', 'Sequence': 'Sequenza'}, axis = 1)
+						tabella_df = tabella_df#.rename({'Feature ID': 'ID OTUs o ASVs', 'Sequence Length': 'Lunghezza sequenza', 'Sequence': 'Sequenza'}, axis = 1)
 						
-						sequenza_link_BLAST = ['[%s] (http://www.ncbi.nlm.nih.gov/BLAST/Blast.cgi?ALIGNMENT_VIEW=Pairwise&PROGRAM=blastn&DATABASE=nt&CMD=Put&QUERY=%s)'%(seq, seq) for seq in tabella_df['Sequenza'].values]
+						sequenza_link_BLAST = ['[%s](http://www.ncbi.nlm.nih.gov/BLAST/Blast.cgi?ALIGNMENT_VIEW=Pairwise&PROGRAM=blastn&DATABASE=nt&CMD=Put&QUERY=%s)'%(seq, seq) for seq in tabella_df['Sequence'].values]
 						
-						tabella_df['Sequenza'] = sequenza_link_BLAST
+						tabella_df['Sequence'] = sequenza_link_BLAST
 						st.dataframe(tabella_df)
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='tabella_lunghezze_e_sequenze_nt_ASVs_%s.csv'%(denoising_pipe),
+							file_name='ASVs_%s_lengths_and_nt_seqs_table.csv'%(denoising_pipe),
 							mime='text/csv')
 					
 
-			side_plchldr3.success('***%s.*** Denoising sequenze \
+			side_plchldr3.success('***%s.*** Denoising \
 			\n > Tab %s. Denoising' %(step_n, step_n))
 			step_n += 1
 
 			st.balloons()
 		else:
 
-			st.warning('La pagina e\' in attesa che digiti nel menu\' laterale il/i metodo/i di denoising delle tue sequenze.')
+			st.warning('The page is awaiting for you to enter the denosing method in the sidebar menu form.')
 			step_n += 1
 			st.stop()
 
@@ -1981,38 +1982,38 @@ if skip is False:
 	with tab_taxonomy:
 
 		side_plchldr4 = sidemenus.empty()
-		side_plchldr4.info('***%s.*** Classificazione tassonomica \
-			\n > Tab %s. Classificazione tassonomica' %(step_n, step_n))
+		side_plchldr4.info('***%s.*** Taxonomic classification \
+			\n > Tab %s. Taxonomic classification' %(step_n, step_n))
 
 
 		form_upload_classifier_data_plchldr = st.empty()
 		with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
 			
-			path_pre_trained_classifier = st.file_uploader('Seleziona un file di classificatore pre-trained:', 
+			path_pre_trained_classifier = st.file_uploader('Select a pre-trained classifier file:', 
 			key='pre_trained_classifier_path_input',
 			accept_multiple_files = False,
 			type='qza',
 			#value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
-			help='File del Classificatore pre-trained, formato del file: .qza (artifact qiime2). \
+			help='Pre-trained classifier file, available at https://docs.qiime2.org/2023.2/data-resources/, file format: .qza (artifact qiime2). \
 				pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
 
-			path_reference_taxonomy = st.file_uploader('Seleziona un file di tassonomia di riferimento:',
+			path_reference_taxonomy = st.file_uploader('Select a reference taxonomy file:',
 			key='reference_taxonomy_path_input',
 			accept_multiple_files = False,
 			type='txt',
 			#value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
-			help='File di Tassonomia di riferimento delle sequenze OTU del classificatore pre-trained, formato del file: .txt. \
+			help='Reference taxonomy file of OTU sequences of the pre-trained classifier, formato del file: .txt. \
 				reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
-			path_reference_otus_seqs = st.file_uploader('Seleziona un file di OTU di riferimento:',
+			path_reference_otus_seqs = st.file_uploader('Select a reference OTU file:',
 			key='reference_otus_seqs_path_input',
 			accept_multiple_files = False,
 			type='fasta',
 			#value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
-			help='File di Sequenze OTU di riferimento del classificatore pre-trained, formato del file: .fasta. \
+			help='OTU reference sequences file of the pre-trained classifier, file format: .fasta. \
 				reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
-			submit_button = st.form_submit_button('Carica')
+			submit_button = st.form_submit_button('Upload')
 
 		if ((submit_button) or (
 			('pre_trained_classifier_path_input' in st.session_state.keys()) and
@@ -2060,34 +2061,34 @@ if skip is False:
 					except Exception as e:
 						
 						st.exception(e)
-						st.warning('La classificazione delle sequenze non e\' andata a buon fine.')
+						st.warning('Sequences classification throwed an exception.')
 						st.stop()
 					
-					st.success("Classificazione delle sequenze completata.")
+					st.success("Successfully classified sequences.")
 					st.balloons()
 
-					st.header('Classificazione tassonomica delle ASVs')
-					tabella_df = st.session_state['classification_%s'%(denoising_pipe)].view(pd.DataFrame)['Taxon'].str.split(';', expand=True).rename({0: 'Regno',
-					1: 'Phylum', 2: 'Classe', 3: 'Ordine', 4: 'Famiglia', 5: 'Genere', 6: 'Specie'}, axis=1)
+					st.header('Taxonomic classification of ASVs')
+					tabella_df = st.session_state['classification_%s'%(denoising_pipe)].view(pd.DataFrame)['Taxon'].str.split(';', expand=True)#.rename({0: 'Regno',
+					#1: 'Phylum', 2: 'Classe', 3: 'Ordine', 4: 'Famiglia', 5: 'Genere', 6: 'Specie'}, axis=1)
 					tabella_df.index.name = '#TAXONOMY'
 					#filter_dataframe(tabella_df)
 					st.write(tabella_df)
 
 					csv = convert_df(tabella_df)
-					ste.download_button(label='Scarica tabella in formato CSV',
+					ste.download_button(label='Download CSV table',
 						data=csv,
-						file_name='classificazione_tassonomica_ASVs_%s.csv'%(denoising_pipe),
+						file_name='taxonomic_classification_ASVs_%s.csv'%(denoising_pipe),
 						mime='text/csv')
 
 
 
-			side_plchldr4.success('***%s.*** Classificazione tassonomica \
-				\n > Tab %s. Classificazione tassonomica' %(step_n, step_n))
+			side_plchldr4.success('***%s.*** Taxonomic classification \
+				\n > Tab %s. Taxonomic classification' %(step_n, step_n))
 			step_n += 1
 		
 		else:
-			st.info('Usa il form sopra per selezionare o trascinare i files per il classificatore tassonomico pre-addestrato, scaricabili sul sito di qiime2.')
-			st.warning('La pagina e\' in attesa che carichi i files per il classificatore tassonomico.')
+			st.info('Use the form above to select or drag and drop the file of the pre-trained, available at https://docs.qiime2.org/2023.2/data-resources/.')
+			st.warning('The page is awaiting for you to upload the files for the taxonomic classifier.')
 			# st.stop()
 			step_n += 1
 
@@ -2095,8 +2096,8 @@ if skip is False:
 	with tab_rarefaction:
 
 		side_plchldr5 = sidemenus.empty()
-		side_plchldr5.info('***%s.*** Normalizzazione \
-			\n > Tab %s. Normalizzazione' %(step_n, step_n))
+		side_plchldr5.info('***%s.*** Normalization \
+			\n > Tab %s. Normalization' %(step_n, step_n))
 		
 		metrics = {'observed_features', 'shannon', 'pielou_e', 'simpson'}
 		
@@ -2114,7 +2115,7 @@ if skip is False:
 			with cols[i]:
 				
 				st.header(denoising_pipe)
-				st.info('Default: Profondita\' di campionamento massima per curve di alfa rarefazione suggerita, equivalente al numero medio arrotondato di sequenze per campione: %s'%(st.session_state['max_depth_suggested_%s'%(denoising_pipe)]))
+				st.info('Default: maximum depth suggested for alpha rarefaction curves, equal to the approximate mean number of sequences per sample: %s'%(st.session_state['max_depth_suggested_%s'%(denoising_pipe)]))
 				try:
 					alpha_rare_curves = app_alpha_rare_curves(
 						_table = st.session_state['feature_table_%s'%(denoising_pipe)], 
@@ -2131,45 +2132,45 @@ if skip is False:
 				alpha_rare_curves.visualization.export_data(secure_temp_dir_rarefaction)
 				alpha_rare_curves.visualization.save(secure_temp_dir_rarefaction+'/alpha_rare_curves.qzv')
 
-				st.subheader('Curve di alfa rarefazione')
-				st.markdown('Si scarica un file .qzv per visualizzare le curve di alfa rarefazione \
-					 su view.qiime2.org, per valutare la profondita\' di rarefazione preferita \
-						per la tabella delle sequenze, in base alla dispersione del valore di alfa diversita\' calcolato \
-							e alla quantita\' dei campioni di partenza inclusi.')
+				st.subheader('Alpha rarefaction curves')
+				st.markdown('You can download a .qzv file to visualize the alpha rarefaction curves \
+					 at view.qiime2.org, to evaluate the preferred rarefaction depth \
+						for the ASVs table, based on the dispersion of the computed alpha diversity metrics value \
+							and on the number of excluded samples (you would want to retain as much samples and sequences as possible).')
 				
 				# aggiungere i file .jsonp .csv e .html e le cartelle q2templateassets e dist al bottone di download (.zip file), altrimenti index.html da solo non si visualizza correttamente nel browser
 				# zipfolder(secure_temp_dir_rarefaction+"/zip_alpha_rare_curves.zip", secure_temp_dir_rarefaction)
 
 				with open(secure_temp_dir_rarefaction+"/alpha_rare_curves.qzv", 'rb') as f:
 					ste.download_button(
-						label="Download curve di alfa rarefazione .qzv",
+						label="Download alpha rarefaction curves .qzv",
 						data=f,
-						file_name="curve_alfa_rarefazione_%s.qzv" %(denoising_pipe),
+						file_name="alpha_rarefaction_curves_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 				
 
 				with st.form('rarefaction_form_%s'%(denoising_pipe)):
 
 					try: # Deblur
-						sampling_depth_suggested = np.min(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)]['num di letture di Deblur che combaciano con sequenze di riferimento positivo'])
+						sampling_depth_suggested = np.min(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)]['reads-hit-reference'])
 					except: # Dada2
-						sampling_depth_suggested = np.min(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)]['non-chimeriche'])
+						sampling_depth_suggested = np.min(st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)]['non-chimeric'])
 
-					st.info('Default: Profondita\' di rarefazione pre-impostata, equivalente al numero minimo di sequenze per campione: %s'%sampling_depth_suggested)
-					st.info('ATTENZIONE: Fare riferimento alle curve di alfa rarefazione per scegliere la profondita\' di campionamento che \
-						permetta di mantenere al contempo il maggior numero di campioni ed il maggior numero di sequenze possibili (si consiglia di escludere \
-							quei campioni con numero di sequenze molto basso in confronto ai rimanenti, se presenti, settando la \
-								profondita\' maggiore rispetto a quella di default, al fine di ritenere piu\' informazioni di sequenze).')
-					sampling_depth = st.number_input(label='Scegli la profondita\' di campionamento per la rarefazione:',
+					st.info('Default: Rarefaction depth pre-set, equals to the minimum number of sequences per sample: %s'%sampling_depth_suggested)
+					st.info('ATTENTION: See alpha rarefaction curves to pick a sequencing depth that \
+						allows to keep as much samples as possible and in the mean time as much sequences as possible (suggestion to exclude \
+							those samples with very low number of sequences compared to the others, if present, and setting \
+								a greater sequencing depth with respect to default, to retain more information of sequences).')
+					sampling_depth = st.number_input(label='Choose the rarefaction depth:',
 						min_value=0, 
 						max_value=None, 
 						value=sampling_depth_suggested, 
 						step=1,
-						help='Numero di sequenze a cui campionare casualmente in modo equo ogni campione. Considerare le curve di rarefazione.',
+						help='Number of sequences for random subsampling of each sample. Consider alpha rarefaction curves.',
 						key = 'sampling_depth_%s_input'%(denoising_pipe))
 					st.session_state['sampling_depth_%s'%(denoising_pipe)] = int(sampling_depth)
 
-					submit_button = st.form_submit_button('Rarefazione')
+					submit_button = st.form_submit_button('Rarefaction')
 				
 				if ((submit_button) or (('sampling_depth_%s_input'%(denoising_pipe) in st.session_state.keys()) and
 				(st.session_state['sampling_depth_%s_input'%(denoising_pipe)] != 0))):
@@ -2181,45 +2182,45 @@ if skip is False:
 						st.session_state['rarefied_table_%s'%(denoising_pipe)] = rarefied_table
 					except:
 
-						st.warning('La rarefazione non e\' andata a buon fine.')
+						st.warning('Rarefaction throwed an exception.')
 						st.stop()
 
 				else:
-					st.info('Per scegliere la profondita\' di campionamento adatta da inserire nel form qui sopra, sono da considerare le curve di alfa rarefazione.')
-					st.warning('La pagina e\' in attesa che selezioni la profonodita\' di campionamento desiderata nel form qui sopra.')
+					st.info('To choose the sampling depth in the form above, consider the alpha rarefaction curves.')
+					st.warning('The page is awaiting for you to select a sampling depth using the form above.')
 
 				st.balloons()
 
 				
 				
-				st.success('Rarefazione alla profondita\' di %s sequenze per campione completata.' %(sampling_depth))
-				st.subheader('Tabella delle ASVs normalizzata col metodo della rarefazione')
+				st.success('Rarefaction at depth of %s sequences per sample successfully completed.' %(sampling_depth))
+				st.subheader('ASVs table normalized with rarefaction method')
 				tabella_df = st.session_state['rarefied_table_%s'%(denoising_pipe)].view(pd.DataFrame).T
 				tabella_df.index.name = '#NAME'
 				st.write(tabella_df.style.format(formatter='{:,.0f}'))
 
 				csv = convert_df(tabella_df)
-				ste.download_button(label='Scarica tabella in formato CSV',
+				ste.download_button(label='Download CSV table',
 					data=csv,
-					file_name='ASVs_feature_table_normalizzata_%s.csv'%(denoising_pipe),
+					file_name='ASVs_feature_table_normalized_%s.csv'%(denoising_pipe),
 					mime='text/csv')
 
 				
-		side_plchldr5.success('***%s.*** Normalizzazione \
-			\n > Tab %s. Normalizzazione' %(step_n, step_n))
+		side_plchldr5.success('***%s.*** Normalization \
+			\n > Tab %s. Normalization' %(step_n, step_n))
 		step_n += 1
 
 
 	with tab_diversity:
 
 		side_plchldr6 = sidemenus.empty()
-		side_plchldr6.info('***%s.*** Alfa e beta diversita\' \
-			\n > Tab %s. Alfa e beta diversita\'' %(step_n, step_n))
+		side_plchldr6.info('***%s.*** Alpha and beta diversity \
+			\n > Tab %s. Alpha and beta diversity' %(step_n, step_n))
 		
 
 		
 		
-		st.header('Alfa Diversita\'')
+		st.header('Alpha Diversity')
 		if len(st.session_state.denoising_pipes_multisel) == 1:
 
 			subhdr_plchldr = st.empty()
@@ -2246,9 +2247,9 @@ if skip is False:
 						st.write(tabella_df)
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='alfa_diversita_%s_%s.csv'%(i.view(pd.Series).name, denoising_pipe),
+							file_name='alpha_diversity_%s_%s.csv'%(i.view(pd.Series).name, denoising_pipe),
 							mime='text/csv')
 
 
@@ -2266,12 +2267,12 @@ if skip is False:
 						st.write(tabella_df)
 						
 						csv = convert_df(tabella_df)
-						ste.download_button(label='Scarica tabella in formato CSV',
+						ste.download_button(label='Download CSV table',
 							data=csv,
-							file_name='alfa_diversita_%s_%s.csv'%(i.view(pd.Series).name, denoising_pipe),
+							file_name='alpha_diversity_%s_%s.csv'%(i.view(pd.Series).name, denoising_pipe),
 							mime='text/csv')
 			
-		st.header('Beta Diversita\'')
+		st.header('Beta Diversity')
 		cols = st.columns(len(st.session_state.denoising_pipes_multisel))			
 
 		for j, denoising_pipe in enumerate(st.session_state.denoising_pipes_multisel):
@@ -2296,20 +2297,20 @@ if skip is False:
 				beta_bc_rare_vis.visualization.export_data(secure_temp_dir_rarefaction_beta_bc)
 				# Non funziona lo zipping della cartella beta rarefaction secure_temp_dir_rarefaction_beta!!
 				#todo workaround temporaneo:
-				st.markdown('Si scarica un file .zip per la visualizzazione dei risultati della beta rarefazione \
-					alla profondita\' di `%s` sequenze per campione. \
-					Il file index.html mostra: un grafico Emperor jackknifed PCoA, \
-						una Heatmap della correlazione di Pearson tra le prove di rarefazione per la metrica \
-							di beta diversita\' ***Bray-Curtis*** ed un albero Newick del clustering dei campioni secondo il metodo UPGMA, visualizzabile \
-									sul sito http://etetoolkit.org/treeview/ ' %(st.session_state['sampling_depth_%s'%(denoising_pipe)]))
+				st.markdown('You can download a .zip file with visualizations of results of beta rarefaction \
+					at the depth of `%s` sequences per sample. \
+					The file index.html shows: an Emperor jackknifed PCoA plot, \
+						a Heatmap of Pearson correlation among rarefactions for beta diversity metric \
+							***Bray-Curtis*** and a Newick tree of UPGMA clustering of samples. Go to \
+									http://etetoolkit.org/treeview/ to visualize it.' %(st.session_state['sampling_depth_%s'%(denoising_pipe)]))
 				zipfolder(secure_temp_dir_rarefaction_beta_bc+"/zip_beta_rare.zip", secure_temp_dir_rarefaction_beta_bc)
 
 				with open(secure_temp_dir_rarefaction_beta_bc+"/zip_beta_rare.zip", 'rb') as f:
 					
 					ste.download_button(
-						label="Download rarefazione beta Bray Curtis .zip",
+						label="Download beta rarefaction Bray Curtis .zip",
 						data=f,
-						file_name="beta_rarefazione_braycurtis_%s.zip" %(denoising_pipe),
+						file_name="beta_rarefaction_braycurtis_%s.zip" %(denoising_pipe),
 						mime="application/zip")
 				
 				st.markdown('***Jaccard***')
@@ -2327,20 +2328,21 @@ if skip is False:
 				beta_j_rare_vis.visualization.export_data(secure_temp_dir_rarefaction_beta_j)
 				# Non funziona lo zipping della cartella beta rarefaction secure_temp_dir_rarefaction_beta!!
 				#todo workaround temporaneo:
-				st.markdown('Si scarica un file .zip per la visualizzazione dei risultati della beta rarefazione. \
-					Nella cartella, il file index.html mostra: un grafico Emperor jackknifed PCoA, \
-						una Heatmap della correlazione di Pearson tra le prove di rarefazione per la metrica \
-							di beta diversita\' ***Jaccard*** ed un albero Newick del clustering dei campioni secondo il metodo UPGMA, visualizzabile \
-									sul sito http://etetoolkit.org/treeview/ ')
+				st.markdown('You can download a .zip file with visualizations of results of beta rarefaction \
+					at the depth of `%s` sequences per sample. \
+					The file index.html shows: an Emperor jackknifed PCoA plot, \
+						a Heatmap of Pearson correlation among rarefactions for beta diversity metric \
+							***Jaccard*** and a Newick tree of UPGMA clustering of samples. Go to \
+									http://etetoolkit.org/treeview/ to visualize it.')
 				
 				zipfolder(secure_temp_dir_rarefaction_beta_j+"/zip_beta_rare.zip", secure_temp_dir_rarefaction_beta_j)
 
 				with open(secure_temp_dir_rarefaction_beta_j+"/zip_beta_rare.zip", 'rb') as f:
 					
 					ste.download_button(
-						label="Download rarefazione beta Jaccard .zip",
+						label="Download beta rarefaction Jaccard .zip",
 						data=f,
-						file_name="beta_rarefazione_jaccard_%s.zip" %(denoising_pipe),
+						file_name="beta_rarefaction_jaccard_%s.zip" %(denoising_pipe),
 						mime="application/zip")
 			except Exception as e:
 
@@ -2349,28 +2351,28 @@ if skip is False:
 			
 		st.balloons()
 
-		side_plchldr6.success('***%s.*** Alfa e beta diversita\' \
-				\n > Tab %s. Alfa e beta diversita\'' %(step_n, step_n))
+		side_plchldr6.success('***%s.*** Alpha and beta diversity \
+				\n > Tab %s. Alpha and beta diversity' %(step_n, step_n))
 		step_n += 1
 
 
 	with tab_phylogenetic_tree:
 
 		side_plchldr7 = sidemenus.empty()
-		side_plchldr7.info('***%s.*** Costruzione albero filogenetico \
-			\n > Tab %s. Albero filogenetico' %(step_n, step_n))
+		side_plchldr7.info('***%s.*** Phylogenetic tree construction \
+			\n > Tab %s. Phylogenetic tree' %(step_n, step_n))
 		
-		st.subheader('Metriche di alfa e beta diversita\' core, basate sull\'albero filogenetico')
-		st.markdown('Costruzione di un albero filogenetico dalle sequenze _de novo_, mediante allineamento di sequenza multiplo usando MAFFT e fasttree.')
+		st.subheader('Core alpha and beta diversity metrics, based on the phylogenetic tree')
+		st.markdown('_De novo_ construction of a phylogenetic tree from sequences, through multiple sequence alignment using MAFFT and fasttree.')
 		cols = st.columns(len(st.session_state.denoising_pipes_multisel))			
 		
-		metadata_uploader = st.file_uploader('Carica un file di metadati .tsv', accept_multiple_files = False, key = 'metadata_input')
+		metadata_uploader = st.file_uploader('Upload a metadata file .tsv', accept_multiple_files = False, key = 'metadata_input')
 		if st.session_state.metadata_input is not None:
 			df_meta = pd.read_csv(st.session_state.metadata_input, sep='\t', index_col=0)
 			df_meta.index.name = 'SampleID'
 			st.session_state.metadata = Metadata(df_meta)
 		else:
-			st.warning('La pagina e\' in attesa che carichi un file di metadati da usare per i grafici emperor delle metriche core di beta diversita\'.')
+			st.warning('The page is awaiting for you to upload a metadata file to be used for emperor plots of core beta diversity metrics.')
 			st.stop()
 		for j, denoising_pipe in enumerate(st.session_state.denoising_pipes_multisel):
 			
@@ -2386,22 +2388,22 @@ if skip is False:
 				st.session_state.rooted_tree.export_data(secure_temp_dir_phylogenetic_tree)
 	
 				
-				st.info('L\'albero filogenetico si visualizza online su diversi possibili siti: \
-					\n> * http://etetoolkit.org/treeview/ --> l\'allineamento masked puo\' essere aggiunto; \
-					\n> * https://icytree.org/ --> la classificazione tassonomica puo\' essere aggiunta come metadata;\
-					\n> * https://www.iroki.net/viewer --> la classificazione tassonomica puo\' essere aggiunta come metadata;\
+				st.info('You can visualize the phylogenetic tree at: \
+					\n> * http://etetoolkit.org/treeview/; \
+					\n> * https://icytree.org/;\
+					\n> * https://www.iroki.net/viewer.\
 							')
 				zipfolder(secure_temp_dir_phylogenetic_tree+"/zip_phylogenetic_mafft_alignment_tree.zip", secure_temp_dir_phylogenetic_tree)
 
 				with open(secure_temp_dir_phylogenetic_tree+"/zip_phylogenetic_mafft_alignment_tree.zip", 'rb') as f:
 						
 					ste.download_button(
-						label="Download allineamento e albero filogenetico .zip",
+						label="Download alignment and phylogenetic tree .zip",
 						data=f,
-						file_name="allineamento_seqs_e_albero_filogenetico_%s.zip" %(denoising_pipe),
+						file_name="alignment_seqs_and_phylogenetic_tree_%s.zip" %(denoising_pipe),
 						mime="application/zip")
 
-				st.subheader('Metriche core di alfa e beta diversita\' filogenetiche')
+				st.subheader('Core alpha and beta diversity metrics phylogenetic')
 				st.subheader('Faith pd')
 				st.table(st.session_state.core_metr_phylo.faith_pd_vector.view(pd.Series))
 				
@@ -2431,33 +2433,33 @@ if skip is False:
 				with open(secure_temp_dir_core_metr_phylo_qzv+"/bray_curtis_emperor.qzv", 'rb') as f:
 						
 					ste.download_button(
-						label="Download visualizzazione emperor bray curtis .qzv",
+						label="Download visualization emperor bray curtis .qzv",
 						data=f,
 						file_name="bray_curtis_emperor_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 				with open(secure_temp_dir_core_metr_phylo_qzv+"/jaccard_emperor.qzv", 'rb') as f:
 						
 					ste.download_button(
-						label="Download visualizzazione emperor jaccard .qzv",
+						label="Download visualization emperor jaccard .qzv",
 						data=f,
 						file_name="jaccard_emperor_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 				with open(secure_temp_dir_core_metr_phylo_qzv+"/weighted_unifrac_emperor.qzv", 'rb') as f:
 						
 					ste.download_button(
-						label="Download visualizzazione emperor weightedunifrac .qzv",
+						label="Download visualization emperor weightedunifrac .qzv",
 						data=f,
 						file_name="weighted_unifrac_emperor_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 				with open(secure_temp_dir_core_metr_phylo_qzv+"/unweighted_unifrac_emperor.qzv", 'rb') as f:
 						
 					ste.download_button(
-						label="Download visualizzazione emperor unweighted unifrac .qzv",
+						label="Download visualization emperor unweighted unifrac .qzv",
 						data=f,
 						file_name="unweighted_unifrac_emperor_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 						
-				st.subheader('Graifici a barre della tassonomia')
+				st.subheader('Taxa barplots')
 				secure_temp_dir_taxa_barplots = tempfile.mkdtemp(prefix="temp_", suffix="_taxa_barplots_%s"%(denoising_pipe))
 
 				from qiime2.plugins.taxa.visualizers import barplot
@@ -2470,23 +2472,23 @@ if skip is False:
 				with open(secure_temp_dir_taxa_barplots+"/taxa_barplots.qzv", 'rb') as f:
 						
 					ste.download_button(
-						label="Download grafici a barre dei taxa .qzv",
+						label="Download taxa barplots .qzv",
 						data=f,
-						file_name="grafici_a_barre_taxa_%s.qzv" %(denoising_pipe),
+						file_name="taxa_barplots_%s.qzv" %(denoising_pipe),
 						mime="application/qzv")
 					
 			except Exception as e:
 				
 				st.exception(e)
-				st.warning('La costruzione dell\'albero filogenetico dalle sequenze rappresentative identificate con %s \
-					non e\' andata a buon fine.' %(denoising_pipe))
+				st.warning('Phylogenetic tree construction from representative sequences identified with %s \
+					throwed an exception.' %(denoising_pipe))
 				st.stop()
 
 			
 			st.balloons()
 
-		side_plchldr7.success('***%s.*** Costruzione albero filogenetico \
-			\n > Tab %s. Albero filogenetico' %(step_n, step_n))
+		side_plchldr7.success('***%s.*** Phylogenetic tree construction \
+			\n > Tab %s. Phylogenetic tree' %(step_n, step_n))
 		step_n += 1
 
 
