@@ -2946,34 +2946,34 @@ with tab_rel_ab:
 								
 					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'All samples')):
 
-						color_picker_col = st.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
+						color_picker_col = st.radio('Bars colour for group %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						key='color_picker_col_%s_%s_radio'%(tax_level, grouping_key))#+[data_meta.index.name])
 						submit_button_label = ''
 					elif (st.session_state.data_meta_input is None):
 
 						color_picker_col = None
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = None
-						submit_button_label = 'Nessun file di metadati fornito. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
+						submit_button_label = 'No metadata file. One default different bar colour \
+							for each sample.'
 						
-						palette_seq_or_qual = st.radio('Colore delle barre dei grafici', 
-						options=['Sequenziale', 'Graduale'],
-						help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-							Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+						palette_seq_or_qual = st.radio('Bar charts colour', 
+						options=['Sequential', 'Gradual'],
+						help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+							Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 						key='palette_%s_%s_radio'%(tax_level, grouping_key))
 						color_picker_col = palette_seq_or_qual
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]
 						
-						side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+						side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 
 						#palette = cycle(px.colors.qualitative.Alphabet)
-					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'Tutti i campioni')):
+					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'All samples')):
 						
 						stacked_grouped_bars_button_plchldr = st.columns((1,1))
-						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Due \
-							tipi di visualizzazione e colorazione delle barre dei grafici diversi disponibili:', options= ['Grafici a barre impilate', 'Grafici a barre a gruppi'], help='Selezionare la visualizzazione preferita: \
-								\n> Grafici a barre impilate: per poter selezionare la colorazione sequenziale o graduale delle barre dei grafici impilate.\
-								\n> Grafici a barre a gruppi: per poter selezionare la colorazione delle barre dei grafici a gruppi basati su una categoria dei metadati.',
+						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Two \
+							different types of visualizations and colouring of barcharts available:', options= ['Stacked barcharts', 'Grouped barcharts'], help='Select the desired visualization: \
+								\n> Stacked barcharts: to select the sequential or gradual colouring of stacked barcharts.\
+								\n> Grouped barcharts: to select the colouting of grouped barcharts based on a metadata category.',
 								key='stacked_grouped_bars_radio',
 								index=0)
 						
@@ -2982,9 +2982,9 @@ with tab_rel_ab:
 						# 	options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						# 	key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 						
-						submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
+						submit_button_label = 'NOTE: No samples\' grouping.'
 
-						if st.session_state.stacked_grouped_bars_radio == 'Grafici a barre impilate':
+						if st.session_state.stacked_grouped_bars_radio == 'Stacked barcharts':
 							
 							color_picker_col = None
 							try:
@@ -2992,19 +2992,19 @@ with tab_rel_ab:
 							except Exception as e:
 								pass
 							
-							palette_seq_or_qual = color_radio_plchldr.radio('Colore delle barre dei grafici', 
-							options=['Sequenziale', 'Graduale'],
-							help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-								Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+							palette_seq_or_qual = color_radio_plchldr.radio('Bar charts colour', 
+							options=['Sequential', 'Gradual'],
+							help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 							key='palette_%s_%s_radio'%(tax_level, grouping_key))
 							
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
-						elif st.session_state.stacked_grouped_bars_radio == 'Grafici a barre a gruppi':
+							submit_button_label = 'NOTE: No samples\' grouping. One default different bar colour \
+							for each sample.'
+						elif st.session_state.stacked_grouped_bars_radio == 'Grouped barcharts':
 
 							color_picker_col = None
 
-							color_picker_col = color_radio_plchldr.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), 
+							color_picker_col = color_radio_plchldr.radio('Bars colour for group %s' %(grouping_key), 
 								options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 								key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 							
@@ -3012,20 +3012,20 @@ with tab_rel_ab:
 								del st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]			
 							except Exception as e:
 								pass
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
+							submit_button_label = 'NOTE: No samples\' grouping.'
 
 				
 				try:
 					st.markdown(submit_button_label)
 				except:
 					pass
-				submit_button = st.form_submit_button('OK, colora', type='primary')
+				submit_button = st.form_submit_button('OK, colour', type='primary')
 			if ((color_picker_col is not None) and (st.session_state['color_picker_col_%s_%s_radio' %(tax_level, grouping_key)] == st.session_state.sample_grouping_radio)):
 
-				color_picked = color_picker_plchldr.color_picker('Colore delle barre dei grafici:', value = '#00FFAA', key = 'color_picked')
+				color_picked = color_picker_plchldr.color_picker('Bar charts colour:', value = '#00FFAA', key = 'color_picked')
 			if (submit_button or (color_picker_col is not None)) :
 				
-				side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+				side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 				for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 					grouped_samples = list(grouped_samples)
 					
@@ -3069,15 +3069,15 @@ with tab_rel_ab:
 					else:
 						
 						barmode = 'stack'
-						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
+						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequential':
 							palette = cycle(px.colors.qualitative.Alphabet)
 						
-						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
+						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Gradual':
 							# sequenza di colori personalizzata fra blu e rosso basata sulla quantita di campioni
 							n_colors = len(data_OTU.columns)+1
 							custom_colors_grad = px.colors.sample_colorscale("turbo", [n/(n_colors -1) for n in range(n_colors)])
 							palette = cycle(custom_colors_grad)
-						side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+						side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 
 						colors = {c: next(palette) for c in data_OTU.columns}
 
@@ -3126,7 +3126,7 @@ with tab_rel_ab:
 							row = 1, col = 1)
 							counter.append(colors[leg_gr_col])
 						except ValueError:
-							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
+							st.warning('Choose a different metadata category for barcharts colour')
 							st.stop()
 					title_plot = len(grouped_samples)
 					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
@@ -3135,8 +3135,8 @@ with tab_rel_ab:
 				step_n += 1
 			else:
 
-				st.warning('La pagina e\' in attesa che selezioni una colorazione per i grafici a barre per ciascun \
-					gruppo di campioni dal menu a lato.')
+				st.warning('The page is awaiting for you to pick a colour for barcharts for each \
+					samples\' grouping from the sidebar menu.')
 			
 				step_n += 1
 
@@ -3149,32 +3149,32 @@ with tab_rel_ab:
 
 				for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 					
-					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'Tutti i campioni')):
+					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'All samples')):
 
-						color_picker_col = st.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
+						color_picker_col = st.radio('Bars colour for group %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 						submit_button_label = ''
 					elif (st.session_state.data_meta_input is None):
 
 						color_picker_col = None
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = None
-						submit_button_label = 'Nessun file di metadati fornito. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
+						submit_button_label = 'No metadata file. One default different bar colour \
+							for each sample.'
 				
-						palette_seq_or_qual = st.radio('Colore delle barre dei grafici', 
-						options=['Sequenziale', 'Graduale'],
-						help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-							Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+						palette_seq_or_qual = st.radio('Bar charts colour', 
+						options=['Sequential', 'Gradual'],
+						help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 						key='palette_%s_%s_radio'%(tax_level, grouping_key))
 						color_picker_col = palette_seq_or_qual
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]
-					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'Tutti i campioni')):
+					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'All samples')):
 						
 						stacked_grouped_bars_button_plchldr = st.columns((1,1))
-						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Due \
-							tipi di visualizzazione e colorazione delle barre dei grafici diversi disponibili:', options= ['Grafici a barre impilate', 'Grafici a barre a gruppi'], help='Selezionare la visualizzazione preferita: \
-								\n> Grafici a barre impilate: per poter selezionare la colorazione sequenziale o graduale delle barre dei grafici impilate.\
-								\n> Grafici a barre a gruppi: per poter selezionare la colorazione delle barre dei grafici a gruppi basati su una categoria dei metadati.',
+						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Two \
+							different types of visualizations and colouring of barcharts available:', options= ['Stacked barcharts', 'Grouped barcharts'], help='Select the desired visualization: \
+								\n> Stacked barcharts: to select the sequential or gradual colouring of stacked barcharts.\
+								\n> Grouped barcharts: to select the colouting of grouped barcharts based on a metadata category.',
 								key='stacked_grouped_bars_radio',
 								index=0)
 						
@@ -3183,8 +3183,8 @@ with tab_rel_ab:
 						# 	options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						# 	key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 						
-						submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
-						if stacked_grouped_bars_radio == 'Grafici a barre impilate':
+						submit_button_label = 'NOTE: No samples\' grouping.'
+						if stacked_grouped_bars_radio == 'Stacked barcharts':
 							
 							color_picker_col = None
 							try:
@@ -3192,19 +3192,19 @@ with tab_rel_ab:
 							except Exception as e:
 								pass
 							
-							palette_seq_or_qual = color_radio_plchldr.radio('Colore delle barre dei grafici', 
-							options=['Sequenziale', 'Graduale'],
-							help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-								Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+							palette_seq_or_qual = color_radio_plchldr.radio('Bar charts colour', 
+							options=['Sequential', 'Gradual'],
+							help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 							key='palette_%s_%s_radio'%(tax_level, grouping_key))
 							
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
-						elif stacked_grouped_bars_radio == 'Grafici a barre a gruppi':
+							submit_button_label = 'NOTE: No samples\' grouping. One default different bar colour \
+							for each sample.'
+						elif stacked_grouped_bars_radio == 'Grouped barcharts':
 
 							color_picker_col = None
 
-							color_picker_col = color_radio_plchldr.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), 
+							color_picker_col = color_radio_plchldr.radio('Bars colour for group %s' %(grouping_key), 
 								options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 								key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 							
@@ -3212,19 +3212,19 @@ with tab_rel_ab:
 								del st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]			
 							except Exception as e:
 								pass
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
+							submit_button_label = 'NOTE: No samples\' grouping.'
 
 				try:
 					st.markdown(submit_button_label)
 				except:
 					pass
-				submit_button = st.form_submit_button('OK, colora', type = 'primary')
+				submit_button = st.form_submit_button('OK, colour', type = 'primary')
 			if ((color_picker_col is not None) and (color_picker_col == sample_grouping)):
 
-				color_picked = color_picker_plchldr.color_picker('Colore delle barre dei grafici:', value = '#00FFAA', key = 'color_picked')
+				color_picked = color_picker_plchldr.color_picker('Bar charts colour:', value = '#00FFAA', key = 'color_picked')
 			if (submit_button or (color_picker_col is not None)):
 			
-				side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+				side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 				for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():				
 					
 					if ((color_picker_col is not None) and (data_meta is not None)):
@@ -3262,14 +3262,14 @@ with tab_rel_ab:
 					else:
 						
 						barmode = 'stack'
-						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
+						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequential':
 							palette = cycle(px.colors.qualitative.Alphabet)
-						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
+						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Gradual':
 							# sequenza di colori personalizzata fra blu e rosso basata sulla quantita di campioni
 							n_colors = len(data_OTU.columns)+1
 							custom_colors_grad = px.colors.sample_colorscale("turbo", [n/(n_colors -1) for n in range(n_colors)])
 							palette = cycle(custom_colors_grad)
-						side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+						side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 
 						colors = {c: next(palette) for c in data_OTU.columns}
 
@@ -3320,7 +3320,7 @@ with tab_rel_ab:
 							row = 1, col = 1)
 							counter.append(colors[leg_gr_col])
 						except ValueError:
-							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
+							st.warning('Choose a different metadata category for barcharts colour')
 							st.stop()
 					title_plot = len(grouped_samples)
 					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
@@ -3329,8 +3329,8 @@ with tab_rel_ab:
 				step_n += 1
 			else:
 				
-				st.warning('La pagina e\' in attesa che selezioni una colorazione per i grafici a barre per ciascun \
-					gruppo di campioni dal menu a lato.')
+				st.warning('The page is awaiting for you to pick a colour for barcharts for each \
+					samples\' grouping from the sidebar menu.')
 			
 				step_n += 1
 
@@ -3345,32 +3345,32 @@ with tab_rel_ab:
 					
 					grouped_samples = list(grouped_samples)
 					
-					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'Tutti i campioni')):
+					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'All samples')):
 
-						color_picker_col = st.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
+						color_picker_col = st.radio('Bars colour for group %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						key='color_picker_col_%s_%s_radio'%(tax_level, grouping_key))#+[data_meta.index.name])
 						submit_button_label = ''
 					elif (st.session_state.data_meta_input is None):
 
 						color_picker_col = None
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = None
-						submit_button_label = 'Nessun file di metadati fornito. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
+						submit_button_label = 'No metadata file. One default different bar colour \
+							for each sample.'
 				
-						palette_seq_or_qual = st.radio('Colore delle barre dei grafici', 
-						options=['Sequenziale', 'Graduale'],
-						help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-							Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+						palette_seq_or_qual = st.radio('Bar charts colour', 
+						options=['Sequential', 'Gradual'],
+						help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 						key='palette_%s_%s_radio'%(tax_level, grouping_key))
 						color_picker_col = palette_seq_or_qual
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]
-					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'Tutti i campioni')):
+					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'All samples')):
 						
 						stacked_grouped_bars_button_plchldr = st.columns((1,1))
-						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Due \
-							tipi di visualizzazione e colorazione delle barre dei grafici diversi disponibili:', options= ['Grafici a barre impilate', 'Grafici a barre a gruppi'], help='Selezionare la visualizzazione preferita: \
-								\n> Grafici a barre impilate: per poter selezionare la colorazione sequenziale o graduale delle barre dei grafici impilate.\
-								\n> Grafici a barre a gruppi: per poter selezionare la colorazione delle barre dei grafici a gruppi basati su una categoria dei metadati.',
+						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Two \
+							different types of visualizations and colouring of barcharts available:', options= ['Stacked barcharts', 'Grouped barcharts'], help='Select the desired visualization: \
+								\n> Stacked barcharts: to select the sequential or gradual colouring of stacked barcharts.\
+								\n> Grouped barcharts: to select the colouting of grouped barcharts based on a metadata category.',
 								key='stacked_grouped_bars_radio',
 								index=0)
 						
@@ -3379,8 +3379,8 @@ with tab_rel_ab:
 						# 	options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						# 	key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 						
-						submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
-						if stacked_grouped_bars_radio == 'Grafici a barre impilate':
+						submit_button_label = 'NOTE: No samples\' grouping.'
+						if stacked_grouped_bars_radio == 'Stacked barcharts':
 							
 							color_picker_col = None
 							try:
@@ -3388,19 +3388,19 @@ with tab_rel_ab:
 							except Exception as e:
 								pass
 							
-							palette_seq_or_qual = color_radio_plchldr.radio('Colore delle barre dei grafici', 
-							options=['Sequenziale', 'Graduale'],
-							help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-								Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+							palette_seq_or_qual = color_radio_plchldr.radio('Bar charts colour', 
+							options=['Sequential', 'Gradual'],
+							help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 							key='palette_%s_%s_radio'%(tax_level, grouping_key))
 							
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
-						elif stacked_grouped_bars_radio == 'Grafici a barre a gruppi':
+							submit_button_label = 'NOTE: No samples\' grouping. One default different bar colour \
+							for each sample.'
+						elif stacked_grouped_bars_radio == 'Grouped barcharts':
 
 							color_picker_col = None
 
-							color_picker_col = color_radio_plchldr.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), 
+							color_picker_col = color_radio_plchldr.radio('Bars colour for group %s' %(grouping_key), 
 								options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 								key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 							
@@ -3408,19 +3408,19 @@ with tab_rel_ab:
 								del st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]			
 							except Exception as e:
 								pass
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
+							submit_button_label = 'NOTE: No samples\' grouping.'
 
 				try:
 					st.markdown(submit_button_label)
 				except:
 					pass
-				submit_button = st.form_submit_button('OK, colora', type = 'primary')
+				submit_button = st.form_submit_button('OK, colour', type = 'primary')
 			if ((color_picker_col is not None) and (color_picker_col == sample_grouping)):
 
-				color_picked = color_picker_plchldr.color_picker('Colore delle barre dei grafici:', value = '#00FFAA', key = 'color_picked')
+				color_picked = color_picker_plchldr.color_picker('Bar charts colour:', value = '#00FFAA', key = 'color_picked')
 			if (submit_button or (color_picker_col is not None)):
 				
-				side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+				side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 				for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 					
 					grouped_samples = list(grouped_samples)
@@ -3463,14 +3463,14 @@ with tab_rel_ab:
 					else:
 						
 						barmode = 'stack'
-						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
+						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequential':
 							palette = cycle(px.colors.qualitative.Alphabet)
-						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
+						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Gradual':
 							# sequenza di colori personalizzata fra blu e rosso basata sulla quantita di campioni
 							n_colors = len(data_OTU.columns)+1
 							custom_colors_grad = px.colors.sample_colorscale("turbo", [n/(n_colors -1) for n in range(n_colors)])
 							palette = cycle(custom_colors_grad)
-						side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+						side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 
 						colors = {c: next(palette) for c in data_OTU.columns}
 
@@ -3523,7 +3523,7 @@ with tab_rel_ab:
 							row = 1, col = 1)
 							counter.append(colors[leg_gr_col])
 						except ValueError:
-							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
+							st.warning('Choose a different metadata category for barcharts colour')
 							st.stop()
 					title_plot = len(grouped_samples)
 					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
@@ -3533,8 +3533,8 @@ with tab_rel_ab:
 			
 			else:
 				
-				st.warning('La pagina e\' in attesa che selezioni una colorazione per i grafici a barre per ciascun \
-					gruppo di campioni dal menu a lato.')
+				st.warning('The page is awaiting for you to pick a colour for barcharts for each \
+					samples\' grouping from the sidebar menu.')
 			
 				step_n += 1
 		else:
@@ -3545,32 +3545,32 @@ with tab_rel_ab:
 
 				for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 					
-					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'Tutti i campioni')):
+					if ((st.session_state.data_meta_input is not None) and (grouping_key != 'All samples')):
 
-						color_picker_col = st.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
+						color_picker_col = st.radio('Bars colour for group %s' %(grouping_key), options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 						submit_button_label = ''
 					elif (st.session_state.data_meta_input is None):
 						
 						color_picker_col = None
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = None
-						submit_button_label = 'Nessun file di metadati fornito. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
+						submit_button_label = 'No metadata file. One default different bar colour \
+							for each sample.'
 						
-						palette_seq_or_qual = st.radio('Colore delle barre dei grafici', 
-						options=['Sequenziale', 'Graduale'],
-						help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-							Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+						palette_seq_or_qual = st.radio('Bar charts colour', 
+						options=['Sequential', 'Gradual'],
+						help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 						key='palette_%s_%s_radio'%(tax_level, grouping_key))
 						color_picker_col = palette_seq_or_qual
 						st.session_state['color_picker_col_%s_%s_radio'%(tax_level, grouping_key)] = st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]
-					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'Tutti i campioni')):
+					elif ((st.session_state.data_meta_input is not None) and (grouping_key == 'All samples')):
 						
 						stacked_grouped_bars_button_plchldr = st.columns((1,1))
-						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Due \
-							tipi di visualizzazione e colorazione delle barre dei grafici diversi disponibili:', options= ['Grafici a barre impilate', 'Grafici a barre a gruppi'], help='Selezionare la visualizzazione preferita: \
-								\n> Grafici a barre impilate: per poter selezionare la colorazione sequenziale o graduale delle barre dei grafici impilate.\
-								\n> Grafici a barre a gruppi: per poter selezionare la colorazione delle barre dei grafici a gruppi basati su una categoria dei metadati.',
+						stacked_grouped_bars_radio = stacked_grouped_bars_radio_plchldr.radio('Two \
+							different types of visualizations and colouring of barcharts available:', options= ['Stacked barcharts', 'Grouped barcharts'], help='Select the desired visualization: \
+								\n> Stacked barcharts: to select the sequential or gradual colouring of stacked barcharts.\
+								\n> Grouped barcharts: to select the colouting of grouped barcharts based on a metadata category.',
 								key='stacked_grouped_bars_radio',
 								index=0)
 						
@@ -3579,8 +3579,8 @@ with tab_rel_ab:
 						# 	options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 						# 	key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 						
-						submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
-						if stacked_grouped_bars_radio == 'Grafici a barre impilate':
+						submit_button_label = 'NOTE: No samples\' grouping.'
+						if stacked_grouped_bars_radio == 'Stacked barcharts':
 							
 							color_picker_col = None
 							try:
@@ -3588,19 +3588,19 @@ with tab_rel_ab:
 							except Exception as e:
 								pass
 							
-							palette_seq_or_qual = color_radio_plchldr.radio('Colore delle barre dei grafici', 
-							options=['Sequenziale', 'Graduale'],
-							help='Colorazione Sequenziale: un colore differente e\' da usare per ciascuna barra che rappresenta un campione (limite a 25 colori ripetuti ciclicamente). \
-								Colorazione Graduale: le sfumature dei colori dell\'arcobaleno sono da usare in maniera graduale per tutte le barre che rappresentano i campioni.',
+							palette_seq_or_qual = color_radio_plchldr.radio('Bar charts colour', 
+							options=['Sequential', 'Gradual'],
+							help='Sequential: one different colour for each bar representing a sample (max. 25 colours repeated cyclically). \
+								Gradual: rainbow colours shades gradually applied for all the bars representing the samples.',
 							key='palette_%s_%s_radio'%(tax_level, grouping_key))
 							
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni. Si deve definire un colore di default delle barre \
-							dei grafici diverso per ciascun campione.'
-						elif stacked_grouped_bars_radio == 'Grafici a barre a gruppi':
+							submit_button_label = 'NOTE: No samples\' grouping. One default different bar colour \
+							for each sample.'
+						elif stacked_grouped_bars_radio == 'Grouped barcharts':
 
 							color_picker_col = None
 							
-							color_picker_col = color_radio_plchldr.radio('Colore delle barre dei grafici per il gruppo %s' %(grouping_key), 
+							color_picker_col = color_radio_plchldr.radio('Bars colour for group %s' %(grouping_key), 
 								options=[i for i in data_meta.loc[grouped_samples,:].columns.values], 
 								key='color_picker_col_%s_%s_radio' %(tax_level, grouping_key))#+[data_meta.index.name])
 							
@@ -3608,19 +3608,19 @@ with tab_rel_ab:
 								del st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)]			
 							except Exception as e:
 								pass
-							submit_button_label = 'NOTA: Nessun raggruppamento dei campioni.'
+							submit_button_label = 'NOTE: No samples\' grouping.'
 	
 				try:
 					st.markdown(submit_button_label)
 				except:
 					pass
-				submit_button = st.form_submit_button('OK, colora', type = 'primary')
+				submit_button = st.form_submit_button('OK, colour', type = 'primary')
 			if ((color_picker_col is not None) and (color_picker_col == sample_grouping)):
 
-				color_picked = color_picker_plchldr.color_picker('Colore delle barre dei grafici:', value = '#00FFAA', key = 'color_picked')
+				color_picked = color_picker_plchldr.color_picker('Bar charts colour:', value = '#00FFAA', key = 'color_picked')
 			if (submit_button or (color_picker_col is not None)):
 				
-				side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+				side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 				for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 					
 					df = df1_d[grouping_key]
@@ -3660,14 +3660,14 @@ with tab_rel_ab:
 					else:
 						
 						barmode = 'stack'
-						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
+						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequential':
 							palette = cycle(px.colors.qualitative.Alphabet)
-						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
+						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Gradual':
 							# sequenza di colori personalizzata fra blu e rosso basata sulla quantita di campioni
 							n_colors = len(data_OTU.columns)+1
 							custom_colors_grad = px.colors.sample_colorscale("turbo", [n/(n_colors -1) for n in range(n_colors)])
 							palette = cycle(custom_colors_grad)
-						side_placeholder3.success('***%s.*** Selezione colore per i grafici a barre' %(step_n))
+						side_placeholder3.success('***%s.*** Select colour for barcharts' %(step_n))
 
 						colors = {c: next(palette) for c in data_OTU.columns}
 
@@ -3719,7 +3719,7 @@ with tab_rel_ab:
 							row = 1, col = 1)
 							counter.append(colors[leg_gr_col])
 						except ValueError:
-							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
+							st.warning('Choose a different metadata category for barcharts colour')
 							st.stop()
 					title_plot = len(grouped_samples)
 					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
@@ -3737,8 +3737,8 @@ with tab_rel_ab:
 				step_n += 1	
 			else:
 				
-				st.warning('La pagina e\' in attesa che selezioni una colorazione per i grafici a barre per ciascun \
-					gruppo di campioni dal menu a lato.')
+				st.warning('The page is awaiting for you to pick a colour for barcharts for each \
+					samples\' grouping from the sidebar menu.')
 			
 				step_n += 1		
 		
@@ -3753,7 +3753,7 @@ with tab_rel_ab:
 				df_sunburst = st.session_state.final_df.iloc[:,8:].T.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
 				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list() + st.session_state.data_meta_df.columns.to_list())]
 			except:
-				st.warning('Nessun file di metadati fornito')
+				st.warning('No metadata file')
 				df_sunburst = st.session_state.final_df.iloc[:,8:].T
 				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list())]
 				
@@ -3768,15 +3768,15 @@ with tab_rel_ab:
 			df_venn = df_sunburst.iloc[:, :-8]
 			df_venn[st.session_state.tax_level_radio] = df_sunburst[st.session_state.tax_level_radio]
 			df_venn = df_venn.groupby(st.session_state.tax_level_radio, axis=0).sum()
-			st.info('E\' possibile scaricare la __tabella finale__ dei campioni raggruppati per la _variabile dei metadati_ selezionata \
-				dei taxa raggruppati per il _livello tassonomico_ selezionato. Formato .csv.')
+			st.info('Downloadable __final table__ of samples grouped per the selected _metadata category_ \
+				of taxa grouped per the selected _taxonomic level_. Format: .csv.')
 			tabella_df = df_venn
 			
 			csv = convert_df(tabella_df)
 			ste.download_button(
-				label="Download tabella dei campioni raggruppati per %s del livello tassonomico %s" %(st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
+				label="Download table of samples grouped per %s of taxonomic level %s" %(st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
 				data=csv,
-				file_name= 'tabella_finale_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
+				file_name= 'final_table_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
 				mime="text/csv")
 			# definisco le conte percentuali
 			
@@ -3785,28 +3785,28 @@ with tab_rel_ab:
 			st.write(st.session_state.tabella_df_filtered)
 			csv = convert_df(st.session_state.tabella_df_filtered)
 			ste.download_button(
-				label="Download tabella filtrata finale dei campioni raggruppati per %s del livello tassonomico %s" %(st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
+				label="Download final table filtered of samples grouped per %s of taxonomic level %s" %(st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
 				data=csv,
-				file_name= 'tabella_filtrata_finale_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
+				file_name= 'final_table_filtered_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio, st.session_state.tax_level_radio),
 				mime="text/csv")
 
 			################### PIECHARTS ##############
 			st.session_state.df_percentages = df_venn.apply(lambda x: ( x * 100 / (x.sum())).round(0))
 
-			st.header('Grafici a torta')
+			st.header('Pie charts')
 			for index, i in enumerate(st.session_state.df_percentages.columns):
 
 				df_torta = st.session_state.df_percentages[i][st.session_state.df_percentages[i] > 0]
-				fig = px.pie(df_torta, values=df_torta.name, names=df_torta.index, title='Abbondanze relative %s - %s'%(st.session_state.tax_level_radio, i))
+				fig = px.pie(df_torta, values=df_torta.name, names=df_torta.index, title='Relative abundances %s - %s'%(st.session_state.tax_level_radio, i))
 				
 				st.plotly_chart(figure_or_data = fig)
 
 				tabella_df = df_torta
 				csv = convert_df(tabella_df)
 				ste.download_button(
-					label="Download tabella abbondanze relative percentuali %s" %(i),
+					label="Download percentage relative abundances table %s" %(i),
 					data=csv,
-					file_name= 'abbondanze_relative_percentuali_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.tax_level_radio, i),
+					file_name= 'relative_abundances_perc_%s_%s_%s.csv' %(st.session_state.dashboard_name, st.session_state.tax_level_radio, i),
 					mime="text/csv")
 			# ############################################
 			# st.header('Diagrammi di Venn')
@@ -3835,7 +3835,7 @@ with tab_rel_ab:
 			# 		mime="text/csv")
 		else:
 			
-			st.warning('Nessun file di metadati fornito per calcolare i diagrammi di venn')
+			st.warning('No metadata file to compute venn diagrams')
 
 		# ###########################################################################
 		# # sunburst prova
@@ -3852,13 +3852,13 @@ with tab_rel_ab:
 
 with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed features
 	
-	side_placeholder4.info('***%s.*** Grafici alfa diversita\'' %(step_n))
+	side_placeholder4.info('***%s.*** Alpha diversity charts' %(step_n))
 
-	st.header('Alfa Diversita\'')
-	st.subheader('Tutti i campioni')
-	st.info('Si possono visualizzare i confronti fra gruppi per ciascun raggruppamento dei campioni in base ai metadati forniti: \
-	 \n > E\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni interattive dei confronti delle metriche di alfa diversita\' tra i gruppi. \
-	 Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di alfa diversita\' tra gruppi.')
+	st.header('Alpha Diversity')
+	st.subheader('All samples')
+	st.info('Visualization of groups\' comparisons based on the provided metadata: \
+	 \n > At the end of the page you can download files of interactive visualizations of comparisons of alpha diversity metrics among groups. \
+	 Go to https://view.qiime2.org/ and load a .qzv file to visualize the comparisons of alpha diversity metrics among samples\' metadata groups.')
 	
 	
 	try:
@@ -3896,8 +3896,8 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				tabella_df = tabella_df.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
 			else:
 				
-				st.warning('Nessun file di metadati fornito.')
-			if st.session_state.sample_grouping_radio != 'Tutti i campioni':
+				st.warning('No metadata file.')
+			if st.session_state.sample_grouping_radio != 'All samples':
 				
 				# due tipologie di grafici a box and whiskers: uno generico delle metriche per tutti i campioni insieme (prima riga) che mostra anche la media e la dev st
 				# uno a box raggruppati per gruppi di campioni in base al raggruppamento dei campioni selezionato nel menu radio a lato (seconda riga)
@@ -3938,27 +3938,27 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				#components.html(source_code, scrolling=True)
 				cols_alpha_divs[index].write(pd.DataFrame(pd.read_html(source_code, decimal='.', index_col=0)[0]))
 				
-				cols_alpha_divs[index].subheader('Kruskal-Wallis (a coppie)')
+				cols_alpha_divs[index].subheader('Kruskal-Wallis (pairwise)')
 				try:
 
 					tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
 					cols_alpha_divs[index].table(tabella_df)
 				except:
 					
-					cols_alpha_divs[index].warning('Il raggruppamento dei campioni e\' composto da un unico gruppo. Non e\' possibile effettuare confronti tra coppie di gruppi.')
+					cols_alpha_divs[index].warning('Single pool of samples. It\'s impossible to compare among pair groups of samples.')
 			
 				try:
 
 					with open(secure_temp_dir_alpha_gr_sign+"/%s.qzv"%(metric_name), 'rb') as f:
 						ste.download_button(
-							label="Download confronto metrica %s di alfa diversita\' tra gruppi .qzv" %(metric_name),
+							label="Download alpha diversity metric %s groups comparison .qzv" %(metric_name),
 							data=f,
 							file_name="alfa_div_%s_confronto_gruppi.qzv" %(metric_name),
 							mime="application/qzv")
 				except Exception as e:
 					
 					st.exception(e)
-					st.warning('Nessun file di metadati fornito. Non sono presenti gruppi da confrontare in base alle metriche di alfa diversita\'.')
+					st.warning('No metadata file. There are no groups to be compared.')
 					pass
 
 			else:
@@ -3976,10 +3976,10 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 					
 	except Exception as e:
 		
-		st.warning('Tutti i campioni selezionati. Non e\' possibile effettuare un confronto tra gruppi.')
+		st.warning('All samples selected. It\'s impossible to compare among groups of samples.')
 		st.exception(e)
 		
-	side_placeholder4.success('***%s.*** Grafici alfa diversita\'' %(step_n))
+	side_placeholder4.success('***%s.*** Alpha diversity charts' %(step_n))
 	step_n += 1
 
 	
@@ -3987,13 +3987,13 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 
 with tab_beta_div:
 
-	side_placeholder5.info('***%s.*** Grafici beta diversita\'' %(step_n))
+	side_placeholder5.info('***%s.*** Beta diversity charts' %(step_n))
 
-	st.header('Beta Diversita\'')
+	st.header('Beta Diversity')
 	
-	st.info('Se si seleziona dal menu\' a lato un raggruppamento dei campioni, e\' possibile scaricare in fondo alla pagina i files contenenti le visualizzazioni \
-	 interattive dei confronti delle metriche di beta diversita\' tra i gruppi. \
-	 \n> Aprire il sito https://view.qiime2.org/ e caricare un file .qzv per visualizzare il confronto fra le metriche di beta diversita\' tra gruppi.')
+	st.info('If a samples\' grouping is selected from the sidebar menu, at the end of the page you can download files of interactive \
+	 visualizations of comparisons of beta diversity metrics among groups. \
+	 \n> Go to https://view.qiime2.org/ and load a .qzv file to visualize the comparisons of beta diversity metrics among samples\' metadata groups.')
 	
 	try:
 
@@ -4064,9 +4064,9 @@ with tab_beta_div:
 
 			with open(secure_temp_dir_beta_gr_sig+"/bray_curtis.qzv", 'rb') as f:
 				ste.download_button(
-					label="Download confronto metrica Bray Curtis di beta diversita\' tra gruppi .qzv",
+					label="Download comparison beta diversity metric Bray Curtis among groups .qzv",
 					data=f,
-					file_name="beta_div_bray_curtis_confronto_gruppi.qzv",
+					file_name="beta_div_bray_curtis_groups_comparison.qzv",
 					mime="application/qzv")
 			with open(secure_temp_dir_beta_gr_sig+"/bray_curtis_emperor.qzv", 'rb') as f:
 				ste.download_button(
@@ -4076,9 +4076,9 @@ with tab_beta_div:
 					mime="application/qzv")
 			with open(secure_temp_dir_beta_gr_sig+"/jaccard.qzv", 'rb') as f:
 				ste.download_button(
-					label="Download confronto metrica Jaccard di beta diversita\' tra gruppi .qzv",
+					label="Download comparison beta diversity metric Jaccard among groups .qzv",
 					data=f,
-					file_name="beta_div_jaccard_confronto_gruppi.qzv",
+					file_name="beta_div_jaccard_groups_comparison.qzv",
 					mime="application/qzv")
 			with open(secure_temp_dir_beta_gr_sig+"/jaccard_emperor.qzv", 'rb') as f:
 				ste.download_button(
@@ -4087,14 +4087,14 @@ with tab_beta_div:
 					file_name="beta_div_jaccard_PCoA.qzv",
 					mime="application/qzv")
 		else:
-			st.warning('Nessun file di metadati fornito. Non e\' possibile effettuare un confronto tra gruppi.')
+			st.warning('No metadata file. It\'s impossible to compare among groups of samples.')
 
 	except:
 
-		st.warning('Tutti i campioni selezionati oppure raggruppamento dei campioni formato da un unico gruppo. Non e\' possibile effettuare un confronto tra gruppi.')
+		st.warning('All samples selected or single pool grouping of samples. It\'s impossible to compare among groups of samples.')
 		pass
 
-	side_placeholder5.success('***%s.*** Grafici beta diversita\'' %(step_n))
+	side_placeholder5.success('***%s.*** Beta diversity charts' %(step_n))
 	step_n += 1
 
 	
@@ -4128,19 +4128,19 @@ secure_temp_dir_dashboard_bars = tempfile.mkdtemp(prefix="temp_", suffix="_dashb
 secure_temp_dir_dashboard_donuts = tempfile.mkdtemp(prefix="temp_", suffix="_dashboard_torte")
 
 ps.init(
-	filename=secure_temp_dir_dashboard_donuts+'/Dashboard-microbioma-GraficiATorta-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
-	title='Mock Dashboard torte - pieSparrow', 
+	filename=secure_temp_dir_dashboard_donuts+'/Dashboard-microbiome-PieCharts-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
+	title='Dashboard pies - pieSparrow', 
 	basetheme=ps.light, 
 	charttheme=ps.sparrow_light
 )
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Dashboard Microbioma batterico'))
+		ps.h1(ps.bold('Bacterial Microbiome Dashboard'))
 	
-	+	ps.p('Questa dashboard mostra i risultati delle analisi \
-		dei dati della App Microbioma tramite visualizzazioni interattive \
-			- sviluppata con python con la libreria piesparrow.')
+	+	ps.p('This dashboard shows data analyses results \
+		from the Microbiome App through interactive visualizations \
+			- developed in python with the library piesparrow.')
 	)
 )
 ps.row(
@@ -4220,19 +4220,19 @@ for j, s_group in enumerate(df.iterrows()):
 
 
 ps.init(
-	filename=secure_temp_dir_dashboard_bars+'/Dashboard-microbioma-GraficiABarre-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
-	title='Mock Dashboard barre - pieSparrow', 
+	filename=secure_temp_dir_dashboard_bars+'/Dashboard-microbiome-BarCharts-%s-%s'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 
+	title='Dashboard bars - pieSparrow', 
 	basetheme=ps.light, 
 	charttheme=ps.sparrow_light
 )
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Dashboard Microbioma batterico'))
+		ps.h1(ps.bold('Bacterial Microbiome Dashboard'))
 	
-	+	ps.p('Questa dashboard mostra i risultati delle analisi \
-		dei dati della App Microbioma tramite visualizzazioni interattive \
-			- sviluppata con python con la libreria piesparrow.')
+	+	ps.p('This dashboard shows data analyses results \
+		from the Microbiome App through interactive visualizations \
+			- developed in python with the library piesparrow.')
 	)
 )
 
@@ -4295,24 +4295,24 @@ ps.row(
 )
 
 with dashboard_info_dwnld_plchldr:
-	st.info('Si possono scaricare due Dashboard in formato HTML generate per le abbondanze relative dei taxa.\
-		 Visualizzazione interattiva di grafici a barre e di grafici a torte.')
+	st.info('You can download two HTML dashboards of taxa relative abundances.\
+		 Interactive visualizations as bar charts and pie charts.')
 with dashboard_barre_dwnld_plchldr:
 	
-	with open(secure_temp_dir_dashboard_bars+'/Dashboard-microbioma-GraficiABarre-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
+	with open(secure_temp_dir_dashboard_bars+'/Dashboard-microbiome-BarCharts-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
 		dwnld_bttn_bars = ste.download_button(
-			label="Download Dashboard HTML Grafici a barre",
+			label="Download Dashboard HTML Bar charts",
 			data=f,
-			file_name="Dashboard_Grafici_a_barre__%s_%s.html" %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio),
+			file_name="Dashboard_Bar_charts__%s_%s.html" %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio),
 			mime="text/html")
 
 with dashboard_torte_dwnld_plchldr:
 
-	with open(secure_temp_dir_dashboard_donuts+'/Dashboard-microbioma-GraficiATorta-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
+	with open(secure_temp_dir_dashboard_donuts+'/Dashboard-microbiome-PieCharts-%s-%s.html'%(st.session_state.dashboard_name, st.session_state.sample_grouping_radio), 'rb') as f:
 		dwnld_bttn_donuts = ste.download_button(
-			label="Download Dashboard HTML Grafici a torta",
+			label="Download Dashboard HTML Pie charts",
 			data=f,
-			file_name="Dashboard_Grafici_a_torta__%s_%s.html" %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio),
+			file_name="Dashboard_Pie_charts__%s_%s.html" %(st.session_state.dashboard_name, st.session_state.sample_grouping_radio),
 			mime="text/html")
 		
 # if dwnld_bttn_donuts:
