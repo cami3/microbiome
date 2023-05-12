@@ -28,7 +28,7 @@ RUN pip3 install -r ./requirements.txt
 
 COPY index.html /opt/conda/envs/my_env/lib/python3.8/site-packages/streamlit/static/index.html
 
-COPY italian.py .
+COPY italiano.py .
 COPY pages/english.py ./pages/
 
 # tell the port number the container should expose
