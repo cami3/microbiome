@@ -2083,7 +2083,7 @@ if skip is False:
 			step_n += 1
 		
 		else:
-			st.info('Usa il form sopra per selezionare o trascinare i files per il classificatore tassonomico pre-addestrato, scaricabili sul sito di qiime2.')
+			st.info('Usa il form sopra per selezionare o trascinare i files per il classificatore tassonomico pre-addestrato, scaricabili sul sito https://docs.qiime2.org/2023.2/data-resources/.')
 			st.warning('La pagina e\' in attesa che carichi i files per il classificatore tassonomico.')
 			# st.stop()
 			step_n += 1

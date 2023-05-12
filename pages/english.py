@@ -2087,7 +2087,7 @@ if skip is False:
 			step_n += 1
 		
 		else:
-			st.info('Use the form above to select or drag and drop the file of the pre-trained, available at https://docs.qiime2.org/2023.2/data-resources/.')
+			st.info('Use the form above to select or drag and drop the file of the pre-trained classifier, available at https://docs.qiime2.org/2023.2/data-resources/.')
 			st.warning('The page is awaiting for you to upload the files for the taxonomic classifier.')
 			# st.stop()
 			step_n += 1
