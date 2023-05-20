@@ -1989,25 +1989,25 @@ if skip is False:
 			key='pre_trained_classifier_path_input',
 			accept_multiple_files = False,
 			type='qza',
-			#value='pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza',
+			#value='/app/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza',
 			help='File del Classificatore pre-trained, formato del file: .qza (artifact qiime2). \
-				pre_trained_classifiers/gg-13-8-99-nb-weighted-classifier.qza')
+				Default: /app/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza')
 
 			path_reference_taxonomy = st.file_uploader('Seleziona un file di tassonomia di riferimento:',
 			key='reference_taxonomy_path_input',
 			accept_multiple_files = False,
 			type='txt',
-			#value='reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
+			#value='/app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
 			help='File di Tassonomia di riferimento delle sequenze OTU del classificatore pre-trained, formato del file: .txt. \
-				reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
+				Default: /app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
 			path_reference_otus_seqs = st.file_uploader('Seleziona un file di OTU di riferimento:',
 			key='reference_otus_seqs_path_input',
 			accept_multiple_files = False,
 			type='fasta',
-			#value='reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
+			#value='/app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
 			help='File di Sequenze OTU di riferimento del classificatore pre-trained, formato del file: .fasta. \
-				reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
+				Default: /app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
 			submit_button = st.form_submit_button('Carica')
 
@@ -2028,6 +2028,9 @@ if skip is False:
 			with NamedTemporaryFile(dir='.', suffix='.fasta') as f:
 				f.write(st.session_state.reference_otus_seqs_path_input.getbuffer())
 				ref_otus_seqs = import_ref_gg_13_8_otus_seqs(f.name)
+			# classifier = Artifact.load(st.session_state.pre_trained_classifier_path_input)
+			# ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(st.session_state.reference_taxonomy_path_input)
+			# ref_otus_seqs = import_ref_gg_13_8_otus_seqs(st.session_state.reference_otus_seqs_path_input)
 			
 			st.session_state.classifier = classifier
 			st.session_state.ref_taxonomy = ref_taxonomy
