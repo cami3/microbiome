@@ -1982,55 +1982,55 @@ if skip is False:
 			\n > Tab %s. Classificazione tassonomica' %(step_n, step_n))
 
 
-		form_upload_classifier_data_plchldr = st.empty()
-		with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
+		# form_upload_classifier_data_plchldr = st.empty()
+		# with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
 			
-			path_pre_trained_classifier = st.file_uploader('Seleziona un file di classificatore pre-trained:', 
-			key='pre_trained_classifier_path_input',
-			accept_multiple_files = False,
-			type='qza',
-			#value='/app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza',
-			help='File del Classificatore pre-trained, formato del file: .qza (artifact qiime2). \
-				Default: /app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza')
+		# 	path_pre_trained_classifier = st.file_uploader('Seleziona un file di classificatore pre-trained:', 
+		# 	key='pre_trained_classifier_path_input',
+		# 	accept_multiple_files = False,
+		# 	type='qza',
+		# 	#value='/app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza',
+		# 	help='File del Classificatore pre-trained, formato del file: .qza (artifact qiime2). \
+		# 		Default: /app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza')
 
-			path_reference_taxonomy = st.file_uploader('Seleziona un file di tassonomia di riferimento:',
-			key='reference_taxonomy_path_input',
-			accept_multiple_files = False,
-			type='txt',
-			#value='/app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
-			help='File di Tassonomia di riferimento delle sequenze OTU del classificatore pre-trained, formato del file: .txt. \
-				Default: /app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
+		# 	path_reference_taxonomy = st.file_uploader('Seleziona un file di tassonomia di riferimento:',
+		# 	key='reference_taxonomy_path_input',
+		# 	accept_multiple_files = False,
+		# 	type='txt',
+		# 	#value='/app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt',
+		# 	help='File di Tassonomia di riferimento delle sequenze OTU del classificatore pre-trained, formato del file: .txt. \
+		# 		Default: /app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt')
 
-			path_reference_otus_seqs = st.file_uploader('Seleziona un file di OTU di riferimento:',
-			key='reference_otus_seqs_path_input',
-			accept_multiple_files = False,
-			type='fasta',
-			#value='/app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
-			help='File di Sequenze OTU di riferimento del classificatore pre-trained, formato del file: .fasta. \
-				Default: /app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
+		# 	path_reference_otus_seqs = st.file_uploader('Seleziona un file di OTU di riferimento:',
+		# 	key='reference_otus_seqs_path_input',
+		# 	accept_multiple_files = False,
+		# 	type='fasta',
+		# 	#value='/app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta',
+		# 	help='File di Sequenze OTU di riferimento del classificatore pre-trained, formato del file: .fasta. \
+		# 		Default: /app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta')
 
-			submit_button = st.form_submit_button('Carica')
+		# 	submit_button = st.form_submit_button('Carica')
 
-		if ((submit_button) or (
-			('pre_trained_classifier_path_input' in st.session_state.keys()) and
-			('reference_taxonomy_path_input' in st.session_state.keys()) and
-			('reference_otus_seqs_path_input' in st.session_state.keys()) and
-			(st.session_state.pre_trained_classifier_path_input is not None) and
-			(st.session_state.reference_taxonomy_path_input is not None) and
-			(st.session_state.reference_otus_seqs_path_input is not None))):
+		# if ((submit_button) or (
+		# 	('pre_trained_classifier_path_input' in st.session_state.keys()) and
+		# 	('reference_taxonomy_path_input' in st.session_state.keys()) and
+		# 	('reference_otus_seqs_path_input' in st.session_state.keys()) and
+		# 	(st.session_state.pre_trained_classifier_path_input is not None) and
+		# 	(st.session_state.reference_taxonomy_path_input is not None) and
+		# 	(st.session_state.reference_otus_seqs_path_input is not None))):
 			
-			with NamedTemporaryFile(dir='.', suffix='.qza') as f:
-				f.write(st.session_state.pre_trained_classifier_path_input.getbuffer())
-				classifier = Artifact.load(f.name)
-			with NamedTemporaryFile(dir='.', suffix='.txt') as f:
-				f.write(st.session_state.reference_taxonomy_path_input.getbuffer())
-				ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(f.name)
-			with NamedTemporaryFile(dir='.', suffix='.fasta') as f:
-				f.write(st.session_state.reference_otus_seqs_path_input.getbuffer())
-				ref_otus_seqs = import_ref_gg_13_8_otus_seqs(f.name)
-		# st.session_state.pre_trained_classifier_path_input = '/app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza'
-		# st.session_state.reference_taxonomy_path_input = '/app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt'
-		# st.session_state.reference_otus_seqs_path_input = '/app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta'
+		# 	with NamedTemporaryFile(dir='.', suffix='.qza') as f:
+		# 		f.write(st.session_state.pre_trained_classifier_path_input.getbuffer())
+		# 		classifier = Artifact.load(f.name)
+		# 	with NamedTemporaryFile(dir='.', suffix='.txt') as f:
+		# 		f.write(st.session_state.reference_taxonomy_path_input.getbuffer())
+		# 		ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(f.name)
+		# 	with NamedTemporaryFile(dir='.', suffix='.fasta') as f:
+		# 		f.write(st.session_state.reference_otus_seqs_path_input.getbuffer())
+		# 		ref_otus_seqs = import_ref_gg_13_8_otus_seqs(f.name)
+		st.session_state.pre_trained_classifier_path_input = '/app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza'
+		st.session_state.reference_taxonomy_path_input = '/app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt'
+		st.session_state.reference_otus_seqs_path_input = '/app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta'
 		
 		classifier = Artifact.load(st.session_state.pre_trained_classifier_path_input)
 		ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(st.session_state.reference_taxonomy_path_input)
