@@ -1299,9 +1299,12 @@ if skip is False:
 		with tab_join:
 			
 			side_placeh1 = sidemenus.empty()
+			side_placeh1a = sidemenus.empty()
 			side_placeh1.info('***%s.*** Selezione parametri di fusione letture R1 ed R2 \
 				\n > Tab %s. Fusione R1 ed R2' %(step_n, step_n))
-
+			side_placeh1a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Fusione R1 ed R2</a>", unsafe_allow_html=True)
+			st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+			
 			hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 			with hypervar_regions_form:
 				hypervar_regions = st.radio(label='Regioni ipervariabili del gene per 16S rRNA target del sequenziamento:',
@@ -1544,9 +1547,12 @@ if skip is False:
 	with tab_QC:
 		
 		side_plchldr2 = sidemenus.empty()
+		side_plchldr2a = sidemenus.empty()
 		side_plchldr2.info('***%s.*** Selezione parametri di controllo qualita\' \
 			\n > Tab %s. Controllo qualita\'' %(step_n, step_n))
-
+		side_plchldr2a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Controllo qualita\'</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+			
 		with st.form(key='quality_filter_form'):
 			st.markdown('Imposta i parametri (parametri di default gia\' impostati)')
 			min_quality = st.number_input(

@@ -1302,9 +1302,12 @@ if skip is False:
 		with tab_join:
 			
 			side_placeh1 = sidemenus.empty()
+			side_placeh1a = sidemenus.empty()
 			side_placeh1.info('***%s.*** Set R1 and R2 reads merging parameters \
 				\n > Tab %s. R1 and R2 merging' %(step_n, step_n))
-
+			side_placeh1a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. R1 and R2 merging</a>", unsafe_allow_html=True)
+			st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+			
 			hypervar_regions_form = hypervar_regions_plchldr.form('hypervar_regiorns_form')
 			with hypervar_regions_form:
 				hypervar_regions = st.radio(label='hypervariable 16S rRNA gene regions target of sequencing:',
@@ -1476,6 +1479,7 @@ if skip is False:
 
 				side_placeh1.success('***%s.*** Set R1 and R2 reads merging parameters \
 					\n > Tab %s. R1 and R2 merging' %(step_n, step_n))
+				
 				step_n += 1
 
 				df = df_demux_joined_summary.rename({'forward sequence count': 'merged R1R2 sequence count'}, axis=1)
@@ -1547,9 +1551,12 @@ if skip is False:
 	with tab_QC:
 		
 		side_plchldr2 = sidemenus.empty()
+		side_plchldr2a = sidemenus.empty()
 		side_plchldr2.info('***%s.*** Set quality control parameters \
 			\n > Tab %s. Quality control' %(step_n, step_n))
-
+		side_plchldr2a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Quality control</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+		
 		with st.form(key='quality_filter_form'):
 			st.markdown('Set the parameters (pre-set defaults)')
 			min_quality = st.number_input(
