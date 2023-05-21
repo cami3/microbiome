@@ -283,6 +283,7 @@ else:
 
 side_subheader_placeholder = sidemenus.empty()
 side_placeholder0 = sidemenus.empty()
+side_placeholder0a = sidemenus.empty()
 sidemenus.markdown('---')
 sidemenus.markdown('IMPORTANT (more info ?):')
 skip_placeholder = sidemenus.empty()
@@ -1034,10 +1035,13 @@ if skip is False:
 	step_n += 1
 	side_subheader_placeholder.subheader('***Secondary analysis raw data***')
 	side_placeholder0.info('***%s.*** Data upload' %(step_n))
+	side_placeholder0a.markdown(f"<a href='#linkto_{step_n}'>{step_n}. Data upload</a>", unsafe_allow_html=True)
+
 	h_plchldr.header('***Secondary analysis of raw data***')
 
 	
 	# Form di caricamento dati
+	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
 			
@@ -1098,8 +1102,9 @@ if skip is False:
 			
 			side_placeholder0.success('***%s.*** Data upload \
 				\n> Tab %s. Raw data summary statistics' %(step_n, step_n))
+			side_placeholder0a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Raw data summary statistics</a>", unsafe_allow_html=True)
 
-			step_n += 1
+			
 
 
 			
@@ -1168,9 +1173,10 @@ if skip is False:
 		st.stop()
 	st.balloons()
 
-
+	
 	with tab_summary_stats:
-		
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+		step_n += 1
 		df = demux_summary.rename(df_cols_to_rename, axis=1)
 		st.session_state.demux_summary_df = df
 		st.subheader('Sequence count per sample')

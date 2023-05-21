@@ -284,6 +284,7 @@ else:
 
 side_subheader_placeholder = sidemenus.empty()
 side_placeholder0 = sidemenus.empty()
+side_placeholder0a = sidemenus.empty()
 sidemenus.markdown('---')
 sidemenus.markdown('IMPORTANTE (maggiori info ?):')
 skip_placeholder = sidemenus.empty()
@@ -1035,10 +1036,13 @@ if skip is False:
 	step_n += 1
 	side_subheader_placeholder.subheader('***Analisi secondaria dati grezzi***')
 	side_placeholder0.info('***%s.*** Caricamento dati' %(step_n))
+	side_placeholder0a.markdown(f"<a href='#linkto_{step_n}'>{step_n}. Caricamento dati</a>", unsafe_allow_html=True)
+
 	h_plchldr.header('***Analisi secondaria dei dati grezzi***')
 
 	
 	# Form di caricamento dati
+	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
 			
@@ -1099,8 +1103,8 @@ if skip is False:
 			
 			side_placeholder0.success('***%s.*** Caricamento dati \
 				\n> Tab %s. Statistiche riassuntive dei dati grezzi' %(step_n, step_n))
-
-			step_n += 1
+			side_placeholder0a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Statistiche riassuntive dei dati grezzi</a>", unsafe_allow_html=True)
+			
 
 
 			
@@ -1169,9 +1173,10 @@ if skip is False:
 		st.stop()
 	st.balloons()
 
-
+	
 	with tab_summary_stats:
-		
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+		step_n += 1
 		df = demux_summary.rename(df_cols_to_rename, axis=1)
 		st.session_state.demux_summary_df = df
 		st.subheader('Conte delle sequenze per campione')
