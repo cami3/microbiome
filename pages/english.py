@@ -1624,9 +1624,12 @@ if skip is False:
 	with tab_denoising:
 
 		side_plchldr3 = sidemenus.empty()
+		side_plchldr3a = sidemenus.empty()
 		side_plchldr3.info('***%s.*** Denoising sequences \
 			\n > Tab %s. Denoising' %(step_n, step_n))
-
+		side_plchldr3a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Denoising</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+		
 		side_form_denoising_pipes_plchldr = sidemenus.empty()
 		# Valori da aggiornare per aggiungere metodi di denoising nuovi alla applicazione 
 		denoising_opts = ['Dada2', 'Deblur']
@@ -1995,9 +1998,12 @@ if skip is False:
 	with tab_taxonomy:
 
 		side_plchldr4 = sidemenus.empty()
+		side_plchldr4a = sidemenus.empty()
 		side_plchldr4.info('***%s.*** Taxonomic classification \
 			\n > Tab %s. Taxonomic classification' %(step_n, step_n))
-
+		side_plchldr4a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Taxonomic classification</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
+		
 
 		# form_upload_classifier_data_plchldr = st.empty()
 		# with form_upload_classifier_data_plchldr.form('upload_classifier_data'):
