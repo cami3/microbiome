@@ -2116,8 +2116,11 @@ if skip is False:
 	with tab_rarefaction:
 
 		side_plchldr5 = sidemenus.empty()
+		side_plchldr5a = sidemenus.empty()
 		side_plchldr5.info('***%s.*** Normalizzazione \
 			\n > Tab %s. Normalizzazione' %(step_n, step_n))
+		side_plchldr5a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Normalizzazione</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		
 		metrics = {'observed_features', 'shannon', 'pielou_e', 'simpson'}
 		
@@ -2234,8 +2237,11 @@ if skip is False:
 	with tab_diversity:
 
 		side_plchldr6 = sidemenus.empty()
+		side_plchldr6a = sidemenus.empty()
 		side_plchldr6.info('***%s.*** Alfa e beta diversita\' \
 			\n > Tab %s. Alfa e beta diversita\'' %(step_n, step_n))
+		side_plchldr6a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Alfa e beta diversita\'</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		
 
 		
@@ -2378,8 +2384,11 @@ if skip is False:
 	with tab_phylogenetic_tree:
 
 		side_plchldr7 = sidemenus.empty()
+		side_plchldr7a = sidemenus.empty()
 		side_plchldr7.info('***%s.*** Costruzione albero filogenetico \
 			\n > Tab %s. Albero filogenetico' %(step_n, step_n))
+		side_plchldr7a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Albero filogenetico</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		
 		st.subheader('Metriche di alfa e beta diversita\' core, basate sull\'albero filogenetico')
 		st.markdown('Costruzione di un albero filogenetico dalle sequenze _de novo_, mediante allineamento di sequenza multiplo usando MAFFT e fasttree.')

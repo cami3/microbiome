@@ -2122,8 +2122,11 @@ if skip is False:
 	with tab_rarefaction:
 
 		side_plchldr5 = sidemenus.empty()
+		side_plchldr5a = sidemenus.empty()
 		side_plchldr5.info('***%s.*** Normalization \
 			\n > Tab %s. Normalization' %(step_n, step_n))
+		side_plchldr5a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Normalization</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		
 		metrics = {'observed_features', 'shannon', 'pielou_e', 'simpson'}
 		
@@ -2240,8 +2243,11 @@ if skip is False:
 	with tab_diversity:
 
 		side_plchldr6 = sidemenus.empty()
+		side_plchldr6a = sidemenus.empty()
 		side_plchldr6.info('***%s.*** Alpha and beta diversity \
 			\n > Tab %s. Alpha and beta diversity' %(step_n, step_n))
+		side_plchldr6a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Alpha and beta diversity</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		
 
 		
@@ -2385,8 +2391,11 @@ if skip is False:
 	with tab_phylogenetic_tree:
 
 		side_plchldr7 = sidemenus.empty()
+		side_plchldr7a = sidemenus.empty()
 		side_plchldr7.info('***%s.*** Phylogenetic tree construction \
 			\n > Tab %s. Phylogenetic tree' %(step_n, step_n))
+		side_plchldr7a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Phylogenetic tree</a>", unsafe_allow_html=True)
+		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		
 		st.subheader('Core alpha and beta diversity metrics, based on the phylogenetic tree')
 		st.markdown('_De novo_ construction of a phylogenetic tree from sequences, through multiple sequence alignment using MAFFT and fasttree.')
