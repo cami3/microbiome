@@ -1047,13 +1047,13 @@ if skip is False:
 		if st.session_state.library_radio == 'Single-end':
 			
 			library_radio_help_string = 'caricare un file R1 per ogni campione \
-				\n> formato del nome file: [NomeCampione]_[index]_[L001]_R1_[001].fastq.gz'
+				\n> formato del nome file: [NomeCampione]__[index]__[L001]__R1__[001].fastq.gz'
 			import_function = import_single_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1'}
 		elif st.session_state.library_radio == 'Paired-end':
 			
 			library_radio_help_string = 'caricare un file R1 ed un file R2 per ogni campione\
-				\n> formato del nome file: [NomeCampione]_[index]_[L001]_R[1-2]_[001].fastq.gz'
+				\n> formato del nome file: [NomeCampione]__[index]__[L001]__R[1-2]__[001].fastq.gz'
 			import_function = import_paired_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1', 'reverse sequence count': 'numero letture R2'}
 
