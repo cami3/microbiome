@@ -1045,14 +1045,14 @@ if skip is False:
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
 			
-			library_radio_help_string = 'Upload a R1 file for each sample \
-				\n> Filename format: [SampleID]__[index]__[L001]__R1__[001].fastq.gz'
+			library_radio_help_string = 'Upload a R1 file for each sample. \
+				\n> Filename format: [SampleID]\_[index]\_[L001]\_R1\_[001].fastq.gz'
 			import_function = import_single_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'forward sequence count'}
 		elif st.session_state.library_radio == 'Paired-end':
 			
-			library_radio_help_string = 'Upload a R1 and a R2 file for each sample\
-				\n> Filename format: [SampleID]__[index]__[L001]__R[1-2]__[001].fastq.gz'
+			library_radio_help_string = 'Upload a R1 and a R2 file for each sample.\
+				\n> Filename format: [SampleID]\_[index]\_[L001]\_R[1-2]\_[001].fastq.gz'
 			import_function = import_paired_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'forward sequence count', 'reverse sequence count': 'reverse sequence count'}
 
