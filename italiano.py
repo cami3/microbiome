@@ -142,17 +142,6 @@ relativi al microbioma batterico, con visualizzazione integrata dei risultati.''
 descr_menu_plchldr = st.empty()
 descr_menu_plchldr.info('Il menu\' a lato visualizza le opzioni disponibili e i passaggi di analisi in esecuzione.')
 
-# Google adsense
-HtmlFile = open("test.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-# print(source_code)
-components.html(source_code, height=50)
-
-HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-# print(source_code)
-components.html(source_code, height=200)
-
 
 def inject_gad():
     """Add this in your streamlit app.py
@@ -281,6 +270,11 @@ else:
 	st.warning('La pagina e\' in attesa che digiti nel menu\' laterale il nome del progetto')
 	st.stop()
 
+# Amazon affiliates
+HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+# print(source_code)
+components.html(source_code, height=200)
 
 side_subheader_placeholder = sidemenus.empty()
 side_placeholder0 = sidemenus.empty()

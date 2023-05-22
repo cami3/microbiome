@@ -141,17 +141,6 @@ Pipeline based on the analysis package Qiime2, with integrated visualization of 
 descr_menu_plchldr = st.empty()
 descr_menu_plchldr.info('The sidebar menu displays available options and analysis steps.')
 
-# Google adsense
-HtmlFile = open("test.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-# print(source_code)
-components.html(source_code, height=50)
-
-HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-# print(source_code)
-components.html(source_code, height=200)
-
 
 def inject_gad():
 	"""Add this in your streamlit app.py
@@ -280,6 +269,12 @@ else:
 	st.warning('The page is awaiting for you to insert a name for the project in the sidebar menu')
 	st.stop()
 
+
+# Amazon affiliates
+HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+# print(source_code)
+components.html(source_code, height=200)
 
 side_subheader_placeholder = sidemenus.empty()
 side_placeholder0 = sidemenus.empty()
