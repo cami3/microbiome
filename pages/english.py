@@ -2676,6 +2676,7 @@ side_subheader_placeholder1 = sidemenus.empty()
 side_subheader_placeholder1.subheader('***Tertiary analysis pre-processed data***')
 
 side_placeholder = sidemenus.empty()
+side_placeholdera = sidemenus.empty()
 side_placeholder1 = sidemenus.empty()
 side_placeholder2 = sidemenus.empty()
 side_placeholder3 = sidemenus.empty()
@@ -2683,6 +2684,7 @@ side_placeholder4 = sidemenus.empty()
 side_placeholder5 = sidemenus.empty()
 
 side_placeholder.info('***%s.*** Data upload' %(step_n))
+side_placeholdera.markdown(f"<a href='#ter_linkto_{step_n}'>{step_n}. Data upload</a>", unsafe_allow_html=True)
 
 if skip is False:
 	st.markdown("""<hr style="height:8px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
@@ -2701,6 +2703,7 @@ def delete_session_state_data_input_keys():
 		pass
 
 # Form di caricamento dati
+st.markdown(f"<div id='ter_linkto_{step_n}'></div>", unsafe_allow_html=True)
 with st.form(key='form_data_upload'):
 
 
