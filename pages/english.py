@@ -251,6 +251,13 @@ def inject_ga():
 # inject_gad1()
 # inject_ga()
 
+
+# Amazon affiliates
+HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
+source_code = HtmlFile.read()
+# print(source_code)
+components.html(source_code, height=200)
+
 h_plchldr = st.empty()
 
 # Menù laterale
@@ -269,12 +276,6 @@ else:
 	st.warning('The page is awaiting for you to insert a name for the project in the sidebar menu')
 	st.stop()
 
-
-# Amazon affiliates
-HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
-source_code = HtmlFile.read()
-# print(source_code)
-components.html(source_code, height=200)
 
 side_subheader_placeholder = sidemenus.empty()
 side_placeholder0 = sidemenus.empty()
@@ -1034,7 +1035,19 @@ if skip is False:
 
 	h_plchldr.header('***Secondary analysis of raw data***')
 
-	
+	sample_data_secondary_analysis = '/app/microbiome/sample_data/paire_end_sequences'
+	zipfolder(sample_data_secondary_analysis+"/zip_sample_data.zip", sample_data_secondary_analysis)
+
+	with open(sample_data_secondary_analysis+"/zip_sample_data.zip", 'rb') as f:
+		
+		ste.download_button(
+			label="Download sample raw data .zip",
+			data=f,
+			file_name="sample_raw_data_secondary_analysis.zip",
+			mime="application/zip")
+
+	st.info('Download sample raw data for secondary analysis.')
+
 	# Form di caricamento dati
 	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
@@ -2696,6 +2709,19 @@ def delete_session_state_data_input_keys():
 	except Exception as e:
 		print(e)
 		pass
+
+sample_data_tertiary_analysis = '/app/microbiome/sample_data/tertiary_analysis_data'
+zipfolder(sample_data_tertiary_analysis+"/zip_sample_data.zip", sample_data_tertiary_analysis)
+
+with open(sample_data_tertiary_analysis+"/zip_sample_data.zip", 'rb') as f:
+	
+	ste.download_button(
+		label="Download sample data .zip",
+		data=f,
+		file_name="sample_data_tertiary_analysis.zip",
+		mime="application/zip")
+
+st.info('Download sample data for tertiary analysis.')
 
 # Form di caricamento dati
 st.markdown(f"<div id='ter_linkto_{step_n}'></div>", unsafe_allow_html=True)
