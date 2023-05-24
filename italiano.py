@@ -17,6 +17,8 @@ from itertools import cycle
 import os, shutil
 from os.path import basename
 import zipfile
+from zipfile import ZipFile
+
 from contextlib import redirect_stderr
 import sys
 import io
@@ -252,13 +254,13 @@ def inject_ga():
 # inject_gad1()
 # inject_ga()
 
+h_plchldr = st.empty()
+
 # Amazon affiliates
 HtmlFile = open("test_amzn.html", 'r', encoding='utf-8')
 source_code = HtmlFile.read()
 # print(source_code)
 components.html(source_code, height=200)
-
-h_plchldr = st.empty()
 
 # Menù laterale
 sidemenus = st.sidebar
@@ -1036,8 +1038,18 @@ if skip is False:
 	h_plchldr.header('***Analisi secondaria dei dati grezzi***')
 	
 	sample_data_secondary_analysis = '/app/microbiome/sample_data/paire_end_sequences'
-	zipfolder(sample_data_secondary_analysis+"/zip_sample_data.zip", sample_data_secondary_analysis)
+	# Create a ZipFile Object
+	with ZipFile('zip_sample_data.zip', 'w') as zipObj:
+		# Add multiple files to the zip
+		zipObj.write(sample_data_secondary_analysis+'/10T_S33_L001_R1_001.fastq.gz')
+		zipObj.write(sample_data_secondary_analysis+'/10T_S33_L001_R2_001.fastq.gz')
+		zipObj.write(sample_data_secondary_analysis+'/11T_S1_L001_R1_001.fastq.gz')
+		zipObj.write(sample_data_secondary_analysis+'/11T_S1_L001_R2_001.fastq.gz')
+		zipObj.write(sample_data_secondary_analysis+'/15T_S2_L001_R1_001.fastq.gz')
+		zipObj.write(sample_data_secondary_analysis+'/15T_S2_L001_R2_001.fastq.gz')
 
+	st.info('Scaricare i dati grezzi di esempio per l\'analisi secondaria.')
+	
 	with open(sample_data_secondary_analysis+"/zip_sample_data.zip", 'rb') as f:
 		
 		ste.download_button(
@@ -1045,8 +1057,6 @@ if skip is False:
 			data=f,
 			file_name="dati_di_esempio_analisi_secondaria.zip",
 			mime="application/zip")
-
-	st.info('Scaricare i dati grezzi di esempio per l\'analisi secondaria.')
 		
 	# Form di caricamento dati
 	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
@@ -2703,7 +2713,14 @@ def delete_session_state_data_input_keys():
 		pass
 
 sample_data_tertiary_analysis = '/app/microbiome/sample_data/tertiary_analysis_data'
-zipfolder(sample_data_tertiary_analysis+"/zip_sample_data.zip", sample_data_tertiary_analysis)
+# Create a ZipFile Object
+with ZipFile('zip_sample_data.zip', 'w') as zipObj:
+	# Add multiple files to the zip
+	zipObj.write(sample_data_tertiary_analysis+'/table.from_moving_pictures.txt')
+	zipObj.write(sample_data_tertiary_analysis+'/taxonomy_from_moving_pictures_tutorial.csv')
+	zipObj.write(sample_data_tertiary_analysis+'/sample-metadata_from_moving_pictures_tutorial.tsv')
+	
+st.info('Scarica dati di esempio per l\'analisi terziaria.')
 
 with open(sample_data_tertiary_analysis+"/zip_sample_data.zip", 'rb') as f:
 	
@@ -2713,7 +2730,6 @@ with open(sample_data_tertiary_analysis+"/zip_sample_data.zip", 'rb') as f:
 		file_name="dati_esempio_analisi_terziaria.zip",
 		mime="application/zip")
 
-st.info('Scarica dati di esempio per l\'analisi terziaria.')
 
 # Form di caricamento dati
 st.markdown(f"<div id='ter_linkto_{step_n}'></div>", unsafe_allow_html=True)
