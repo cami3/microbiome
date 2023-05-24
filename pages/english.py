@@ -1039,7 +1039,7 @@ if skip is False:
 
 	sample_data_secondary_analysis = '/app/microbiome/sample_data/paire_end_sequences'
 	# Create a ZipFile Object
-	with ZipFile('zip_sample_data.zip', 'w') as zipObj:
+	with ZipFile(sample_data_secondary_analysis+'/zip_sample_data.zip', 'w') as zipObj:
 		# Add multiple files to the zip
 		zipObj.write(sample_data_secondary_analysis+'/10T_S33_L001_R1_001.fastq.gz')
 		zipObj.write(sample_data_secondary_analysis+'/10T_S33_L001_R2_001.fastq.gz')
@@ -2721,7 +2721,7 @@ def delete_session_state_data_input_keys():
 		pass
 
 sample_data_tertiary_analysis = '/app/microbiome/sample_data/tertiary_analysis_data'
-with ZipFile('zip_sample_data.zip', 'w') as zipObj:
+with ZipFile(sample_data_tertiary_analysis+'/zip_sample_data.zip', 'w') as zipObj:
 	# Add multiple files to the zip
 	zipObj.write(sample_data_tertiary_analysis+'/table.from_moving_pictures.txt')
 	zipObj.write(sample_data_tertiary_analysis+'/taxonomy_from_moving_pictures_tutorial.csv')
