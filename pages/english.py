@@ -1037,26 +1037,16 @@ if skip is False:
 
 	h_plchldr.header('***Secondary analysis of raw data***')
 
-	sample_data_secondary_analysis = '/app/microbiome/sample_data/paire_end_sequences'
-	# Create a ZipFile Object
-	with ZipFile(sample_data_secondary_analysis+'/zip_sample_data.zip', 'w') as zipObj:
-		# Add multiple files to the zip
-		zipObj.write(sample_data_secondary_analysis+'/10T_S33_L001_R1_001.fastq.gz')
-		zipObj.write(sample_data_secondary_analysis+'/10T_S33_L001_R2_001.fastq.gz')
-		zipObj.write(sample_data_secondary_analysis+'/11T_S1_L001_R1_001.fastq.gz')
-		zipObj.write(sample_data_secondary_analysis+'/11T_S1_L001_R2_001.fastq.gz')
-		zipObj.write(sample_data_secondary_analysis+'/15T_S2_L001_R1_001.fastq.gz')
-		zipObj.write(sample_data_secondary_analysis+'/15T_S2_L001_R2_001.fastq.gz')
+	# sample_data_secondary_analysis = '/app/microbiome/sample_data/paire_end_sequences'
+	# st.info('Download sample raw data for secondary analysis.')
 	
-	st.info('Download sample raw data for secondary analysis.')
-	
-	with open(sample_data_secondary_analysis+"/zip_sample_data.zip", 'rb') as f:
+	# with open(sample_data_secondary_analysis+"/zip_sample_data.zip", 'rb') as f:
 		
-		ste.download_button(
-			label="Download sample raw data .zip",
-			data=f,
-			file_name="sample_raw_data_secondary_analysis.zip",
-			mime="application/zip")
+	# 	ste.download_button(
+	# 		label="Download sample raw data .zip",
+	# 		data=f,
+	# 		file_name="sample_raw_data_secondary_analysis.zip",
+	# 		mime="application/zip")
 
 	# Form di caricamento dati
 	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
@@ -2721,12 +2711,6 @@ def delete_session_state_data_input_keys():
 		pass
 
 sample_data_tertiary_analysis = '/app/microbiome/sample_data/tertiary_analysis_data'
-with ZipFile(sample_data_tertiary_analysis+'/zip_sample_data.zip', 'w') as zipObj:
-	# Add multiple files to the zip
-	zipObj.write(sample_data_tertiary_analysis+'/table.from_moving_pictures.txt')
-	zipObj.write(sample_data_tertiary_analysis+'/taxonomy_from_moving_pictures_tutorial.csv')
-	zipObj.write(sample_data_tertiary_analysis+'/sample-metadata_from_moving_pictures_tutorial.tsv')
-
 st.info('Download sample data for tertiary analysis.')
 
 with open(sample_data_tertiary_analysis+"/zip_sample_data.zip", 'rb') as f:
