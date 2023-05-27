@@ -1057,12 +1057,14 @@ if skip is False:
 				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R1\_[001].fastq.gz'
 			import_function = import_single_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1'}
+			sample_data_dir = '/app/microbiome/sample_data/single_end_sequences'
 		elif st.session_state.library_radio == 'Paired-end':
 			
 			library_radio_help_string = 'caricare un file R1 ed un file R2 per ogni campione.\
 				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R[1-2]\_[001].fastq.gz'
 			import_function = import_paired_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1', 'reverse sequence count': 'numero letture R2'}
+			sample_data_dir = '/app/microbiome/sample_data/paire_end_sequences'
 
 
 		lbl_plchldr = st.empty()
@@ -1083,7 +1085,9 @@ if skip is False:
 		# bottone per cancellare i file caricati in precedenza e la cache associata, da cliccare per modificare i files fastq.gz
 		clear_files_and_cache_button = clear_files_and_cache_bttn_plchldr.form_submit_button('Modifica dati')
 	
-		
+		sample_data_bttn_plchldr = st.empty()
+		# bottone per caricare dati di esempio paired-end
+		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Carica dati di esempio')
 	
 	if submit_button or (st.session_state.demux_fastq_input != []):
 		
@@ -1140,7 +1144,19 @@ if skip is False:
 		
 		st.balloons()
 		
+	elif sample_data_bttn:
+
+		imported_sequences = import_function(sample_data_dir)
+		st.session_state.imported_sequeces = imported_sequences
+
+		st.success('Caricamento dei dati grezzi riuscito.')
+
+		side_placeholder0.success('***%s.*** Caricamento dati \
+			\n> Tab %s. Statistiche riassuntive dei dati grezzi' %(step_n, step_n))
+		side_placeholder0a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Statistiche riassuntive dei dati grezzi</a>", unsafe_allow_html=True)
 		
+		st.balloons()
+
 	else:
 		st.stop()
 
@@ -2751,7 +2767,6 @@ with st.form(key='form_data_upload'):
 	# bottone per cancellare la session state dei file taxonomy, OTU e metadata in input
 	delete_sessionstate_bttn = delete_sessionstate_bttn_plchldr.form_submit_button('Modifica dati')
 
-
 			
 if delete_sessionstate_bttn:
 	delete_session_state_data_input_keys()
@@ -2796,6 +2811,7 @@ if submit_button or ((st.session_state.data_OTU_input is not None) and (st.sessi
 	else:
 
 		st.warning('Nessun file di metadati fornito.')
+
 else:
 
 	st.stop()
@@ -2810,7 +2826,6 @@ dashboard_torte_dwnld_plchldr = st.empty()
 
 descr_plchldr.markdown('Scrollare la pagina principale e navigare le tab qui sotto per \
 	la visualizzazione dei risultati delle analisi.')
-
 
 
 final_df, data_tax, data_OTU, taxa_levels, key_error_warning = create_final_df(st.session_state.data_OTU_input, st.session_state.data_tax_input)
