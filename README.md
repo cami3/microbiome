@@ -6,7 +6,7 @@ The web app performs OTUs/ASVs (Operational Taxonomic Unit/Amplicon Sequence Var
 The web app is also provided with functionalities for interactive tertiary data analysis if OTU, taxonomy and samples' associated metadata tables are provided. It produces tables and plots about the taxonomy associated to features, as well as the number of features, as well as the taxa barplots, as well as the alpha and beta diversity metrics comparisons with test statistics, for each user-defined group of samples at each user-defined taxonomic level.
 
 All results tables and visualizations publication-ready are available for download.
-Written in italian.
+Written in italian and english.
 Available at http://www.microbioma16s.it
 
 
@@ -17,5 +17,5 @@ La web app esegue il clustering/denoising delle sequenze di DNA in OTUs/ASVs (Op
 La web app è dotata anche dell'opzione di analisi terziaria interattiva dei dati, se l'utenza abbia già a disposizione le tabelle delle OTU, della tassonomia ed eventualmente dei metadati associati ai campioni. Produce tabelle e grafici della tassonomia associata ad ogni feature, così come del numero delle features ed anche grafici a barre dei taxa e confronti con test statistici tra le metriche di alfa e beta diversità, per ogni raggruppamento dei campioni definito dall'utente, per ogni categoria tassonomica definita dall'utente.
 
 Tutti i risultati in formato di tabelle .csv e di immagini sono scaricabili e pronti per la pubblicazione.
-Scritta in italiano.
+Scritta in italiano e inglese.
 Raggiungibile al sito: http://www.microbioma16s.it
