@@ -1087,7 +1087,7 @@ if skip is False:
 	
 		sample_data_bttn_plchldr = st.empty()
 		# bottone per caricare dati di esempio paired-end
-		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Load sample data')
+		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Load sample data', disabled = True)
 	
 	if submit_button or (st.session_state.demux_fastq_input != []):
 		
