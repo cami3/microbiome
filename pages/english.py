@@ -1571,7 +1571,7 @@ if skip is False:
 
 	except Exception as e:
 
-		#st.exception(e)
+		st.exception(e)
 		
 		with tab_summary_stats:
 			st.warning('Single-end sequences, skip reads merging step.')
@@ -1611,47 +1611,87 @@ if skip is False:
 			quality_window = int(quality_window)
 			submit_button = st.form_submit_button('Quality control')
 		
-		if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0))):# and ('joined_sequences' in st.session_state.keys())):
-		
-			try:
+		if library_PE_SE == 'Paired-end':
+			if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0)) and ('joined_sequences' in st.session_state.keys())):
+			
+				try:
+					
+					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(st.session_state.joined_sequences, min_quality, quality_window)
+					st.session_state.demux_filter = demux_filter
+					st.session_state.df_q_filter = df_q_filter
+
+				except Exception as e:
+
+					st.warning('Sequenze Single-end')
+					# st.exception(e)
+					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(imported_sequences, min_quality, quality_window)
+					st.session_state.demux_filter = demux_filter
+					st.session_state.df_q_filter = df_q_filter
+					
 				
-				demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(st.session_state.joined_sequences, min_quality, quality_window)
-				st.session_state.demux_filter = demux_filter
-				st.session_state.df_q_filter = df_q_filter
+				side_plchldr2.success('***%s.*** Set quality control parameters \
+				\n > Tab %s. Quality control' %(step_n, step_n))
+				step_n += 1
 
-			except Exception as e:
-
-				st.warning('Sequenze Single-end')
-				# st.exception(e)
-				demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(imported_sequences, min_quality, quality_window)
-				st.session_state.demux_filter = demux_filter
-				st.session_state.df_q_filter = df_q_filter
+				st.subheader('Quality control stats')
+				st.write(df_q_filter.style.format(formatter='{:,.0f}'))
 				
+				csv = convert_df(df_q_filter)
+				ste.download_button(label='Download CSV table',
+					data=csv,
+					file_name='QC_stats.csv',
+					mime='text/csv')
+				
+				st.balloons()
+
+
+			else:
+				st.info('Use the form above to set the quality control parameters.')
+				st.warning("The page is awaiting for you to set the desired quality control parameters \
+					using the form above.")
 			
-			side_plchldr2.success('***%s.*** Set quality control parameters \
-			\n > Tab %s. Quality control' %(step_n, step_n))
-			step_n += 1
-
-			st.subheader('Quality control stats')
-			st.write(df_q_filter.style.format(formatter='{:,.0f}'))
+				step_n += 1
+		elif library_PE_SE == 'Single-end':
 			
-			csv = convert_df(df_q_filter)
-			ste.download_button(label='Download CSV table',
-				data=csv,
-				file_name='QC_stats.csv',
-				mime='text/csv')
+			if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0))):
 			
-			st.balloons()
+				try:
+					
+					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(st.session_state.joined_sequences, min_quality, quality_window)
+					st.session_state.demux_filter = demux_filter
+					st.session_state.df_q_filter = df_q_filter
+
+				except Exception as e:
+
+					st.warning('Sequenze Single-end')
+					# st.exception(e)
+					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(imported_sequences, min_quality, quality_window)
+					st.session_state.demux_filter = demux_filter
+					st.session_state.df_q_filter = df_q_filter
+					
+				
+				side_plchldr2.success('***%s.*** Set quality control parameters \
+				\n > Tab %s. Quality control' %(step_n, step_n))
+				step_n += 1
+
+				st.subheader('Quality control stats')
+				st.write(df_q_filter.style.format(formatter='{:,.0f}'))
+				
+				csv = convert_df(df_q_filter)
+				ste.download_button(label='Download CSV table',
+					data=csv,
+					file_name='QC_stats.csv',
+					mime='text/csv')
+				
+				st.balloons()
 
 
-		else:
-			st.info('Use the form above to set the quality control parameters.')
-			st.warning("The page is awaiting for you to set the desired quality control parameters \
-				using the form above.")
-		
-			step_n += 1
-
-
+			else:
+				st.info('Use the form above to set the quality control parameters.')
+				st.warning("The page is awaiting for you to set the desired quality control parameters \
+					using the form above.")
+			
+				step_n += 1
 
 	with tab_denoising:
 
