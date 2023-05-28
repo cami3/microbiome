@@ -2434,6 +2434,10 @@ if skip is False:
 			df_meta = pd.read_csv(st.session_state.metadata_input, sep='\t', index_col=0)
 			df_meta.index.name = 'SampleID'
 			st.session_state.metadata = Metadata(df_meta)
+		elif st.button('Load sample metadata'):
+			df_meta = pd.read_csv('/app/microbiome/sample_data/metadata_ASVs.txt', sep='\t', index_col=0)
+			df_meta.index.name = 'SampleID'
+			st.session_state.metadata = Metadata(df_meta)
 		else:
 			st.warning('The page is awaiting for you to upload a metadata file to be used for emperor plots of core beta diversity metrics.')
 			st.stop()

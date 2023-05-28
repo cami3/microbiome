@@ -2422,8 +2422,13 @@ if skip is False:
 		cols = st.columns(len(st.session_state.denoising_pipes_multisel))			
 		
 		metadata_uploader = st.file_uploader('Carica un file di metadati .tsv', accept_multiple_files = False, key = 'metadata_input')
+		
 		if st.session_state.metadata_input is not None:
 			df_meta = pd.read_csv(st.session_state.metadata_input, sep='\t', index_col=0)
+			df_meta.index.name = 'SampleID'
+			st.session_state.metadata = Metadata(df_meta)
+		elif st.button('Carica metadati di esempio'):
+			df_meta = pd.read_csv('/app/microbiome/sample_data/metadata_ASVs.txt', sep='\t', index_col=0)
 			df_meta.index.name = 'SampleID'
 			st.session_state.metadata = Metadata(df_meta)
 		else:
