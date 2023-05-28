@@ -1054,7 +1054,7 @@ if skip is False:
 		if st.session_state.library_radio == 'Single-end':
 			
 			library_radio_help_string = 'Upload a R1 file for each sample. \
-				\n> Filename format: [SampleID]\_[index]\_[L001]\_R1\_[001].fastq.gz'
+				\n> Filename format: [SampleID]\_[index]\_[L001]\_R1\_[001].fastq.gz (e.g. Sample1\_S1\_L001\_R1\_001.fastq.gz)'
 			import_function = import_single_end_fastq_gz_files
 			df_cols_to_rename_for = {'forward sequence count': 'forward sequence count'}
 			df_cols_to_rename_rev = {'reverse sequence count': 'forward sequence count'}
@@ -1062,7 +1062,7 @@ if skip is False:
 		elif st.session_state.library_radio == 'Paired-end':
 			
 			library_radio_help_string = 'Upload a R1 and a R2 file for each sample.\
-				\n> Filename format: [SampleID]\_[index]\_[L001]\_R[1-2]\_[001].fastq.gz'
+				\n> Filename format: [SampleID]\_[index]\_[L001]\_R[1-2]\_[001].fastq.gz (e.g. Sample1\_S1\_L001\_R1\_001.fastq.gz)'
 			import_function = import_paired_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'forward sequence count', 'reverse sequence count': 'reverse sequence count'}
 			sample_data_dir = '/app/microbiome/sample_data/paire_end_sequences'
@@ -1572,7 +1572,7 @@ if skip is False:
 
 	except Exception as e:
 
-		st.exception(e)
+		#st.exception(e)
 		
 		with tab_summary_stats:
 			st.warning('Single-end sequences, skip reads merging step.')
@@ -2236,7 +2236,7 @@ if skip is False:
 
 				st.subheader('Alpha rarefaction curves')
 				st.markdown('You can download a .qzv file to visualize the alpha rarefaction curves \
-					 at view.qiime2.org, to evaluate the preferred rarefaction depth \
+					 at https://view.qiime2.org, to evaluate the preferred rarefaction depth \
 						for the ASVs table, based on the dispersion of the computed alpha diversity metrics value \
 							and on the number of excluded samples (you would want to retain as much samples and sequences as possible).')
 				
@@ -2403,7 +2403,7 @@ if skip is False:
 				# Non funziona lo zipping della cartella beta rarefaction secure_temp_dir_rarefaction_beta!!
 				#todo workaround temporaneo:
 				st.markdown('You can download a .zip file with visualizations of results of beta rarefaction \
-					at the depth of `%s` sequences per sample. \
+					at the depth of %s sequences per sample. \
 					The file index.html shows: an Emperor jackknifed PCoA plot, \
 						a Heatmap of Pearson correlation among rarefactions for beta diversity metric \
 							***Bray-Curtis*** and a Newick tree of UPGMA clustering of samples. Go to \

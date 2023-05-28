@@ -1054,7 +1054,7 @@ if skip is False:
 		if st.session_state.library_radio == 'Single-end':
 			
 			library_radio_help_string = 'caricare un file R1 per ogni campione. \
-				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R1\_[001].fastq.gz'
+				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R1\_[001].fastq.gz (es.: Campione1\_S1\_L001\_R1\_001.fastq.gz)'
 			import_function = import_single_end_fastq_gz_files
 			df_cols_to_rename_for = {'forward sequence count': 'numero letture R1'}
 			df_cols_to_rename_rev = {'reverse sequence count': 'numero letture R1'}
@@ -1062,7 +1062,7 @@ if skip is False:
 		elif st.session_state.library_radio == 'Paired-end':
 			
 			library_radio_help_string = 'caricare un file R1 ed un file R2 per ogni campione.\
-				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R[1-2]\_[001].fastq.gz'
+				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R[1-2]\_[001].fastq.gz (es.: Campione1\_S1\_L001\_R1\_001.fastq.gz)'
 			import_function = import_paired_end_fastq_gz_files
 			df_cols_to_rename = {'forward sequence count': 'numero letture R1', 'reverse sequence count': 'numero letture R2'}
 			sample_data_dir = '/app/microbiome/sample_data/paire_end_sequences'
@@ -1568,7 +1568,7 @@ if skip is False:
 
 	except Exception as e:
 
-		st.exception(e)
+		#st.exception(e)
 		
 		with tab_summary_stats:
 			st.warning('Sequenze Single-end, skip del passaggio di fusione delle letture.')
@@ -2231,7 +2231,7 @@ if skip is False:
 
 				st.subheader('Curve di alfa rarefazione')
 				st.markdown('Si scarica un file .qzv per visualizzare le curve di alfa rarefazione \
-					 su view.qiime2.org, per valutare la profondita\' di rarefazione preferita \
+					 su https://view.qiime2.org, per valutare la profondita\' di rarefazione preferita \
 						per la tabella delle sequenze, in base alla dispersione del valore di alfa diversita\' calcolato \
 							e alla quantita\' dei campioni di partenza inclusi.')
 				
@@ -2398,7 +2398,7 @@ if skip is False:
 				# Non funziona lo zipping della cartella beta rarefaction secure_temp_dir_rarefaction_beta!!
 				#todo workaround temporaneo:
 				st.markdown('Si scarica un file .zip per la visualizzazione dei risultati della beta rarefazione \
-					alla profondita\' di `%s` sequenze per campione. \
+					alla profondita\' di %s sequenze per campione. \
 					Il file index.html mostra: un grafico Emperor jackknifed PCoA, \
 						una Heatmap della correlazione di Pearson tra le prove di rarefazione per la metrica \
 							di beta diversita\' ***Bray-Curtis*** ed un albero Newick del clustering dei campioni secondo il metodo UPGMA, visualizzabile \
