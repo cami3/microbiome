@@ -1056,7 +1056,8 @@ if skip is False:
 			library_radio_help_string = 'caricare un file R1 per ogni campione. \
 				\n> Formato del nome file: [NomeCampione]\_[index]\_[L001]\_R1\_[001].fastq.gz'
 			import_function = import_single_end_fastq_gz_files
-			df_cols_to_rename = {'forward sequence count': 'numero letture R1'}
+			df_cols_to_rename_for = {'forward sequence count': 'numero letture R1'}
+			df_cols_to_rename_rev = {'reverse sequence count': 'numero letture R1'}
 			sample_data_dir = '/app/microbiome/sample_data/single_end_sequences'
 		elif st.session_state.library_radio == 'Paired-end':
 			
@@ -1087,7 +1088,7 @@ if skip is False:
 	
 		sample_data_bttn_plchldr = st.empty()
 		# bottone per caricare dati di esempio paired-end
-		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Carica dati di esempio', disabled = True)
+		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Carica dati di esempio')
 	
 	if submit_button or (st.session_state.demux_fastq_input != []):
 		
@@ -1200,7 +1201,10 @@ if skip is False:
 	with tab_summary_stats:
 		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		step_n += 1
-		df = demux_summary.rename(df_cols_to_rename, axis=1)
+		try: # R1
+			df = demux_summary.rename(df_cols_to_rename_for, axis=1, errors = "raise")
+		except: # R2
+			df = demux_summary.rename(df_cols_to_rename_rev, axis=1, errors = "raise")
 		st.session_state.demux_summary_df = df
 		st.subheader('Conte delle sequenze per campione')
 		try:
@@ -1558,7 +1562,7 @@ if skip is False:
 
 	except Exception as e:
 
-		st.exception(e)
+		#st.exception(e)
 		
 		with tab_summary_stats:
 			st.warning('Sequenze Single-end, skip del passaggio di fusione delle letture.')
@@ -1598,7 +1602,7 @@ if skip is False:
 			quality_window = int(quality_window)
 			submit_button = st.form_submit_button('Controllo qualita\'')
 		
-		if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0)) and ('joined_sequences' in st.session_state.keys())):
+		if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0))):# and ('joined_sequences' in st.session_state.keys())):
 		
 			try:
 				
