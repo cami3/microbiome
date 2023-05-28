@@ -1202,10 +1202,14 @@ if skip is False:
 	with tab_summary_stats:
 		st.markdown(f"<div id='linkto_{step_n}_tab'></div>", unsafe_allow_html=True)
 		step_n += 1
-		try: # R1
-			df = demux_summary.rename(df_cols_to_rename_for, axis=1, errors = "raise")
-		except: # R2
-			df = demux_summary.rename(df_cols_to_rename_rev, axis=1, errors = "raise")
+		try: 
+			try: # R1
+				df = demux_summary.rename(df_cols_to_rename_for, axis=1, errors = "raise")
+			except: # R2
+				df = demux_summary.rename(df_cols_to_rename_rev, axis=1)
+		except: # paired-end
+			df = demux_summary.rename(df_cols_to_rename, axis=1, errors = "raise")
+			
 		st.session_state.demux_summary_df = df
 		st.subheader('Sequence count per sample')
 		try:
