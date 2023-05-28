@@ -1149,6 +1149,7 @@ if skip is False:
 
 		imported_sequences = import_function(sample_data_dir)
 		st.session_state.imported_sequeces = imported_sequences
+		imported_sequences_temp_dir = sample_data_dir
 
 		st.success('Caricamento dei dati grezzi riuscito.')
 
@@ -1648,7 +1649,7 @@ if skip is False:
 			
 				step_n += 1
 		elif library_PE_SE == 'Single-end':
-			
+
 			if ((submit_button) or ((st.session_state.min_quality_num != 0) and (st.session_state.quality_window_num != 0))):
 			
 				try:
@@ -2495,9 +2496,9 @@ if skip is False:
 	
 				
 				st.info('L\'albero filogenetico si visualizza online su diversi possibili siti: \
-					\n> * http://etetoolkit.org/treeview/ --> l\'allineamento masked puo\' essere aggiunto; \
-					\n> * https://icytree.org/ --> la classificazione tassonomica puo\' essere aggiunta come metadata;\
-					\n> * https://www.iroki.net/viewer --> la classificazione tassonomica puo\' essere aggiunta come metadata;\
+					\n> * http://etetoolkit.org/treeview/  \
+					\n> * https://icytree.org/ \
+					\n> * https://www.iroki.net/viewer \
 							')
 				zipfolder(secure_temp_dir_phylogenetic_tree+"/zip_phylogenetic_mafft_alignment_tree.zip", secure_temp_dir_phylogenetic_tree)
 
