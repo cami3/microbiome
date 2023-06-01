@@ -77,7 +77,7 @@ import locale
 # LE FUNZIONI CUSTOM SONO NEL FILE helpers.py
 
 
-# GIRA NELL AMBIENTE CONDA: qiime2-2022.11, streamlit version 1.11.1
+# GIRA NELL AMBIENTE CONDA: qiime2-2023.2, streamlit version 1.11.1
 
 
 
@@ -136,9 +136,13 @@ sslify = SSLify(app)
 st.title('App Microbioma')
 
 
-st.markdown('''per l\'analisi bioinformatica intuitiva basata su Qiime2 dei dati di sequenziamento NGS 
-da esperimenti di meta-barcoding del gene codificante per rRNA 16S,
-relativi al microbioma batterico, con visualizzazione integrata dei risultati.''')
+st.markdown('''La "App Microbioma" è uno strumento potente per l'analisi interattiva \
+	dei dati NGS (Next-Generation Sequencing) provenienti da esperimenti di meta-barcoding \
+		del gene codificante per rRNA 16S. Offre un'interfaccia intuitiva e utilizza il pacchetto \
+			di analisi Qiime2 per elaborare e interpretare i dati del microbioma. \
+				Con la visualizzazione integrata dei risultati, l'App Microbioma consente ai ricercatori \
+					di ottenere informazioni sulla composizione delle comunità batteriche e \
+						di esplorare le complessità della ricerca sul microbioma.''')
 
 # Descrizione
 descr_menu_plchldr = st.empty()
@@ -275,7 +279,7 @@ dashboard_name = sidemenus.text_input('Nome del progetto:',
 if (('dashboard_name' in st.session_state.keys()) and (st.session_state.dashboard_name != '')):
 	pass
 else:
-	st.warning('La pagina e\' in attesa che digiti nel menu\' laterale il nome del progetto')
+	st.warning('Inizia digitando nel menu\' laterale il nome del progetto')
 	st.stop()
 
 
