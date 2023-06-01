@@ -1,6 +1,7 @@
 ﻿import streamlit as st
 import streamlit.components.v1 as components
 import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina ad ogni interazione (st.download_button() innesca invece il reload)
+from streamlit.scriptrunner import get_report_ctx
 
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -1054,6 +1055,8 @@ if skip is False:
 		
 	# Form di caricamento dati
 	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
+	ctx = get_report_ctx()
+	session_id = ctx.session_id
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
 			
@@ -1076,7 +1079,7 @@ if skip is False:
 
 		data_demux_fastq = st.file_uploader(
 			label = 'Files fastq.gz:',
-			key='demux_fastq_input',
+			key='demux_fastq_input_%s'%(session_id),
 			accept_multiple_files = True,
 			help='Caricare i files dei dati grezzi da analizzare. Formato dei files accettato: fastq.gz, codifica Phred + 33. \
 				\n> Il metodo di preparazione della libreria Illumina selezionato nel menu\' a lato e\' __%s__: %s.' %(st.session_state.library_radio, library_radio_help_string))
@@ -1094,18 +1097,23 @@ if skip is False:
 		# bottone per caricare dati di esempio paired-end
 		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Carica dati di esempio')
 	
-	if submit_button or (st.session_state.demux_fastq_input != []):
+	if submit_button or (st.session_state['demux_fastq_input_%s'%(session_id)] != []):
 		
+		try:
+			
+			del st.session_state.imported_sequences
+		except:
+			pass
 		try:
 
 			imported_sequences_temp_dir = tempfile.mkdtemp(prefix="temp_",suffix="_fastq_gz")
-			for i in data_demux_fastq:
+			for i in st.session_state['demux_fastq_input_%s'%(session_id)]:
 				with tempfile.NamedTemporaryFile(dir=imported_sequences_temp_dir, prefix=i.name, suffix='.fastq.gz', delete=False) as f:
 					f.write(i.getbuffer())
 				os.rename(f.name, '%s/%s' %(imported_sequences_temp_dir, i.name))
 				
 			imported_sequences = import_function(imported_sequences_temp_dir)
-			st.session_state.imported_sequeces = imported_sequences
+			st.session_state.imported_sequences = imported_sequences
 
 			st.success('Caricamento dei dati grezzi riuscito.')
 			lbl_plchldr.info('***ATTENZIONE!*** Per modificare i dati caricati in precedenza ed eseguire da zero una nuova analisi: \
@@ -1128,7 +1136,11 @@ if skip is False:
 				clear_files_and_cache_button_callback()
 				st.experimental_rerun()
 				
-
+			try:
+			
+				del st.session_state['demux_fastq_input_%s'%(session_id)]
+			except Exception as e:
+				pass
 			
 			descr_plchldr = st.empty()
 			descr_plchldr.markdown('La pagina principale mostra i risultati e si deve scrollare. Le tab vanno navigate in ordine \
@@ -1152,7 +1164,7 @@ if skip is False:
 	elif sample_data_bttn:
 
 		imported_sequences = import_function(sample_data_dir)
-		st.session_state.imported_sequeces = imported_sequences
+		st.session_state.imported_sequences = imported_sequences
 		imported_sequences_temp_dir = sample_data_dir
 
 		st.success('Caricamento dei dati grezzi riuscito.')
@@ -1162,7 +1174,9 @@ if skip is False:
 		side_placeholder0a.markdown(f"<a href='#linkto_{step_n}_tab'>Tab {step_n}. Statistiche riassuntive dei dati grezzi</a>", unsafe_allow_html=True)
 		
 		st.balloons()
+	elif (("imported_sequences" in st.session_state.keys()) and (st.session_state.imported_sequences is not None)):
 
+		pass
 	else:
 		st.stop()
 
