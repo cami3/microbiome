@@ -1,7 +1,7 @@
 ﻿import streamlit as st
 import streamlit.components.v1 as components
 import streamlit_ext as ste # ste.download_button() permette di non eseguire il reload della pagina ad ogni interazione (st.download_button() innesca invece il reload)
-from streamlit.scriptrunner import get_report_ctx
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -1055,7 +1055,7 @@ if skip is False:
 		
 	# Form di caricamento dati
 	st.markdown(f"<div id='linkto_{step_n}'></div>", unsafe_allow_html=True)
-	ctx = get_report_ctx()
+	ctx = get_script_run_ctx()
 	session_id = ctx.session_id
 	with st.form(key='form_demux_fastq_upload', clear_on_submit=False):
 		if st.session_state.library_radio == 'Single-end':
@@ -1079,7 +1079,7 @@ if skip is False:
 
 		data_demux_fastq = st.file_uploader(
 			label = 'Files fastq.gz:',
-			key='demux_fastq_input_%s'%(session_id),
+			key='demux_fastq_input',
 			accept_multiple_files = True,
 			help='Caricare i files dei dati grezzi da analizzare. Formato dei files accettato: fastq.gz, codifica Phred + 33. \
 				\n> Il metodo di preparazione della libreria Illumina selezionato nel menu\' a lato e\' __%s__: %s.' %(st.session_state.library_radio, library_radio_help_string))
@@ -1097,17 +1097,19 @@ if skip is False:
 		# bottone per caricare dati di esempio paired-end
 		sample_data_bttn = sample_data_bttn_plchldr.form_submit_button('Carica dati di esempio')
 	
-	if submit_button or (st.session_state['demux_fastq_input_%s'%(session_id)] != []):
+	if submit_button or (st.session_state['demux_fastq_input'] != []):
 		
 		try:
 			
 			del st.session_state.imported_sequences
+			import_function.clear()
+			app_demux_visualizers_summarize.clear()
 		except:
 			pass
 		try:
 
 			imported_sequences_temp_dir = tempfile.mkdtemp(prefix="temp_",suffix="_fastq_gz")
-			for i in st.session_state['demux_fastq_input_%s'%(session_id)]:
+			for i in st.session_state['demux_fastq_input']:
 				with tempfile.NamedTemporaryFile(dir=imported_sequences_temp_dir, prefix=i.name, suffix='.fastq.gz', delete=False) as f:
 					f.write(i.getbuffer())
 				os.rename(f.name, '%s/%s' %(imported_sequences_temp_dir, i.name))
@@ -1138,7 +1140,7 @@ if skip is False:
 				
 			try:
 			
-				del st.session_state['demux_fastq_input_%s'%(session_id)]
+				del st.session_state['demux_fastq_input']
 			except Exception as e:
 				pass
 			
@@ -1208,7 +1210,7 @@ if skip is False:
 	
 	# Calcolo delle statistiche riassuntive dei dati grezzi con metodo qiime2 demux.visualizers.summarize()
 	try:
-		demux_summary, source_code_demux_summary, secure_temp_dir_demux_summary = app_demux_visualizers_summarize(imported_sequences)
+		demux_summary, source_code_demux_summary, secure_temp_dir_demux_summary = app_demux_visualizers_summarize(st.session_state.imported_sequences)
 		
 	except Exception as e:
 		st.exception(e)
