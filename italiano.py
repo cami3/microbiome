@@ -660,7 +660,7 @@ def clear_files_and_cache_button_callback():
 		st.stop()
 	
 	try:
-		shutil.rmtree(imported_sequences_temp_dir)
+		shutil.rmtree(st.session_state.imported_sequences_temp_dir)
 	except FileNotFoundError as e:
 		st.exception(e)
 		
@@ -1102,19 +1102,18 @@ if skip is False:
 		try:
 			
 			del st.session_state.imported_sequences
-			import_function.clear()
-			app_demux_visualizers_summarize.clear()
 		except:
 			pass
 		try:
 
 			imported_sequences_temp_dir = tempfile.mkdtemp(prefix="temp_",suffix="_fastq_gz")
+			st.session_state.imported_sequences_temp_dir = imported_sequences_temp_dir
 			for i in st.session_state['demux_fastq_input']:
-				with tempfile.NamedTemporaryFile(dir=imported_sequences_temp_dir, prefix=i.name, suffix='.fastq.gz', delete=False) as f:
+				with tempfile.NamedTemporaryFile(dir=st.session_state.imported_sequences_temp_dir, prefix=i.name, suffix='.fastq.gz', delete=False) as f:
 					f.write(i.getbuffer())
-				os.rename(f.name, '%s/%s' %(imported_sequences_temp_dir, i.name))
+				os.rename(f.name, '%s/%s' %(st.session_state.imported_sequences_temp_dir, i.name))
 				
-			imported_sequences = import_function(imported_sequences_temp_dir)
+			imported_sequences = import_function(st.session_state.imported_sequences_temp_dir)
 			st.session_state.imported_sequences = imported_sequences
 
 			st.success('Caricamento dei dati grezzi riuscito.')
@@ -1134,15 +1133,18 @@ if skip is False:
 
 
 			
+			
 			if clear_files_and_cache_button:
 				clear_files_and_cache_button_callback()
 				st.experimental_rerun()
 				
 			try:
 			
+				import_function.clear()
+				app_demux_visualizers_summarize.clear()
 				del st.session_state['demux_fastq_input']
 			except Exception as e:
-				pass
+				st.exception(e)
 			
 			descr_plchldr = st.empty()
 			descr_plchldr.markdown('La pagina principale mostra i risultati e si deve scrollare. Le tab vanno navigate in ordine \
@@ -1167,7 +1169,7 @@ if skip is False:
 
 		imported_sequences = import_function(sample_data_dir)
 		st.session_state.imported_sequences = imported_sequences
-		imported_sequences_temp_dir = sample_data_dir
+		st.session_state.imported_sequences_temp_dir = sample_data_dir
 
 		st.success('Caricamento dei dati grezzi riuscito.')
 
@@ -1207,11 +1209,10 @@ if skip is False:
 		)
 	
 
-	
 	# Calcolo delle statistiche riassuntive dei dati grezzi con metodo qiime2 demux.visualizers.summarize()
 	try:
 		demux_summary, source_code_demux_summary, secure_temp_dir_demux_summary = app_demux_visualizers_summarize(st.session_state.imported_sequences)
-		
+		st.session_state.secure_temp_dir_demux_summary = secure_temp_dir_demux_summary
 	except Exception as e:
 		st.exception(e)
 		st.error('Errore nel calcolo delle statistiche riassuntive dei dati grezzi')
@@ -1519,10 +1520,9 @@ if skip is False:
 					submit_button = st.form_submit_button(label='Fondi le letture paired-end')
 
 			if ((submit_button) or (st.session_state.minovlen_slider != 0)):
-
-				df_demux_joined_summary, joined_sequences, pdf_joined_sequences, secure_temp_dir_joined_summary, stderr_joining = form_callback_vsearch_join(imported_sequences, imported_sequences_temp_dir, secure_temp_dir_demux_summary)
+			
+				df_demux_joined_summary, joined_sequences, pdf_joined_sequences, secure_temp_dir_joined_summary, stderr_joining = form_callback_vsearch_join(st.session_state.imported_sequences, st.session_state.imported_sequences_temp_dir, st.session_state.secure_temp_dir_demux_summary)
 				st.session_state.joined_sequences = joined_sequences
-
 				# with st.expander('Fusione delle letture R1 ed R2 in corso ...'):
 				# 	st.write('prova std err stderr_joining') #stderr_joining)
 				# 	st.write('%s'%(stderr_joining))
@@ -1641,7 +1641,7 @@ if skip is False:
 
 					st.warning('Sequenze Single-end')
 					# st.exception(e)
-					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(imported_sequences, min_quality, quality_window)
+					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(st.session_state.imported_sequences, min_quality, quality_window)
 					st.session_state.demux_filter = demux_filter
 					st.session_state.df_q_filter = df_q_filter
 					
@@ -1682,7 +1682,7 @@ if skip is False:
 
 					st.warning('Sequenze Single-end')
 					# st.exception(e)
-					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(imported_sequences, min_quality, quality_window)
+					demux_filter, df_q_filter, secure_temp_dir_q_filter_summary = quality_filter_paired_end(st.session_state.imported_sequences, min_quality, quality_window)
 					st.session_state.demux_filter = demux_filter
 					st.session_state.df_q_filter = df_q_filter
 					
@@ -2621,7 +2621,7 @@ if skip is False:
 
 	try:
 		
-		shutil.rmtree(imported_sequences_temp_dir)
+		shutil.rmtree(st.session_state.imported_sequences_temp_dir)
 	except FileNotFoundError as e:
 		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
 		# st.exception(e)
@@ -2632,7 +2632,7 @@ if skip is False:
 		pass
 
 	try:
-		shutil.rmtree(secure_temp_dir_demux_summary)
+		shutil.rmtree(st.session_state.secure_temp_dir_demux_summary)
 	except FileNotFoundError as e:
 		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
 		# st.exception(e)
