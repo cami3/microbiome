@@ -1142,6 +1142,10 @@ if skip is False:
 			
 				import_function.clear()
 				app_demux_visualizers_summarize.clear()
+				quality_filter_paired_end.clear()
+				import_SequencesWithQuality.clear()
+				app_classify_hybrid_vsearch_sklearn.clear()
+				app_alpha_divs.clear()
 				del st.session_state['demux_fastq_input']
 			except Exception as e:
 				st.exception(e)
