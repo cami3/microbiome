@@ -2189,8 +2189,8 @@ if skip is False:
 				st.balloons()
 
 				st.header('Taxonomic classification of ASVs')
-				tabella_df = st.session_state['classification_%s'%(denoising_pipe)].view(pd.DataFrame)['Taxon'].str.split(';', expand=True)#.rename({0: 'Regno',
-				#1: 'Phylum', 2: 'Classe', 3: 'Ordine', 4: 'Famiglia', 5: 'Genere', 6: 'Specie'}, axis=1)
+				tabella_df = st.session_state['classification_%s'%(denoising_pipe)].view(pd.DataFrame)['Taxon'].str.split(';', expand=True).rename({0: 'Kingdom',
+				1: 'Phylum', 2: 'Class', 3: 'Order', 4: 'Family', 5: 'Genus', 6: 'Species'}, axis=1)
 				tabella_df.index.name = '#TAXONOMY'
 				#filter_dataframe(tabella_df)
 				st.write(tabella_df)
