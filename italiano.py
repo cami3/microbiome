@@ -1781,7 +1781,7 @@ if skip is False:
 							\n> Pre-impostato il valore medio in base alle analisi effettuate. \
 							Tale valore varia in base alla tecnologia di sequenziamento. \
 							Fare riferimento al provider dei dati.',
-							min_value=250, max_value=300, step=50, value=approx_reads_lenght_R1, key='reads_lenght_R1_n_input')
+							min_value=100, max_value=300, step=50, value=approx_reads_lenght_R1, key='reads_lenght_R1_n_input')
 
 					if st.session_state.hypervar_regions_radio == 'V3V4':
 						value_N = st.session_state.reads_lenght_R1_n_input # average length is 464
