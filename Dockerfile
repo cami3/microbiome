@@ -40,5 +40,5 @@ HEALTHCHECK CMD curl --fail http://localhost:80/_stcore/health
 
 # The code to run when container is started:
 # run the command
-ENTRYPOINT ["conda", "run", "-n", "my_env", "streamlit", "run", "italiano.py", "--server.port=80", "--server.address=0.0.0.0"]
+ENTRYPOINT ["conda", "run", "-n", "my_env", "streamlit", "run", "italiano.py", "--server.port=80", "--server.address=0.0.0.0", "--global.logLevel=debug"]
 
