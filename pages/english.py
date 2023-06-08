@@ -989,7 +989,7 @@ def OTUs_annots_freqs(_idx_sample_grouping):
 			df = pd.DataFrame(final_df.iloc[otus_idxs,:].loc[:,st.session_state.tax_level_radio])
 
 			# per la tab grafico delle abbondanze relative
-			df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][['Genere'] + grouped_samples + [st.session_state.tax_level_radio]])
+			df1 = pd.DataFrame(final_df.iloc[otus_idxs,:][['Genus'] + grouped_samples + [st.session_state.tax_level_radio]])
 			
 			df1_d[grouping_key] = df1
 			warning_tab_num_of_OTUs_per_taxon = 'It\'s not possible to visualize charts at the OTU level.'
@@ -3045,7 +3045,7 @@ with tab_num_of_OTUs_per_taxon:
 			for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 
 				st.markdown('***%s***' %(grouping_key))
-				
+				#st.dataframe(pd.DataFrame(taxa_counts_d[grouping_key]).T)
 				df = pd.DataFrame(np.diag(pd.DataFrame(taxa_counts_d[grouping_key]).T), index = (pd.DataFrame(taxa_counts_d[grouping_key]).T.index)).reset_index(drop=False)
 				df = df.rename({'index': ('Taxonomic classification level %s' %(st.session_state.tax_level_radio)), 0:'number of OTUs'}, axis=1)
 				
@@ -4103,7 +4103,7 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 						ste.download_button(
 							label="Download alpha diversity metric %s groups comparison .qzv" %(metric_name),
 							data=f,
-							file_name="alfa_div_%s_confronto_gruppi.qzv" %(metric_name),
+							file_name="alfa_div_%s_groups_comparison.qzv" %(metric_name),
 							mime="application/qzv")
 				except Exception as e:
 					
