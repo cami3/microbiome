@@ -656,9 +656,9 @@ def clear_files_and_cache_button_callback():
 	'''
 	try:
 
-		import_paired_end_fastq_gz_files.clear()
-		import_function.clear()
-		app_demux_visualizers_summarize.clear()
+		#import_paired_end_fastq_gz_files.clear()
+		#import_function.clear()
+		#app_demux_visualizers_summarize.clear()
 		for i in st.session_state.keys():
 			del i
 		# del st.session_state['demux_fastq_input']
@@ -1149,16 +1149,16 @@ if skip is False:
 				clear_files_and_cache_button_callback()
 				st.experimental_rerun()
 				
-			try:
+			# try:
 			
-				import_function.clear()
-				app_demux_visualizers_summarize.clear()
-				quality_filter_paired_end.clear()
-				import_SequencesWithQuality.clear()
-				app_classify_hybrid_vsearch_sklearn.clear()
-				#del st.session_state['demux_fastq_input']
-			except Exception as e:
-				st.exception(e)
+			# 	import_function.clear()
+			# 	app_demux_visualizers_summarize.clear()
+			# 	quality_filter_paired_end.clear()
+			# 	import_SequencesWithQuality.clear()
+			# 	app_classify_hybrid_vsearch_sklearn.clear()
+			# 	#del st.session_state['demux_fastq_input']
+			# except Exception as e:
+			# 	st.exception(e)
 			
 			descr_plchldr = st.empty()
 			descr_plchldr.markdown('La pagina principale mostra i risultati e si deve scrollare. Le tab vanno navigate in ordine \

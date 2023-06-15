@@ -320,7 +320,7 @@ def import_paired_end_fastq_gz_files(_filepath):
 	Import R1 and R2 fastq.gz files for all samples in the project.
 	fastq files must be in the Casava 1.8 format.
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		paired_end_sequences = qiime2.Artifact.import_data(
 			'SampleData[PairedEndSequencesWithQuality]', 
 			_filepath,
@@ -334,7 +334,7 @@ def import_single_end_fastq_gz_files(_filepath):
 	Import R1 fastq.gz files for all samples in the project.
 	fastq files must be in the Casava 1.8 format.
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		single_end_sequences = qiime2.Artifact.import_data(
 			'SampleData[SequencesWithQuality]', 
 			_filepath,
@@ -347,7 +347,7 @@ def vsearch_join_pairs(_paired_end_sequences, minovlen, minmergelen, maxmergelen
 	Performs joining of paired end reads based on given paramenters.
 	Default parameters are set for reads' length of 250 bases (v2 Illumina MiSeq kit)
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		demux_joined = vsearch.methods.merge_pairs(
 			demultiplexed_seqs = _paired_end_sequences,
 			minovlen=minovlen,
@@ -364,7 +364,7 @@ def quality_filter_paired_end(_demux_joined, min_quality, quality_window):
 	'''
 	Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		demux_filter = quality_filter.methods.q_score(demux=_demux_joined, min_quality=min_quality, quality_window=quality_window)
 		secure_temp_dir_q_filter_summary = tempfile.mkdtemp(prefix="temp_", suffix="_q_filter_summary")
 		filter_stats = metadata.visualizers.tabulate(demux_filter.filter_stats.view(qiime2.Metadata))
@@ -393,14 +393,14 @@ def quality_filter_paired_end(_demux_joined, min_quality, quality_window):
 
 #@st.cache_resource
 def app_alpha_rare_curves(_table, max_depth, metrics):
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		alpha_rare_curves = alpha_rarefaction(table = _table, max_depth=max_depth, metrics=metrics)
 	return alpha_rare_curves
 
 
 #@st.cache_resource
 def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metadata):
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		result_alignment = align_to_tree_mafft_fasttree(sequences = _sequences)
 		seqs_alignment = result_alignment.alignment
 		masked_alignment = result_alignment.masked_alignment
@@ -414,7 +414,7 @@ def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metada
 
 #@st.cache_resource(show_spinner=True)
 def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		trunc_len = N
 		pooling_method = "independent"
 		chimera_method = "consensus"
@@ -449,7 +449,7 @@ def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
 	Otherwise, if trim_TF is False, disable trimming.
 	"Deblur operates only on same length sequences. " from the web https://forum.qiime2.org/t/deblur-plugin-error/2172
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		if trim_TF:
 			deblur_sequences = deblur.methods.denoise_16S(
 				_demux_filter,
@@ -471,7 +471,7 @@ def import_SequencesWithQuality(_filepath):
 	Import R1 fastq.gz files for all samples in the project.
 	fastq files must be in the Casava 1.8 format.
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		single_end_sequences = qiime2.Artifact.import_data(
 			'SampleData[SequencesWithQuality]', 
 			_filepath,
@@ -630,7 +630,7 @@ def app_demux_visualizers_summarize(_sequences):
 	Funzione cached per calcolare le statistiche riassuntive 
 	dei dati grezzi caricati dall'utente
 	'''
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		demux_summary = demux.visualizers.summarize(_sequences)
 		secure_temp_dir_demux_summary = tempfile.mkdtemp(prefix="temp_", suffix="_demux_summary")
 		demux_summary.visualization.export_data(secure_temp_dir_demux_summary)
@@ -656,9 +656,9 @@ def clear_files_and_cache_button_callback():
 	'''
 	try:
 
-		import_paired_end_fastq_gz_files.clear()
-		import_function.clear()
-		app_demux_visualizers_summarize.clear()
+		#import_paired_end_fastq_gz_files.clear()
+		#import_function.clear()
+		#app_demux_visualizers_summarize.clear()
 		for i in st.session_state.keys():
 			del i
 		# del st.session_state['demux_fastq_input']
@@ -681,7 +681,7 @@ def clear_files_and_cache_button_callback():
 # Funzione per effettuare la fusione delle reads paired-end con vsearch e visualizzare i risultati
 #@st.cache_resource(show_spinner=True)
 def form_callback_vsearch_join(_paired_end_sequences, imported_sequences_temp_dir, secure_temp_dir_demux_summary):
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		minovlen = st.session_state.minovlen_slider
 		minmergelen = st.session_state.minmergelen_slider
 		maxmergelen = st.session_state.maxmergelen_slider
@@ -1014,7 +1014,7 @@ def OTUs_annots_freqs(_idx_sample_grouping):
 	
 #@st.cache_resource
 def app_classify_hybrid_vsearch_sklearn(_query, _reference_reads, _reference_taxonomy, _classifier, reads_per_batch, randseed):
-	with st.spinner('Analisi in corso'):
+	with st.spinner('Analyzing'):
 		seqs_classification = classify_hybrid_vsearch_sklearn(query=_query,
 			reference_reads=_reference_reads,
 			reference_taxonomy=_reference_taxonomy,
@@ -1149,16 +1149,16 @@ if skip is False:
 				clear_files_and_cache_button_callback()
 				st.experimental_rerun()
 				
-			try:
+			# try:
 				
-				import_function.clear()
-				app_demux_visualizers_summarize.clear()
-				quality_filter_paired_end.clear()
-				import_SequencesWithQuality.clear()
-				app_classify_hybrid_vsearch_sklearn.clear()
-				#del st.session_state['demux_fastq_input']
-			except Exception as e:
-				st.exception(e)
+			# 	import_function.clear()
+			# 	app_demux_visualizers_summarize.clear()
+			# 	quality_filter_paired_end.clear()
+			# 	import_SequencesWithQuality.clear()
+			# 	app_classify_hybrid_vsearch_sklearn.clear()
+			# 	#del st.session_state['demux_fastq_input']
+			# except Exception as e:
+			# 	st.exception(e)
 			
 			descr_plchldr = st.empty()
 			descr_plchldr.markdown('The main page shows results and is to be scrolled. The tabs are to be navigated in order \
