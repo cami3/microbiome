@@ -1883,7 +1883,7 @@ if skip is False:
 							st.session_state['stats_%s_per_sample'%(denoising_pipe)] = tabella_df
 							st.subheader('%s denoising stats per sample'%(denoising_pipe))
 							st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)] = tabella_df
-							st.table(tabella_df.style.format(formatter='{:,.0f}'))
+							st.dataframe(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
 							ste.download_button(label='Download CSV table',
@@ -1905,7 +1905,7 @@ if skip is False:
 							# 	'percentage of input non-chimeric': 'percentuale letture iniziali non-chimeriche'}, axis = 1)
 							st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)] = tabella_df
 							
-							st.table(tabella_df.style.format(formatter='{:,.0f}'))
+							st.dataframe(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
 							ste.download_button(label='Download CSV table',
@@ -2625,7 +2625,7 @@ if skip is False:
 			\n > Tab %s. Phylogenetic tree' %(step_n, step_n))
 		step_n += 1
 
-
+	
 	try:
 		
 		shutil.rmtree(st.session_state.imported_sequences_temp_dir)

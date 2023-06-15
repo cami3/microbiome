@@ -1881,7 +1881,7 @@ if skip is False:
 							st.session_state['stats_%s_per_sample'%(denoising_pipe)] = tabella_df
 							st.subheader('Statistiche di denoising con %s per campione'%(denoising_pipe))
 							st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)] = tabella_df
-							st.table(tabella_df.style.format(formatter='{:,.0f}'))
+							st.dataframe(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
 							ste.download_button(label='Scarica tabella in formato CSV',
@@ -1902,7 +1902,7 @@ if skip is False:
 								'percentage of input non-chimeric': 'percentuale letture iniziali non-chimeriche'}, axis = 1)
 							st.session_state['stats_denoising_%s_per_sample'%(denoising_pipe)] = tabella_df
 							
-							st.table(tabella_df.style.format(formatter='{:,.0f}'))
+							st.dataframe(tabella_df.style.format(formatter='{:,.0f}'))
 							
 							csv = convert_df(tabella_df)
 							ste.download_button(label='Scarica tabella in formato CSV',
