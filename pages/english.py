@@ -2625,18 +2625,18 @@ if skip is False:
 			\n > Tab %s. Phylogenetic tree' %(step_n, step_n))
 		step_n += 1
 
-	
-	try:
-		
-		shutil.rmtree(st.session_state.imported_sequences_temp_dir)
-	except FileNotFoundError as e:
-		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
-		# st.exception(e)
-		pass
-	except NameError as e:
-		# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
-		# st.exception(e)
-		pass
+	if not st.session_state.imported_sequences_temp_dir == sample_data_dir:
+		try:
+			
+			shutil.rmtree(st.session_state.imported_sequences_temp_dir)
+		except FileNotFoundError as e:
+			# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+			# st.exception(e)
+			pass
+		except NameError as e:
+			# st.info('Comportamento corretto, le eccezioni sono mostrate a schermo per motivi di sviluppo dell\'applicazione.')
+			# st.exception(e)
+			pass
 
 	try:
 		shutil.rmtree(st.session_state.secure_temp_dir_demux_summary)
