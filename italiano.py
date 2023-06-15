@@ -2452,10 +2452,10 @@ if skip is False:
 				# Non funziona lo zipping della cartella beta rarefaction secure_temp_dir_rarefaction_beta!!
 				#todo workaround temporaneo:
 				st.markdown('Si scarica un file .zip per la visualizzazione dei risultati della beta rarefazione. \
-					Nella cartella, il file index.html mostra: un grafico Emperor jackknifed PCoA, \
+					alla profondita\' di %s sequenze per campione. Nella cartella, il file index.html mostra: un grafico Emperor jackknifed PCoA, \
 						una Heatmap della correlazione di Pearson tra le prove di rarefazione per la metrica \
 							di beta diversita\' ***Jaccard*** ed un albero Newick del clustering dei campioni secondo il metodo UPGMA, visualizzabile \
-									sul sito http://etetoolkit.org/treeview/ ')
+									sul sito http://etetoolkit.org/treeview/ '%(st.session_state['sampling_depth_%s'%(denoising_pipe)]))
 				
 				zipfolder(secure_temp_dir_rarefaction_beta_j+"/zip_beta_rare.zip", secure_temp_dir_rarefaction_beta_j)
 
