@@ -690,7 +690,7 @@ def clear_files_and_cache_button_callback():
 
 # Funzione per effettuare la fusione delle reads paired-end con vsearch e visualizzare i risultati
 #@st.cache_resource(show_spinner=True)
-@st.cache
+@st.cache(suppress_st_warning=True)
 def form_callback_vsearch_join(_paired_end_sequences, imported_sequences_temp_dir, secure_temp_dir_demux_summary):
 	with st.spinner('Analisi in corso'):
 		minovlen = st.session_state.minovlen_slider
