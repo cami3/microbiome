@@ -315,6 +315,7 @@ hypervar_regions_plchldr = sidemenus.empty()
 # Funzioni copiate da helper.py file
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def import_paired_end_fastq_gz_files(_filepath):
 	'''
 	Import R1 and R2 fastq.gz files for all samples in the project.
@@ -329,6 +330,7 @@ def import_paired_end_fastq_gz_files(_filepath):
 
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def import_single_end_fastq_gz_files(_filepath):
 	'''
 	Import R1 fastq.gz files for all samples in the project.
@@ -342,6 +344,7 @@ def import_single_end_fastq_gz_files(_filepath):
 	return single_end_sequences
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def vsearch_join_pairs(_paired_end_sequences, minovlen, minmergelen, maxmergelen, maxee, maxdiffs):#minovlen=20, minmergelen=460, maxmergelen=480, maxee=1, maxdiffs=5):
 	'''
 	Performs joining of paired end reads based on given paramenters.
@@ -360,6 +363,7 @@ def vsearch_join_pairs(_paired_end_sequences, minovlen, minmergelen, maxmergelen
 
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def quality_filter_paired_end(_demux_joined, min_quality, quality_window):
 	'''
 	Performs quality filtering of paired-end fastq reads based on phred64 Illumina quality score.
@@ -392,6 +396,7 @@ def quality_filter_paired_end(_demux_joined, min_quality, quality_window):
 	return demux_filter, df_q_filter, secure_temp_dir_q_filter_summary
 
 #@st.cache_resource
+@st.cache
 def app_alpha_rare_curves(_table, max_depth, metrics):
 	with st.spinner('Analisi in corso'):
 		alpha_rare_curves = alpha_rarefaction(table = _table, max_depth=max_depth, metrics=metrics)
@@ -399,6 +404,7 @@ def app_alpha_rare_curves(_table, max_depth, metrics):
 
 
 #@st.cache_resource
+@st.cache
 def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metadata):
 	with st.spinner('Analisi in corso'):
 		result_alignment = align_to_tree_mafft_fasttree(sequences = _sequences)
@@ -413,6 +419,7 @@ def app_align_to_tree_mafft_fasttree(_sequences, _table, sampling_depth, _metada
 
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
 	with st.spinner('Analisi in corso'):
 		trunc_len = N
@@ -440,6 +447,7 @@ def dada2_denoise_single_joined(_demux_filter, N, trim_TF):
 
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
 	'''
 	Performs denoising of data and trimming at position N, which is defined by the user based on
@@ -466,6 +474,7 @@ def deblur_denoise_trim_paired_end(_demux_filter, N, trim_TF):
 
 
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def import_SequencesWithQuality(_filepath):
 	'''
 	Import R1 fastq.gz files for all samples in the project.
@@ -625,6 +634,7 @@ def myround(x, base=10):
 
 # funzione cached per calcolare le statistiche riassuntive dei dati grezzi caricati dall'utente
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def app_demux_visualizers_summarize(_sequences):
 	'''
 	Funzione cached per calcolare le statistiche riassuntive 
@@ -680,6 +690,7 @@ def clear_files_and_cache_button_callback():
 
 # Funzione per effettuare la fusione delle reads paired-end con vsearch e visualizzare i risultati
 #@st.cache_resource(show_spinner=True)
+@st.cache
 def form_callback_vsearch_join(_paired_end_sequences, imported_sequences_temp_dir, secure_temp_dir_demux_summary):
 	with st.spinner('Analisi in corso'):
 		minovlen = st.session_state.minovlen_slider
@@ -1013,6 +1024,7 @@ def OTUs_annots_freqs(_idx_sample_grouping):
 
 	
 #@st.cache_resource
+@st.cache
 def app_classify_hybrid_vsearch_sklearn(_query, _reference_reads, _reference_taxonomy, _classifier, reads_per_batch, randseed):
 	with st.spinner('Analisi in corso'):
 		seqs_classification = classify_hybrid_vsearch_sklearn(query=_query,
