@@ -4360,17 +4360,17 @@ ps.row(
 
 
 
-for j, s_group in enumerate(df.iterrows()):
+for j, s_group in enumerate(df_table.iterrows()):
 
 	try:
-		gr = df.loc[:, st.session_state.sample_grouping_radio][j]
-		df_pie= pd.DataFrame(df.iloc[j,:]).T
+		gr = df_table.loc[:, st.session_state.sample_grouping_radio][j]
+		df_pie= pd.DataFrame(df_table.iloc[j,:]).T
 		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
 		
 	except Exception as e: # 'Tutti i campioni'
 		# st.exception(e)
 		gr = s_group[1][0]
-		df_pie= pd.DataFrame(df.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
+		df_pie= pd.DataFrame(df_table.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
 	
 
@@ -4384,7 +4384,7 @@ for j, s_group in enumerate(df.iterrows()):
 			ps.donut(
 				title = '%s, %s'%(st.session_state.tax_level_radio, gr),
 				df = df_pie,
-				columns = df.columns[1:], 
+				columns = df_table.columns[1:], 
 			)
 		)
 	)
@@ -4430,10 +4430,13 @@ try:
 
 	df = pd.merge(df, st.session_state.data_meta_df, how='left', left_on='index', right_index=True)
 	df = df.groupby(st.session_state.sample_grouping_radio).sum().reset_index(level=0)
-	df_table = df
+	# numero di colonne dei metadati numeriche
+	n_num_cols = len(st.session_state.data_meta_df.select_dtypes(include=np.number).columns.tolist())
+	# seleziono solo le colonne relative ai taxa escludendo le colonne di metadati numeriche mergiate alla fine del dataframe
+	df_table = df.iloc[:, :-n_num_cols]
 
-	df_barchart = df.T[1:]
-	df_barchart_hdr = df.T.iloc[0,:]
+	df_barchart = df_table.T[1:]
+	df_barchart_hdr = df_table.T.iloc[0,:]
 	df_barchart.columns = df_barchart_hdr
 	df_barchart.index.name = st.session_state.tax_level_radio
 	df_barchart = df_barchart.reset_index(level=0)
