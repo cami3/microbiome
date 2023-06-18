@@ -2563,7 +2563,13 @@ if skip is False:
 				st.subheader('Core alpha and beta diversity metrics phylogenetic')
 				st.subheader('Faith pd')
 				st.table(st.session_state.core_metr_phylo.faith_pd_vector.view(pd.Series))
-				
+				tabella_df = st.session_state.core_metr_phylo.faith_pd_vector.view(pd.Series)
+				csv = convert_df(tabella_df)
+				ste.download_button(label='Download CSV table',
+					data=csv,
+					file_name='alpha_diversity_faith_pd_%s.csv'%(denoising_pipe),
+					mime='text/csv')
+		
 				secure_temp_dir_core_metr_phylo = tempfile.mkdtemp(prefix="temp_", suffix="_core_metr_phylo")
 				secure_temp_dir_core_metr_phylo_qzv = tempfile.mkdtemp(prefix="temp_", suffix="_core_metr_phylo_qzv")
 
