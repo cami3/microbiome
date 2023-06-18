@@ -1291,7 +1291,7 @@ if skip is False:
 			bins = 2
 		elif (len(df.index) == 1):
 			bins = 1
-		elif (len(df.index) > 10):
+		elif (len(df.index) >= 10):
 			bins = 10
 		try:
 			forw_subheader.subheader('Forward reads frequency histogram')
