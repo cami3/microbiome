@@ -4315,7 +4315,7 @@ ps.init(
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Bacterial Microbiome Dashboard'))
+		ps.h1(ps.bold('Microbiome Dashboard'))
 	
 	+	ps.p('This dashboard shows data analyses results \
 		from the Microbiome App through interactive visualizations \
@@ -4407,7 +4407,7 @@ ps.init(
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Bacterial Microbiome Dashboard'))
+		ps.h1(ps.bold('Microbiome Dashboard'))
 	
 	+	ps.p('This dashboard shows data analyses results \
 		from the Microbiome App through interactive visualizations \

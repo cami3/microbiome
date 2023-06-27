@@ -4312,7 +4312,7 @@ ps.init(
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Dashboard Microbioma batterico'))
+		ps.h1(ps.bold('Dashboard Microbioma'))
 	
 	+	ps.p('Questa dashboard mostra i risultati delle analisi \
 		dei dati della App Microbioma tramite visualizzazioni interattive \
@@ -4404,7 +4404,7 @@ ps.init(
 
 ps.row(
 	ps.colxl(align='left', type='card', content = 
-		ps.h1(ps.bold('Dashboard Microbioma batterico'))
+		ps.h1(ps.bold('Dashboard Microbioma'))
 	
 	+	ps.p('Questa dashboard mostra i risultati delle analisi \
 		dei dati della App Microbioma tramite visualizzazioni interattive \
