@@ -2830,7 +2830,7 @@ def delete_session_state_data_input_keys():
 		print(e)
 		pass
 
-sample_data_tertiary_analysis = '/app/microbiome/sample_data/tertiary_analysis_data'
+sample_data_tertiary_analysis = '/app/sample_data/tertiary_analysis_data'
 st.info('Download sample data for tertiary analysis.')
 
 with open(sample_data_tertiary_analysis+"/zip_sample_data.zip", 'rb') as f:
@@ -2951,7 +2951,7 @@ try:
 	data_meta = data_meta.loc[st.session_state.data_OTU_df.columns,:]
 	st.session_state.data_meta_df = data_meta
 except Exception as e:
-	# st.exception(e)
+	st.exception(e)
 	st.warning('No metadata file.')
 
 # Controllo corrispondenza dei campioni dei metadati coi campioni dell OTU file
@@ -4342,13 +4342,15 @@ try:
 	# numero di colonne dei metadati numeriche
 	n_num_cols = len(st.session_state.data_meta_df.select_dtypes(include=np.number).columns.tolist())
 	# seleziono solo le colonne relative ai taxa escludendo le colonne di metadati numeriche mergiate alla fine del dataframe
-	df_table = df.iloc[:, :-n_num_cols]
-		
+	if n_num_cols != 0:
+		df_table = df.iloc[:, :-n_num_cols]
+	else:
+		df_table = df	
 
 		
 except Exception as e:
 	df_table = df
-	# st.exception(e)
+	st.exception(e)
 	pass
 
 

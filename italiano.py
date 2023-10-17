@@ -2826,7 +2826,7 @@ def delete_session_state_data_input_keys():
 		print(e)
 		pass
 
-sample_data_tertiary_analysis = '/app/microbiome/sample_data/tertiary_analysis_data'
+sample_data_tertiary_analysis = '/app/sample_data/tertiary_analysis_data'
 st.info('Scarica dati di esempio per l\'analisi terziaria.')
 
 with open(sample_data_tertiary_analysis+"/zip_sample_data.zip", 'rb') as f:
@@ -2947,7 +2947,7 @@ try:
 	data_meta = data_meta.loc[st.session_state.data_OTU_df.columns,:]
 	st.session_state.data_meta_df = data_meta
 except Exception as e:
-	# st.exception(e)
+	st.exception(e)
 	st.warning('Nessun file di metadati fornito.')
 
 # Controllo corrispondenza dei campioni dei metadati coi campioni dell OTU file
@@ -4326,7 +4326,6 @@ ps.row(
 	+	ps.h3('%s' %(st.session_state.sample_grouping_radio))
 	)
 )
-
 df = st.session_state.final_df[[st.session_state.tax_level_radio]+ st.session_state.sequenced_samples].groupby(st.session_state.tax_level_radio).sum()
 df = df.T.reset_index(level=0)
 df_table = df
@@ -4339,13 +4338,15 @@ try:
 	# numero di colonne dei metadati numeriche
 	n_num_cols = len(st.session_state.data_meta_df.select_dtypes(include=np.number).columns.tolist())
 	# seleziono solo le colonne relative ai taxa escludendo le colonne di metadati numeriche mergiate alla fine del dataframe
-	df_table = df.iloc[:, :-n_num_cols]
-		
+	if n_num_cols != 0:
+		df_table = df.iloc[:, :-n_num_cols]
+	else:
+		df_table = df	
 
 		
 except Exception as e:
 	df_table = df
-	# st.exception(e)
+	st.exception(e)
 	pass
 
 
@@ -4368,7 +4369,7 @@ for j, s_group in enumerate(df_table.iterrows()):
 		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
 		
 	except Exception as e: # 'Tutti i campioni'
-		# st.exception(e)
+		st.exception(e)
 		gr = s_group[1][0]
 		df_pie= pd.DataFrame(df_table.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
