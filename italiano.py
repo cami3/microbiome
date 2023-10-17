@@ -948,7 +948,6 @@ def OTUs_annots_freqs(_idx_sample_grouping):
 			# Rimozione delle OTU che non sono presenti (hanno reads counts = 0) nel gruppo di campioni
 			otus_idxs = final_df.loc[:, final_df.columns.isin(grouped_samples)][final_df.loc[:, final_df.columns.isin(grouped_samples)].any(axis=1)].index
 			df = pd.DataFrame(final_df.iloc[otus_idxs,:].loc[:,st.session_state.tax_level_radio])
-			
 			# per la tab grafico delle abbondanze relative
 		
 			if ((st.session_state.tax_level_radio != 'Phylum') and (st.session_state.tax_level_radio != 'Regno')):
@@ -2165,9 +2164,9 @@ if skip is False:
 		# 	with NamedTemporaryFile(dir='.', suffix='.fasta') as f:
 		# 		f.write(st.session_state.reference_otus_seqs_path_input.getbuffer())
 		# 		ref_otus_seqs = import_ref_gg_13_8_otus_seqs(f.name)
-		st.session_state.pre_trained_classifier_path_input = '/app/microbiome/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza'
-		st.session_state.reference_taxonomy_path_input = '/app/microbiome/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt'
-		st.session_state.reference_otus_seqs_path_input = '/app/microbiome/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta'
+		st.session_state.pre_trained_classifier_path_input = '/app/pre_trained_classifier/gg-13-8-99-nb-weighted-classifier.qza'
+		st.session_state.reference_taxonomy_path_input = '/app/reference_seqs/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt'
+		st.session_state.reference_otus_seqs_path_input = '/app/reference_seqs/gg_13_8_otus/rep_set/99_otus.fasta'
 		
 		classifier = Artifact.load(st.session_state.pre_trained_classifier_path_input)
 		ref_taxonomy = import_ref_gg_13_8_otus_taxonomy(st.session_state.reference_taxonomy_path_input)
@@ -3038,7 +3037,7 @@ with tab_taxonomy_of_OTUs:
 
 			taxa_counts_d, df1_d, tabella_df_l_l, warning_tab_num_of_OTUs_per_taxon = OTUs_annots_freqs(st.session_state.idx_sample_grouping)
 			
-			# stampa a schermo sull applicazione separata dalla funzione in modo tale da poter sfruttare i vantaggi del caching dei dati
+			# stampa a schermo sull applicazione è separata dalla funzione in modo tale da poter sfruttare i vantaggi del caching dei dati
 			for i, (grouping_key, grouped_samples) in enumerate(st.session_state.idx_sample_grouping.items()):
 
 				st.markdown('***%s***' %grouping_key)
@@ -3071,7 +3070,6 @@ with tab_num_of_OTUs_per_taxon:
 			for grouping_key, grouped_samples in st.session_state.idx_sample_grouping.items():
 
 				st.markdown('***%s***' %(grouping_key))
-				
 				df = pd.DataFrame(np.diag(pd.DataFrame(taxa_counts_d[grouping_key]).T), index = (pd.DataFrame(taxa_counts_d[grouping_key]).T.index)).reset_index(drop=False)
 				df = df.rename({'index': ('Classificazione tassonomica livello %s' %(st.session_state.tax_level_radio)), 0:'numero di OTUs'}, axis=1)
 				
@@ -4316,7 +4314,7 @@ ps.row(
 	
 	+	ps.p('Questa dashboard mostra i risultati delle analisi \
 		dei dati della App Microbioma tramite visualizzazioni interattive \
-			- sviluppata con python con la libreria piesparrow.')
+			- creata con python con la libreria piesparrow.')
 	)
 )
 ps.row(
@@ -4409,7 +4407,7 @@ ps.row(
 	
 	+	ps.p('Questa dashboard mostra i risultati delle analisi \
 		dei dati della App Microbioma tramite visualizzazioni interattive \
-			- sviluppata con python con la libreria piesparrow.')
+			- creata con python con la libreria piesparrow.')
 	)
 )
 
@@ -4434,8 +4432,10 @@ try:
 	# numero di colonne dei metadati numeriche
 	n_num_cols = len(st.session_state.data_meta_df.select_dtypes(include=np.number).columns.tolist())
 	# seleziono solo le colonne relative ai taxa escludendo le colonne di metadati numeriche mergiate alla fine del dataframe
-	df_table = df.iloc[:, :-n_num_cols]
-
+	if n_num_cols != 0:
+		df_table = df.iloc[:, :-n_num_cols]
+	else:
+		df_table = df
 	df_barchart = df_table.T[1:]
 	df_barchart_hdr = df_table.T.iloc[0,:]
 	df_barchart.columns = df_barchart_hdr
@@ -4446,7 +4446,7 @@ try:
 	
 except Exception as e: # if sample_grouping_radio = 'Tutti i campioni'
 
-	# st.exception(e)
+	st.exception(e)
 	df_barchart = df
 	df_table = df_barchart
 	pass
