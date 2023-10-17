@@ -7,7 +7,8 @@ WORKDIR /app
 LABEL maintainer="Camilla Tafuro"
 
 # copy or clone all the files to the container
-RUN git clone https://github.com/cami3/microbiome.git .
+#RUN git clone https://github.com/cami3/microbiome.git .
+COPY . .
 
 # Create Conda environment from the YAML file
 COPY qiime2-2023.2-py38-linux-conda.yml .
