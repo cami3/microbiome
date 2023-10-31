@@ -753,6 +753,8 @@ def create_final_df(x,y):
 			y_import = Artifact.load(f.name)
 			data_tax = y_import.view(pd.DataFrame)
 			# Split dela colonna Taxon in base al punto e virgola per creare i livelli tassonomici
+			if data_tax.iloc[0,0] == 'Taxon': # elimino la prima riga per un errore nel file qza che viene letto con un doppio header
+				data_tax = data_tax.iloc[1:,:]
 			data_tax_tmp = data_tax['Taxon'].str.split(';', expand=True)
 			if len(data_tax_tmp.columns) == 6:
 				data_tax[['Kingdom',
@@ -785,7 +787,7 @@ def create_final_df(x,y):
 					'Species']]
 			data_tax.index.name = '#TAXONOMY'
 
-
+	
 	data_tax = data_tax.fillna('Unclassified')
 
 	
@@ -3210,7 +3212,17 @@ with tab_rel_ab:
 					
 					if ((color_picker_col is not None) and (data_meta is not None)):
 						
-						barmode = 'group'
+						# sort samples by color_picker_col column of data_meta to have bars of samples ordered per category in charts
+						df_t = df.T
+						# merge with data_meta 'color_picker_col' column
+						df_t = df_t.merge(data_meta[color_picker_col], how='outer', left_index=True, right_index=True)
+						# sort values by 'color_picker_col' column
+						df_t = df_t.sort_values(by=color_picker_col)
+						
+						# drop 'color_picker_col' column and re-transpose dataframe for plots
+						df = df_t.iloc[:,:-1].T
+
+						st.session_state.barmode = 'relative'
 						palette = cycle(px.colors.qualitative.Alphabet)
 						# palette = cycle(px.colors.sequential.PuBu)
 						colors_d = data_meta.loc[grouped_samples, :].groupby(st.session_state['color_picker_col_%s_%s_radio' %(tax_level, grouping_key)]).groups
@@ -3242,7 +3254,7 @@ with tab_rel_ab:
 						
 					else:
 						
-						barmode = 'stack'
+						st.session_state.barmode = 'stack'
 						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
 							palette = cycle(px.colors.qualitative.Alphabet)
 						
@@ -3286,7 +3298,7 @@ with tab_rel_ab:
 							marker_color = colors[leg_gr_col]
 
 						try:
-							
+							# add bars for each sample in grouping_key
 							fig.add_trace(go.Bar(
 								y = [df[taxa_levels[idx_tax_level-1]],
 								df[st.session_state.tax_level_radio]],
@@ -3303,7 +3315,7 @@ with tab_rel_ab:
 							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
 							st.stop()
 					title_plot = len(grouped_samples)
-					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
+					fig.update_layout(title = 'N = %s'%(title_plot), barmode=st.session_state.barmode, plot_bgcolor = None, bargroupgap = 0.1)
 
 					st.plotly_chart(figure_or_data=fig, height=900, use_container_width=True, config=config)
 				step_n += 1
@@ -3403,7 +3415,17 @@ with tab_rel_ab:
 					
 					if ((color_picker_col is not None) and (data_meta is not None)):
 					
-						barmode = 'group'
+						# sort samples by color_picker_col column of data_meta to have bars of samples ordered per category in charts
+						df_t = df.T
+						# merge with data_meta 'color_picker_col' column
+						df_t = df_t.merge(data_meta[color_picker_col], how='outer', left_index=True, right_index=True)
+						# sort values by 'color_picker_col' column
+						df_t = df_t.sort_values(by=color_picker_col)
+						
+						# drop 'color_picker_col' column and re-transpose dataframe for plots
+						df = df_t.iloc[:,:-1].T
+
+						st.session_state.barmode = 'relative'
 						palette = cycle(px.colors.qualitative.Alphabet)
 						# palette = cycle(px.colors.sequential.PuBu)
 						colors_d = data_meta.loc[grouped_samples, :].groupby(st.session_state['color_picker_col_%s_%s_radio' %(tax_level, grouping_key)]).groups
@@ -3435,7 +3457,7 @@ with tab_rel_ab:
 							colors = {v[1]:v[0] for c,v in colors0.items()}
 					else:
 						
-						barmode = 'stack'
+						st.session_state.barmode = 'stack'
 						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
 							palette = cycle(px.colors.qualitative.Alphabet)
 						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
@@ -3497,7 +3519,7 @@ with tab_rel_ab:
 							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
 							st.stop()
 					title_plot = len(grouped_samples)
-					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
+					fig.update_layout(title = 'N = %s'%(title_plot), barmode=st.session_state.barmode, plot_bgcolor = None, bargroupgap = 0.1)
 
 					st.plotly_chart(figure_or_data=fig, height=900, use_container_width=True, config=config)
 				step_n += 1
@@ -3604,7 +3626,17 @@ with tab_rel_ab:
 					
 					if ((color_picker_col is not None) and (data_meta is not None)):
 					
-						barmode = 'group'
+						# sort samples by color_picker_col column of data_meta to have bars of samples ordered per category in charts
+						df_t = df.T
+						# merge with data_meta 'color_picker_col' column
+						df_t = df_t.merge(data_meta[color_picker_col], how='outer', left_index=True, right_index=True)
+						# sort values by 'color_picker_col' column
+						df_t = df_t.sort_values(by=color_picker_col)
+						
+						# drop 'color_picker_col' column and re-transpose dataframe for plots
+						df = df_t.iloc[:,:-1].T
+
+						st.session_state.barmode = 'relative'
 						palette = cycle(px.colors.qualitative.Alphabet)
 						# palette = cycle(px.colors.sequential.PuBu)
 						colors_d = data_meta.loc[grouped_samples, :].groupby(st.session_state['color_picker_col_%s_%s_radio' %(tax_level, grouping_key)]).groups
@@ -3636,7 +3668,7 @@ with tab_rel_ab:
 							colors = {v[1]:v[0] for c,v in colors0.items()}
 					else:
 						
-						barmode = 'stack'
+						st.session_state.barmode = 'stack'
 						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
 							palette = cycle(px.colors.qualitative.Alphabet)
 						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
@@ -3700,7 +3732,7 @@ with tab_rel_ab:
 							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
 							st.stop()
 					title_plot = len(grouped_samples)
-					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
+					fig.update_layout(title = 'N = %s'%(title_plot), barmode=st.session_state.barmode, plot_bgcolor = None, bargroupgap = 0.1)
 
 					st.plotly_chart(figure_or_data=fig, height=900, use_container_width=True, config=config)
 				step_n += 1
@@ -3801,7 +3833,17 @@ with tab_rel_ab:
 					
 					if ((color_picker_col is not None) and (data_meta is not None)):
 					
-						barmode = 'group'
+						# sort samples by color_picker_col column of data_meta to have bars of samples ordered per category in charts
+						df_t = df.T
+						# merge with data_meta 'color_picker_col' column
+						df_t = df_t.merge(data_meta[color_picker_col], how='outer', left_index=True, right_index=True)
+						# sort values by 'color_picker_col' column
+						df_t = df_t.sort_values(by=color_picker_col)
+						
+						# drop 'color_picker_col' column and re-transpose dataframe for plots
+						df = df_t.iloc[:,:-1].T
+
+						st.session_state.barmode = 'relative'
 						palette = cycle(px.colors.qualitative.Alphabet)
 						# palette = cycle(px.colors.sequential.PuBu)
 						colors_d = data_meta.loc[grouped_samples, :].groupby(st.session_state['color_picker_col_%s_%s_radio' %(tax_level, grouping_key)]).groups
@@ -3833,7 +3875,7 @@ with tab_rel_ab:
 							colors = {v[1]:v[0] for c,v in colors0.items()}
 					else:
 						
-						barmode = 'stack'
+						st.session_state.barmode = 'stack'
 						if st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Sequenziale':
 							palette = cycle(px.colors.qualitative.Alphabet)
 						elif st.session_state['palette_%s_%s_radio'%(tax_level, grouping_key)] == 'Graduale':
@@ -3896,7 +3938,7 @@ with tab_rel_ab:
 							st.warning('Scegli una categoria di metadati diversa per il colore delle barre dei grafici')
 							st.stop()
 					title_plot = len(grouped_samples)
-					fig.update_layout(title = 'N = %s'%(title_plot), barmode=barmode, plot_bgcolor = None, bargroupgap = 0.1)
+					fig.update_layout(title = 'N = %s'%(title_plot), barmode=st.session_state.barmode, plot_bgcolor = None, bargroupgap = 0.1)
 					
 					st.plotly_chart(figure_or_data=fig, height=900, use_container_width=True, config=config)
 			
@@ -3926,14 +3968,16 @@ with tab_rel_ab:
 			try: # if metadata are present
 				df_sunburst = st.session_state.final_df.iloc[:,8:].T.merge(st.session_state.data_meta_df, left_index=True, right_index=True)
 				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list() + st.session_state.data_meta_df.columns.to_list())]
-			except:
+			except Exception as e:
+				#st.exception(e)
 				st.warning('Nessun file di metadati fornito')
 				df_sunburst = st.session_state.final_df.iloc[:,8:].T
 				df_sunburst.columns = [i for i in list(st.session_state.final_df.OTU.to_list())]
 				
 			try:
 				df_sunburst = df_sunburst.groupby(st.session_state.sample_grouping_radio).sum()
-			except:
+			except Exception as e:
+				#st.exception(e)
 				df_sunburst = df_sunburst
 
 			df_sunburst = df_sunburst.T
@@ -4344,7 +4388,7 @@ try:
 		
 except Exception as e:
 	df_table = df
-	st.exception(e)
+	# st.exception(e)
 	pass
 
 
@@ -4367,7 +4411,7 @@ for j, s_group in enumerate(df_table.iterrows()):
 		df_pie= df_pie.set_index(st.session_state.sample_grouping_radio).dropna(how='all', axis=1)
 		
 	except Exception as e: # 'Tutti i campioni'
-		st.exception(e)
+		# st.exception(e)
 		gr = s_group[1][0]
 		df_pie= pd.DataFrame(df_table.iloc[j,:]).T.set_index('index').dropna(how='all', axis=1)
 		
@@ -4446,7 +4490,7 @@ try:
 	
 except Exception as e: # if sample_grouping_radio = 'Tutti i campioni'
 
-	st.exception(e)
+	# st.exception(e)
 	df_barchart = df
 	df_table = df_barchart
 	pass
