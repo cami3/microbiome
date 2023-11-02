@@ -882,6 +882,14 @@ def create_final_df(x,y):
 	final_df = final_df.reset_index()
 	final_df['OTU'] = otus_col
 	
+	# recreate data_tax with only OTUs that are present in the OTU table (in case the taxonomy table file contains other features)
+	if len(final_df) != len(data_tax):
+		st.warning('The taxonomy file contains OTUs that are not present in the OTU file. \')
+		string_cols = final_df.select_dtypes('object').columns.tolist()
+		data_tax = final_df.loc[:, string_cols]
+		data_tax.set_index('OTU', inplace=True, drop=False)
+		data_tax.index.name = '#TAXONOMY'
+
 	return final_df, data_tax, data_OTU, taxa_levels, key_error_warning
 
 # estrazione di dataframe pandas da file PDF 

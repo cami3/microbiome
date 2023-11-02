@@ -873,6 +873,7 @@ def create_final_df(x,y):
 		final_df = data_tax_multi.merge(data_OTU, left_on='#TAXONOMY', right_index=True, how='inner')
 		key_error_warning = ''
 	except KeyError as e:
+		st.exception(e)
 		key_error_warning = 'Le sequenze del file OTU e del file taxonomy non corrispondono %s' %e
 		final_df = pd.concat([data_tax_multi,data_OTU])
 		final_df[final_df.duplicated('#TAXONOMY', keep=False)]
@@ -881,6 +882,14 @@ def create_final_df(x,y):
 	final_df = final_df.iloc[:,1:]
 	final_df = final_df.reset_index()
 	final_df['OTU'] = otus_col
+
+	# recreate data_tax with only OTUs that are present in the OTU table (in case the taxonomy table file contains other features)
+	if len(final_df) != len(data_tax):
+		st.warning('Il file della classificazione tassonomica contiene OTUs non presenti nel file OTU. \')
+		string_cols = final_df.select_dtypes('object').columns.tolist()
+		data_tax = final_df.loc[:, string_cols]
+		data_tax.set_index('OTU', inplace=True, drop=False)
+		data_tax.index.name = '#TAXONOMY'
 	
 	return final_df, data_tax, data_OTU, taxa_levels, key_error_warning
 
