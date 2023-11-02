@@ -884,7 +884,7 @@ def create_final_df(x,y):
 	
 	# recreate data_tax with only OTUs that are present in the OTU table (in case the taxonomy table file contains other features)
 	if len(final_df) != len(data_tax):
-		st.warning('The taxonomy file contains OTUs that are not present in the OTU file. \')
+		st.warning('The taxonomy file contains OTUs that are not present in the OTU file. These OTUs will be removed from the taxonomy file.')
 		string_cols = final_df.select_dtypes('object').columns.tolist()
 		data_tax = final_df.loc[:, string_cols]
 		data_tax.set_index('OTU', inplace=True, drop=False)
@@ -4169,9 +4169,16 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				
 				cols_alpha_divs[index].subheader('Kruskal-Wallis (pairwise)')
 				try:
+					with cols_alpha_divs[index]:
 
-					tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
-					cols_alpha_divs[index].table(tabella_df)
+						tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
+						st.table(tabella_df)
+						csv = convert_df(tabella_df)
+						ste.download_button(
+							label="Download pairwise Kruskal Wallis table %s" %(metric_name),
+							data=csv,
+							file_name= '%s_kruskal_wallis.csv' %(metric_name),
+							mime="text/csv")
 				except:
 					
 					cols_alpha_divs[index].warning('Single pool of samples. It\'s impossible to compare among pair groups of samples.')

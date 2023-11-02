@@ -4167,9 +4167,16 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 				
 				cols_alpha_divs[index].subheader('Kruskal-Wallis (a coppie)')
 				try:
+					with cols_alpha_divs[index]:
 
-					tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
-					cols_alpha_divs[index].table(tabella_df)
+						tabella_df = pd.read_csv(secure_temp_dir_alpha_gr_sign+'/kruskal-wallis-pairwise-%s.csv'%(st.session_state.sample_grouping_radio))
+						st.table(tabella_df)
+						csv = convert_df(tabella_df)
+						ste.download_button(
+							label="Download tabella Kruskal Wallis a coppie %s" %(metric_name),
+							data=csv,
+							file_name= '%s_kruskal_wallis.csv' %(metric_name),
+							mime="text/csv")
 				except:
 					
 					cols_alpha_divs[index].warning('Il raggruppamento dei campioni e\' composto da un unico gruppo. Non e\' possibile effettuare confronti tra coppie di gruppi.')
