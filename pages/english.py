@@ -4142,6 +4142,15 @@ with tab_alpha_div: # 4 METRICHE: shannon, simpson, pielou evenness, observed fe
 					y=tabella_df.columns[0],
 					color=st.session_state.sample_grouping_radio)
 				cols_alpha_divs[index].subheader('%s'%(tabella_df.columns[0]))
+				cols_alpha_divs[index].table(tabella_df.iloc[:,0])
+				with cols_alpha_divs[index]:
+					
+					csv = convert_df(tabella_df)
+					ste.download_button(
+						label="Download table for metric %s" %(tabella_df.columns[0]),
+						data=csv,
+						file_name= '%s.csv' %(tabella_df.columns[0]),
+						mime="text/csv")
 				cols_alpha_divs[index].plotly_chart(fig_boxplot, use_container_width=True, config=config)
 				cols_alpha_divs[index].subheader('%s - %s' %(tabella_df.columns[0], st.session_state.sample_grouping_radio))
 				cols_alpha_divs[index].plotly_chart(fig_boxplot1, use_container_width=True, config=config)
