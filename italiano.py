@@ -885,7 +885,7 @@ def create_final_df(x,y):
 
 	# recreate data_tax with only OTUs that are present in the OTU table (in case the taxonomy table file contains other features)
 	if len(final_df) != len(data_tax):
-		st.warning('Il file della classificazione tassonomica contiene OTUs non presenti nel file OTU. \')
+		st.warning('Il file della classificazione tassonomica contiene OTUs non presenti nel file OTU. Queste OTU saranno rimosse dal file della classificazione tassonomica.')
 		string_cols = final_df.select_dtypes('object').columns.tolist()
 		data_tax = final_df.loc[:, string_cols]
 		data_tax.set_index('OTU', inplace=True, drop=False)
