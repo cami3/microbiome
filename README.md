@@ -1,4 +1,4 @@
-# App microbioma
+# Microbiome App - App microbioma
 
 ############# Head over to https://blululi.it/b/microbiomephyloseq for a Comprehensive R code specifically tailored for Microbiome 16S rRNA Data Analysis, based on phyloseq. ##################
 
