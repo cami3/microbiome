@@ -1,4 +1,8 @@
 # App microbioma
+
+############# Head over to https://blululi.it/b/microbiomephyloseq for a Comprehensive R code specifically tailored for Microbiome 16S rRNA Data Analysis, based on phyloseq. ##################
+
+
 16S rRNA meta-barcoding NGS data analysis app - bacterial microbiome
 
 Web app for user-friendly pre-processing of 16S rRNA NGS (Next Generation Sequencing - Illumina) raw fastq.gz files, running interactively a pipeline based on the QIIME2 (Quantitative Insights Into Microbial Ecology) analysis package. Developed using python programming and the streamlit library. 
