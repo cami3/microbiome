@@ -1,6 +1,6 @@
 # Microbiome App - App microbioma
 
-############# Head over to https://blululi.it/b/microbiomephyloseq for a Comprehensive R code specifically tailored for Microbiome 16S rRNA Data Analysis, based on phyloseq. ##################
+############# Head over to https://microbiomephylo.com for a Comprehensive Microbiome Amplicon Sequencing Downstream Data Analysis, based on phyloseq. MicrobiomePhylo is designed with an intuitive interface to facilitate the analyses and publication-ready plots. ##################
 
 
 16S rRNA meta-barcoding NGS data analysis app - bacterial microbiome
