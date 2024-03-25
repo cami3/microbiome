@@ -1,6 +1,6 @@
 # Microbiome App - App microbioma
 
-############# Head over to https://microbiomephylo.com for a Comprehensive Microbiome Amplicon Sequencing Downstream Data Analysis, based on phyloseq. MicrobiomePhylo is designed with an intuitive interface to facilitate the analyses and publication-ready plots. ##################
+############# Head over to https://microbiomephylo.com for a Comprehensive Microbiome Amplicon Sequencing Downstream Data Analysis, based on phyloseq. MicrobiomePhylo web application is designed with an intuitive interface to facilitate the analyses and publication-ready plots. It integrates with qiime2 artifacts, making it the most suitable tool to analyze your OTU and taxonomy table, rooted tree and metadata in the .qza format. ##################
 
 
 16S rRNA meta-barcoding NGS data analysis app - bacterial microbiome
