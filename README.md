@@ -1,8 +1,36 @@
-# Microbiome App - App microbioma
+# MicrobiomePhylo App
 
-############# Head over to https://microbiomephylo.com for a Comprehensive Microbiome Amplicon Sequencing Downstream Data Analysis, based on phyloseq. MicrobiomePhylo web application is designed with an intuitive interface to facilitate the analyses and publication-ready plots. It integrates with qiime2 artifacts, making it the most suitable tool to analyze your OTU and taxonomy table, rooted tree and metadata in the .qza format. ##################
+Explore the depths of microbiome research with MicrobiomePhylo, your premier destination for comprehensive microbiome amplicon sequencing downstream data analysis. Powered by the robust capabilities of the phyloseq package, our web application stands as a beacon for researchers seeking to navigate the complexities of microbiome data with ease and precision.
+
+### MicrobiomePhylo: A Gateway to Advanced Microbiome Analysis
+
+Our platform, accessible at https://microbiomephylo.com, is meticulously designed to offer an unparalleled user experience. With an intuitive interface at its core, MicrobiomePhylo simplifies the journey from raw data to publication-ready visualizations, ensuring that your research not only meets but exceeds the standards of scientific excellence.
+
+### Seamless Integration with QIIME2 Artifacts
+
+Understanding the importance of seamless data integration, MicrobiomePhylo offers full compatibility with QIIME2 artifacts. This feature empowers researchers to effortlessly analyze their OTU and taxonomy tables, rooted trees, and metadata, all in the .qza format. By bridging the gap between data collection and analysis, our platform ensures that your focus remains on uncovering the insights hidden within your microbiome data.
+
+# Key Features:
+
+### Comprehensive Analysis Tools: 
+Leverage the power of phyloseq for in-depth analysis of microbiome amplicon sequencing data.
+### Intuitive User Interface: 
+Navigate through the analysis process with ease, thanks to our user-friendly platform design.
+### Seamless QIIME2 Integration: 
+Import your .qza files directly into MicrobiomePhylo for a streamlined analysis experience.
+### Publication-Ready Visualizations: 
+Generate visually compelling plots that are ready to enhance the impact of your research publications.
+
+Join the Community of Microbiome Researchers
+
+Whether you're delving into the microbiome for the first time or you're an experienced researcher looking for a more efficient analysis solution, MicrobiomePhylo is here to support your scientific endeavors. Visit us at https://microbiomephylo.com and take the first step towards unlocking the full potential of your microbiome data.
+
+Embark on your journey with MicrobiomePhylo and transform the way you analyze microbiome amplicon sequencing data. Together, let's advance the frontiers of microbiome research.
 
 
+
+
+# Microbiome App - App microbiome
 16S rRNA meta-barcoding NGS data analysis app - bacterial microbiome
 
 Web app for user-friendly pre-processing of 16S rRNA NGS (Next Generation Sequencing - Illumina) raw fastq.gz files, running interactively a pipeline based on the QIIME2 (Quantitative Insights Into Microbial Ecology) analysis package. Developed using python programming and the streamlit library. 
