@@ -1,6 +1,6 @@
 # MicrobiomePhylo App
 
-Explore the depths of microbiome research with MicrobiomePhylo, your premier destination for comprehensive microbiome amplicon sequencing downstream data analysis. Powered by the robust capabilities of the phyloseq package, our web application stands as a beacon for researchers seeking to navigate the complexities of microbiome data with ease and precision.
+Explore the depths of microbiome research with MicrobiomePhylo, your premier destination for comprehensive microbiome amplicon sequencing downstream data analysis. Powered by the robust capabilities of the phyloseq and vegan packages, our web application stands as a beacon for researchers seeking to navigate the complexities of microbiome data with ease and precision.
 
 ### MicrobiomePhylo: A Gateway to Advanced Microbiome Analysis
 
