@@ -1,5 +1,4 @@
-
-
+⚠️ This project is no longer maintained. Its successor is Microbiome16S, a local desktop app: [[link]](https://microbiome16s.blululi.it/landing/)
 
 
 
