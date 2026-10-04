@@ -1,3 +1,24 @@
+# Updated link
+
+From QIIME2 output to a finished 16S analysis, without writing R.
+Load your feature table, taxonomy and metadata, pick a grouping variable, click Run. Get publication-ready figures, full statistics, an HTML report and a paste-ready Methods paragraph in minutes. Everything runs on your computer.
+
+Download the Desktop App for macOS & Linux:
+
+- No coding
+- Data never leave your machine
+- QIIME2, BIOM or CSV
+- No QIIME2 install needed
+
+👉 https://microbiome16s.blululi.it/landing/
+
+One-time purchase. Download and use, no account.
+
+
+
+
+
+
 # MicrobiomePhylo App
 
 Explore the depths of microbiome research with MicrobiomePhylo, your premier destination for comprehensive microbiome amplicon sequencing downstream data analysis. Powered by the robust capabilities of the phyloseq and vegan packages, our web application stands as a beacon for researchers seeking to navigate the complexities of microbiome data with ease and precision.
